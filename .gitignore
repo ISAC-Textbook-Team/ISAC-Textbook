@@ -1,0 +1,18 @@
+# LaTeX 编译文件
+*.aux
+*.bbl
+*.blg
+*.log
+*.pdf
+*.xdv
+*.synctex.gz
+*.out
+*.toc
+*.fls
+*.fdb_latexmk
+*.synctex
+*.xdv
+# main.pdf  # 如果有生成的 PDF，也忽略
+# 其他可能的编译产物
+*.synctex.gz(busy)
+*.xdv(busy)

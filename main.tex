@@ -1,0 +1,97 @@
+% 将原来的 book 替换为 ctexbook，它专为中文书籍排版设计，自动处理“第一章”、“图 1.1”及首行缩进
+% twoside 是书籍出版的标准，支持奇偶页不同的页眉
+\documentclass[11pt, twoside, openany, fontset=windows]{ctexbook}
+% \documentclass[11pt, twoside, fontset=windows]{ctexbook} 纸质书籍
+% ==========================================
+% 页面布局与中式页眉页脚规范
+% ==========================================
+\usepackage{geometry}
+\geometry{a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{} % 清空默认设置
+
+% 偶数页 (Even) 居中显示书名
+\fancyhead[EC]{《通信感知一体化：理论与应用》} 
+\setlength{\headheight}{27pt} % 增加页眉高度以适应中文字体
+% 奇数页 (Odd) 居中显示当前章名 (\leftmark 在 ctexbook 中会自动提取为"第一章 XXX")
+\fancyhead[OC]{\leftmark} 
+\fancyfoot[C]{\thepage} % 底部居中显示页码
+
+% --- 数学与学术宏包 ---
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{bm} 
+
+% ==========================================
+% 理工科定理与定义环境
+% ==========================================
+\newtheorem{theorem}{定理}[chapter]
+\newtheorem{lemma}[theorem]{引理}
+\newtheorem{definition}{定义}[chapter]
+\newtheorem{assumption}{假设}[chapter]
+\newtheorem{example}{例}[chapter]
+
+% --- 图表与浮动体控制 (理工科核心) ---
+\usepackage{graphicx}   % 插入图片必备
+\usepackage{float}      % 提供 [H] 强制位置选项
+\usepackage{subcaption} % 替代过时的 subfigure 宏包，用于排版并排子图
+\usepackage{booktabs}   % 三线表必备，符合学术出版规范
+\usepackage{multirow}   % 复杂表格的跨行处理
+
+% --- 算法与伪代码排版 ---
+\usepackage{algorithm}
+\usepackage{algpseudocode} % algorithmicx 的核心宏包
+
+% ==========================================
+% 缩略语表支持宏包
+% ==========================================
+\usepackage{acronym} % 自动化缩略语管理
+
+% --- 用户自定义颜色 ---
+\usepackage{xcolor}
+\definecolor{DeepBlue}{RGB}{0, 0, 139} 
+\definecolor{DeepRed}{RGB}{139, 0, 0}  
+
+% --- 交叉引用 (必须放在最后) ---
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=DeepBlue, % 如图表引用显示为深蓝色
+    citecolor=DeepBlue, % 参考文献引用标号 [1] 颜色
+    urlcolor=DeepBlue
+}
+
+\begin{document}
+
+% --- 前言部分 (罗马数字页码) ---
+\frontmatter
+\tableofcontents
+
+% ==========================================
+% 缩略语与符号表 (已抽离为独立文件)
+% ==========================================
+\include{chapters/acronyms}
+ 
+
+\mainmatter
+\include{chapters/chapter1}
+% 可以继续 include chapter2, chapter3...
+
+% --- 附录部分 ---
+\appendix
+% \appendix 命令会将章节编号从 1, 2, 3 转换为 A, B, C
+\include{appendix/appendixA} % 比如：相关的数学推导或额外数据
+
+% --- 后记部分 ---
+\backmatter 
+
+% \backmatter 会关闭章节编号，但依然会将大标题加入目录（适用于参考文献、致谢、索引等）
+
+% 1. 设置参考文献的格式（IEEE 格式会自动将引用按数字 [1], [2] 排序）
+\bibliographystyle{ieeetr}
+
+% 2. 告诉 LaTeX 你的参考文献数据库在哪里（不需要加 .bib 后缀）
+\bibliography{bib/references} 
+
+% \include{backmatter/acknowledgement} % 致谢可以放在参考文献后面
+\end{document}

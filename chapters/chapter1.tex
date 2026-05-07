@@ -1,0 +1,127 @@
+\chapter{Integrated Sensing and Communications: Background and Applications}
+
+\section{Introduction}
+在 6G 时代，物理世界与数字世界的融合将成为现实，未来网络将具备感知物理世界的能力~\cite{liu2022integrated}。
+
+% ==========================================
+% 规范 1：单张图片的插入
+% ==========================================
+\section{Figure Insertion (图片插入规范)}
+
+在理工科学术排版中，图片通常使用 \texttt{figure} 浮动体环境。
+
+% 【图片排版规范与建议】：
+% 1. 位置参数：首选 [htbp] (Here, Top, Bottom, Page)，让系统自动寻找最优位置。若极其需要固定，才使用 [H]。
+% 2. 居中对齐：必须使用 \centering，不要用 \begin{center}，否则会产生额外空白。
+% 3. 图片格式：矢量图尽量使用 .pdf，标量图使用高分辨率 .png。
+% 4. 标签位置：\label{} 必须严格紧跟在 \caption{} 之后或在其内部，否则交叉引用会出现标号错误！
+\begin{figure}[htbp]
+    \centering
+    % \includegraphics[width=0.8\textwidth]{figures/isac_diagram.pdf}
+    % 此处用黑色方块代替实际图片以作演示
+    \rule{0.8\textwidth}{4cm} 
+    \caption{ISAC 系统中的集成与协调增益示意图。}
+    \label{fig:isac_gain}
+\end{figure}
+
+如图~\ref{fig:isac_gain} 所示，感知与通信功能的整合可以带来显著的硬件和频谱效率提升~\cite{liu2022integrated}。
+
+% ==========================================
+% 规范 2：并排子图的插入
+% ==========================================
+\subsection{Subfigures (子图排版规范)}
+
+在对比不同算法或信道模型时，常需要并排显示多张图。推荐使用 \texttt{subcaption} 宏包，
+而非过时的 \texttt{subfigure}。
+
+\begin{figure}[htbp]
+    \centering
+    % 左侧子图
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \rule{\textwidth}{3cm}
+        \caption{纯通信模式}
+        \label{fig:mode_a}
+    \end{subfigure}
+    \hfill % 使用 hfill 自动填充两个子图之间的水平间距
+    % 右侧子图
+    \begin{subfigure}[b]{0.45\textwidth}
+        \centering
+        \rule{\textwidth}{3cm}
+        \caption{通信感知一体化 (ISAC) 模式}
+        \label{fig:mode_b}
+    \end{subfigure}
+    \caption{不同网络架构下的频谱分配对比。}
+    \label{fig:isac_modes}
+\end{figure}
+
+对比图~\ref{fig:isac_modes}\subref{fig:mode_a} 与图~\ref{fig:isac_modes}\subref{fig:mode_b} 
+可以看出，ISAC 通过联合波形设计减少了带外干扰。
+
+% ==========================================
+% 规范 3：三线表的插入
+% ==========================================
+\section{Table Insertion (学术表格排版规范)}
+
+% 【表格排版规范与建议】：
+% 1. 忌用竖线：Springer/IEEE 等权威理工科模板极不建议在表格中使用竖线（|）。
+% 2. 使用 booktabs：只保留顶部（\toprule）、中间列名下（\midrule）和底部（\bottomrule）三条粗细不同的横线。
+% 3. 标题位置：表格的 \caption 必须放在表格上方（而图片的 caption 放在下方）。
+\begin{table}[htbp]
+\centering
+\caption{ISAC 集成等级分类与特征}
+\label{tab:isac_levels}
+\begin{tabular}{@{}llp{8cm}@{}} % @{} 去除表格边缘的空白
+\toprule
+集成等级 & 核心技术 & 特征描述 \\
+\midrule
+Level 1 & 频谱共存 (Spectral Coexistence) & S\&C 系统共享频谱资源，但硬件和波形相互独立~\cite{liu2022integrated}。 \\
+Level 2 & 共址硬件 (Co-located Hardware) & 部署在相同的射频前端，例如多功能雷达通信平台~\cite{liu2022integrated}。\\
+Level 3 & 联合信令与处理 & 利用单一波形同时实现感知与信息传输。 \\
+Level 4 & 感知网络 (Perceptive Network) & 蜂窝网络级的大规模感知与通信协作。 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+% ==========================================
+% 规范 4：多行数学公式的插入
+% ==========================================
+\section{Equations (公式排版规范)}
+
+行内公式使用 $...$，独立的数学模型应当使用 \texttt{equation} 或 \texttt{align} 环境进行编号排版。
+
+例如，在推导基扩展模型 (Basis Expansion Model) 或信道估计问题时，多行公式通常需要对齐等号：
+\begin{align}
+    \mathbf{y} &= \mathbf{H}\mathbf{x} + \mathbf{n} \label{eq:channel_model} \\
+               &= \sum_{l=1}^{L} b_l \phi_l \mathbf{x} + \mathbf{n} \label{eq:bem_expansion}
+\end{align}
+其中，公式 \eqref{eq:bem_expansion} 给出了一组基和稀疏性的数学表达。注意引用公式应使用 \verb|\eqref{}|，
+它会自动为编号加上括号。
+
+% ==========================================
+% 规范 5：算法与伪代码
+% ==========================================
+\section{Algorithms (算法伪代码规范)}
+
+针对具体的信号处理算法或深度学习训练流程，\texttt{algorithm} 浮动体环境是必不可少的。
+
+\begin{algorithm}[htbp]
+\caption{联合感知与通信预编码算法}
+\label{alg:precoding}
+\begin{algorithmic}[1] % [1] 表示每一行都显示行号
+    \Require 信道状态矩阵 $\mathbf{H}$，目标位置先验 $\hat{\theta}$，最大迭代次数 $K_{max}$
+    \Ensure 优化的预编码矩阵 $\mathbf{W}^*$
+    \State 初始化 $\mathbf{W}^{(0)}$，迭代索引 $k \gets 0$
+    \While{$k < K_{max}$ 且未收敛}
+        \State 计算当前通信信干噪比 (SINR)
+        \State 求解子问题，更新雷达波束图误差：
+        \State $\mathbf{W}^{(k+1)} \gets \arg\min ||\mathbf{W} - \mathbf{W}_{rad}||_F^2$
+        \State $k \gets k + 1$
+    \EndWhile
+    \State \Return $\mathbf{W}^* = \mathbf{W}^{(k)}$
+\end{algorithmic}
+\end{algorithm}
+
+如算法~\ref{alg:precoding} 所示，我们可以清晰地将逻辑步骤进行结构化展示。
+
+
