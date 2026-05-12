@@ -12,7 +12,7 @@
 *.fdb_latexmk
 *.synctex
 *.xdv
-# main.pdf  # 如果有生成的 PDF，也忽略
+main.pdf  # 如果有生成的 PDF，也忽略
 # 其他可能的编译产物
 *.synctex.gz(busy)
 *.xdv(busy)

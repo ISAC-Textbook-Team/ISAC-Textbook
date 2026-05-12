@@ -52,6 +52,10 @@
 \definecolor{DeepBlue}{RGB}{0, 0, 139} 
 \definecolor{DeepRed}{RGB}{139, 0, 0}  
 
+
+% --- 绘图与tikz 宏包 ---
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, positioning, arrows.meta, fit}
 % --- 交叉引用 (必须放在最后) ---
 \usepackage{hyperref}
 \hypersetup{
@@ -60,7 +64,6 @@
     citecolor=DeepBlue, % 参考文献引用标号 [1] 颜色
     urlcolor=DeepBlue
 }
-
 \begin{document}
 
 % --- 前言部分 (罗马数字页码) ---
@@ -74,7 +77,7 @@
  
 
 \mainmatter
-\include{chapters/chapter1}
+\include{chapters/chapter1/chapter1} % 包含第一章绪论
 % 可以继续 include chapter2, chapter3...
 
 % --- 附录部分 ---
@@ -91,7 +94,6 @@
 \bibliographystyle{ieeetr}
 
 % 2. 告诉 LaTeX 你的参考文献数据库在哪里（不需要加 .bib 后缀）
-\bibliography{bib/references} 
+\bibliography{bib/references}
 
-% \include{backmatter/acknowledgement} % 致谢可以放在参考文献后面
 \end{document}
