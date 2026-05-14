@@ -1,9 +1,9 @@
-% 将原来的 book 替换为 ctexbook，它专为中文书籍排版设计，自动处理“第一章”、“图 1.1”及首行缩进
-% twoside 是书籍出版的标准，支持奇偶页不同的页眉
-\documentclass[11pt, twoside, openany, fontset=windows]{ctexbook}
-% \documentclass[11pt, twoside, fontset=windows]{ctexbook} 纸质书籍
+% 将原来的 ctexbook 替换为 book，以支持英文书籍排版，同时引入 ctex 宏包保留中文渲染能力
+\documentclass[11pt, twoside, openany]{book}
+\usepackage[fontset=windows]{ctex}
+
 % ==========================================
-% 页面布局与中式页眉页脚规范
+% 页面布局与英文页眉页脚规范
 % ==========================================
 \usepackage{geometry}
 \geometry{a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
@@ -11,10 +11,10 @@
 \pagestyle{fancy}
 \fancyhf{} % 清空默认设置
 
-% 偶数页 (Even) 居中显示书名
-\fancyhead[EC]{《通信感知一体化：理论与应用》} 
-\setlength{\headheight}{27pt} % 增加页眉高度以适应中文字体
-% 奇数页 (Odd) 居中显示当前章名 (\leftmark 在 ctexbook 中会自动提取为"第一章 XXX")
+% 偶数页 (Even) 居中显示英文书名
+\fancyhead[EC]{Integrated Sensing and Communication: Theory and Applications} 
+\setlength{\headheight}{15pt} % 适应英文字体的高度，相比中文不需要那么高
+% 奇数页 (Odd) 居中显示当前章名 (\leftmark 在 book 类中会自动提取为 "Chapter 1 XXX")
 \fancyhead[OC]{\leftmark} 
 \fancyfoot[C]{\thepage} % 底部居中显示页码
 
@@ -23,13 +23,13 @@
 \usepackage{bm} 
 
 % ==========================================
-% 理工科定理与定义环境
+% 理工科定理与定义环境 (英文规范)
 % ==========================================
-\newtheorem{theorem}{定理}[chapter]
-\newtheorem{lemma}[theorem]{引理}
-\newtheorem{definition}{定义}[chapter]
-\newtheorem{assumption}{假设}[chapter]
-\newtheorem{example}{例}[chapter]
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{assumption}{Assumption}[chapter]
+\newtheorem{example}{Example}[chapter]
 
 % --- 图表与浮动体控制 (理工科核心) ---
 \usepackage{graphicx}   % 插入图片必备
@@ -51,11 +51,20 @@
 \usepackage{xcolor}
 \definecolor{DeepBlue}{RGB}{0, 0, 139} 
 \definecolor{DeepRed}{RGB}{139, 0, 0}  
+% 新增的自定义颜色：橙黄色、粉色、纯红色
+\definecolor{MyOrange}{RGB}{255, 165, 0}
+\definecolor{MyPink}{RGB}{255, 182, 193}
+\definecolor{MyRed}{RGB}{255, 0, 0}
 
+% --- 重点标注命令：替代大色块 ---
+\newcommand{\warning}[1]{\textcolor{MyOrange}{#1}}
+\newcommand{\note}[1]{\textcolor{MyPink}{#1}}
+\newcommand{\important}[1]{\textcolor{MyRed}{#1}}
 
 % --- 绘图与tikz 宏包 ---
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, positioning, arrows.meta, fit}
+
 % --- 交叉引用 (必须放在最后) ---
 \usepackage{hyperref}
 \usepackage{tabularx}
@@ -65,6 +74,7 @@
     citecolor=DeepBlue, % 参考文献引用标号 [1] 颜色
     urlcolor=DeepBlue
 }
+
 \begin{document}
 
 % --- 前言部分 (罗马数字页码) ---
