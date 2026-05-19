@@ -1,29 +1,38 @@
-% 将原来的 ctexbook 替换为 book，以支持英文书籍排版，同时引入 ctex 宏包保留中文渲染能力
-\documentclass[11pt, twoside, openany]{book}
-\usepackage[fontset=windows]{ctex}
+% English book template
+\documentclass[12pt,twoside,openany]{book}
 
 % ==========================================
-% 页面布局与英文页眉页脚规范
+% Font settings
+% ==========================================
+\usepackage{fontspec}
+\usepackage[english]{babel}
+
+% Main English fonts
+\setmainfont{Times New Roman}
+\setsansfont{Arial}
+\setmonofont{Consolas}
+
+% ==========================================
+% Page layout and headers
 % ==========================================
 \usepackage{geometry}
 \geometry{a4paper, left=2.5cm, right=2.5cm, top=3cm, bottom=3cm}
+
 \usepackage{fancyhdr}
 \pagestyle{fancy}
-\fancyhf{} % 清空默认设置
+\fancyhf{}
 
-% 偶数页 (Even) 居中显示英文书名
-\fancyhead[EC]{Integrated Sensing and Communication: Theory and Applications} 
-\setlength{\headheight}{15pt} % 适应英文字体的高度，相比中文不需要那么高
-% 奇数页 (Odd) 居中显示当前章名 (\leftmark 在 book 类中会自动提取为 "Chapter 1 XXX")
-\fancyhead[OC]{\leftmark} 
-\fancyfoot[C]{\thepage} % 底部居中显示页码
+\fancyhead[EC]{Integrated Sensing and Communication: Theory and Applications}
+\setlength{\headheight}{15pt}
+\fancyhead[OC]{\leftmark}
+\fancyfoot[C]{\thepage}
 
-% --- 数学与学术宏包 ---
+% --- Mathematics and academic packages ---
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{bm} 
 
 % ==========================================
-% 理工科定理与定义环境 (英文规范)
+% Theorem and definition environments
 % ==========================================
 \newtheorem{theorem}{Theorem}[chapter]
 \newtheorem{lemma}[theorem]{Lemma}
@@ -31,80 +40,80 @@
 \newtheorem{assumption}{Assumption}[chapter]
 \newtheorem{example}{Example}[chapter]
 
-% --- 图表与浮动体控制 (理工科核心) ---
-\usepackage{graphicx}   % 插入图片必备
-\usepackage{float}      % 提供 [H] 强制位置选项
-\usepackage{subcaption} % 替代过时的 subfigure 宏包，用于排版并排子图
-\usepackage{booktabs}   % 三线表必备，符合学术出版规范
-\usepackage{multirow}   % 复杂表格的跨行处理
+% --- Figures, tables, and float control ---
+\usepackage{graphicx}   % Required for inserting figures
+\usepackage{float}      % Provides the [H] float placement option
+\usepackage{subcaption} % Used for subfigures
+\usepackage{booktabs}   % Professional three-line tables
+\usepackage{multirow}   % Multi-row cells in tables
 
-% --- 算法与伪代码排版 ---
+% --- Algorithms and pseudocode ---
 \usepackage{algorithm}
-\usepackage{algpseudocode} % algorithmicx 的核心宏包
+\usepackage{algpseudocode}
 
 % ==========================================
-% 缩略语表支持宏包
+% Acronym support
 % ==========================================
-\usepackage{acronym} % 自动化缩略语管理
+\usepackage{acronym}
 
-% --- 用户自定义颜色 ---
+% --- User-defined colors ---
 \usepackage{xcolor}
 \definecolor{DeepBlue}{RGB}{0, 0, 139} 
 \definecolor{DeepRed}{RGB}{139, 0, 0}  
-% 新增的自定义颜色：橙黄色、粉色、纯红色
 \definecolor{MyOrange}{RGB}{255, 165, 0}
 \definecolor{MyPink}{RGB}{255, 182, 193}
 \definecolor{MyRed}{RGB}{255, 0, 0}
 
-% --- 重点标注命令：替代大色块 ---
+% --- Highlight commands ---
 \newcommand{\warning}[1]{\textcolor{MyOrange}{#1}}
 \newcommand{\note}[1]{\textcolor{MyPink}{#1}}
 \newcommand{\important}[1]{\textcolor{MyRed}{#1}}
 
-% --- 绘图与tikz 宏包 ---
+% --- TikZ drawing package ---
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, positioning, arrows.meta, fit}
 
-% --- 交叉引用 (必须放在最后) ---
-\usepackage{hyperref}
+% --- Cross-referencing and hyperlinks ---
 \usepackage{tabularx}
+\usepackage{hyperref}
 \hypersetup{
     colorlinks=true,
-    linkcolor=DeepBlue, % 如图表引用显示为深蓝色
-    citecolor=DeepBlue, % 参考文献引用标号 [1] 颜色
+    linkcolor=DeepBlue,
+    citecolor=DeepBlue,
     urlcolor=DeepBlue
 }
 
 \begin{document}
 
-% --- 前言部分 (罗马数字页码) ---
+% --- Front matter with Roman page numbering ---
 \frontmatter
 \tableofcontents
 
 % ==========================================
-% 缩略语与符号表 (已抽离为独立文件)
+% Acronyms and symbols
 % ==========================================
 \include{chapters/acronyms}
  
-
 \mainmatter
-\include{chapters/chapter1/chapter1} % 包含第一章绪论
-% 可以继续 include chapter2, chapter3...
+\include{chapters/chapter1/chapter1} % Chapter 1
+% More chapters can be included here, such as chapter2, chapter3, ...
 
-% --- 附录部分 ---
+% --- Appendices ---
 \appendix
-% \appendix 命令会将章节编号从 1, 2, 3 转换为 A, B, C
-\include{appendix/appendixA} % 比如：相关的数学推导或额外数据
+% The \appendix command changes chapter numbering from 1, 2, 3 to A, B, C.
+\include{appendix/appendixA}
 
-% --- 后记部分 ---
+% --- Back matter ---
 \backmatter 
 
-% \backmatter 会关闭章节编号，但依然会将大标题加入目录（适用于参考文献、致谢、索引等）
+% The \backmatter command disables chapter numbering,
+% while still allowing major headings such as references and acknowledgments
+% to appear in the table of contents.
 
-% 1. 设置参考文献的格式（IEEE 格式会自动将引用按数字 [1], [2] 排序）
+% 1. Set the bibliography style.
 \bibliographystyle{ieeetr}
 
-% 2. 告诉 LaTeX 你的参考文献数据库在哪里（不需要加 .bib 后缀）
+% 2. Specify the bibliography database without the .bib suffix.
 \bibliography{bib/references}
 
 \end{document}
