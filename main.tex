@@ -68,7 +68,19 @@
 \newcommand{\warning}[1]{\textcolor{MyOrange}{#1}}
 \newcommand{\note}[1]{\textcolor{MyPink}{#1}}
 \newcommand{\important}[1]{\textcolor{MyRed}{#1}}
+% ==========================================
+% Internal display heading: for small unnumbered topic titles
+\newcommand{\topichead}[1]{%
+  \par\vspace{0.6\baselineskip}%
+  \noindent\textbf{#1}%
+  \par\nobreak\vspace{0.25\baselineskip}%
+}
 
+% Run-in heading: for paragraph-level headings
+\newcommand{\runinhead}[1]{%
+  \par\vspace{0.25\baselineskip}%
+  \noindent\textbf{#1}\quad
+}
 % --- TikZ drawing package ---
 \usepackage{tikz}
 \usetikzlibrary{shapes.geometric, positioning, arrows.meta, fit}
