@@ -1,0 +1,13 @@
+prefix=c:/Users/Lin/Desktop/recent files/Textbook_Draft/ISAC-Draft/.conda/Library
+exec_prefix=c:/Users/Lin/Desktop/recent files/Textbook_Draft/ISAC-Draft/.conda/Library
+libdir=c:/Users/Lin/Desktop/recent files/Textbook_Draft/ISAC-Draft/.conda/Library/lib
+sharedlibdir=c:/Users/Lin/Desktop/recent files/Textbook_Draft/ISAC-Draft/.conda/Library/lib
+includedir=c:/Users/Lin/Desktop/recent files/Textbook_Draft/ISAC-Draft/.conda/Library/include
+
+Name: zlib
+Description: zlib compression library
+Version: 1.3.1
+
+Requires:
+Libs: -L${libdir} -L${sharedlibdir} -lz
+Cflags: -I${includedir}

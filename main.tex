@@ -30,7 +30,7 @@
 % --- Mathematics and academic packages ---
 \usepackage{amsmath, amssymb, amsthm}
 \usepackage{bm} 
-
+\usepackage{booktabs}
 % ==========================================
 % Theorem and definition environments
 % ==========================================
@@ -46,6 +46,7 @@
 \usepackage{subcaption} % Used for subfigures
 \usepackage{booktabs}   % Professional three-line tables
 \usepackage{multirow}   % Multi-row cells in tables
+\usepackage{xurl}       % Better URL line breaking
 
 % --- Algorithms and pseudocode ---
 \usepackage{algorithm}
@@ -121,7 +122,7 @@
 % The \backmatter command disables chapter numbering,
 % while still allowing major headings such as references and acknowledgments
 % to appear in the table of contents.
-
+\include{backmatter/companion_code}
 % 1. Set the bibliography style.
 \bibliographystyle{ieeetr}
 
