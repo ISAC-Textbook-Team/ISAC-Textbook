@@ -16,3 +16,10 @@ main.pdf  # 如果有生成的 PDF，也忽略
 # 其他可能的编译产物
 *.synctex.gz(busy)
 *.xdv(busy)
+
+# Codex revision notes and temporary review outputs
+agent_revision_summary.md
+citation_todo.md
+review_agent_questions.md
+codex_isac_sec3_sec4_revision_prompt.md
+build/

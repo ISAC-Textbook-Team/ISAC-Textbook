@@ -1,151 +1,169 @@
-# 📖 《通信感知一体化 (ISAC)》书籍协作与排版指南
+# ISAC 教材项目结构与协作规范
 
-欢迎参与本书的编写！为了保证全书格式统一，且避免重复工作，
-我们整理了本协作指南。**遇到排版问题时，请直接复制本指南中的代码模板进行修改。**
+本项目旨在完成《Integrated Sensing and Communication: Theory and Applications》教材初稿，并在多人协作过程中统一章节结构、标题层级、图表风格、参考文献格式和编译方式。
 
-## 📂 1. 项目文件结构
+## 1. 项目目录结构
 
-请在对应的文件夹中进行你的工作，不要随意修改 `main.tex` 的核心配置。根据我们的项目目录，文件结构如下：
+请在对应目录中维护相关内容，不要随意调整全书主控文件和公共配置。
 
 ```text
-📁 DEMO/
-├── 📄 main.tex           # 🌟 全书的主控文件（主编负责维护，包含所有宏包和格式定义）
-├── 📄 main.pdf           # 编译后生成的书籍 PDF 最终版
-├── 📁 chapters/          # ✍️ 正文工作区：各位作者将负责的章节写在这里（如 chapter1.tex）
-├── 📁 appendix/          # 📎 附录工作区：存放数学推导或补充数据（如 appendixA.tex）
-├── 📁 bib/               # 📚 参考文献库：全书共用此文件夹下的引用数据库
-└── 📁 figures/           # 🖼️ 图片库：全书的所有图表统一存放在此
+ISAC-Draft/
+├── main.tex                 # 全书主控文件：宏包、页面格式、目录、章节入口、参考文献入口
+├── chapters/                # 正文章节
+│   ├── acronyms.tex          # 全书缩略语表
+│   └── chapter1/
+│       ├── chapter1.tex      # Chapter 1 的章节入口文件
+│       ├── sec1.tex          # Chapter 1 Section 1
+│       ├── sec2.tex          # Chapter 1 Section 2
+│       ├── sec3.tex          # Chapter 1 Section 3
+│       └── sec4.tex          # Chapter 1 Section 4
+├── figures/                 # 全书图像文件
+│   └── chapter1/             # Chapter 1 使用的图像
+├── code/                    # 生成图片或仿真结果的代码
+│   └── chapter1/             # Chapter 1 对应代码
+├── bib/
+│   └── references.bib        # 全书参考文献数据库
+├── appendix/                # 附录
+├── backmatter/              # 书末内容，如配套代码说明
+└── Readme.md                # 项目结构与协作规范
 ```
 
-⚠️ 注意：目录中出现的 `.aux`, `.bbl`, `.synctex.gz` 等文件均属于 LaTeX 编译过程中自动生成的“副产物”。**请各位合作者不要去手动修改它们**。如果你使用 Git 进行版本控制，建议将这些文件加入 `.gitignore`。
+LaTeX 编译产物，例如 `.aux`、`.bbl`、`.blg`、`.log`、`.out`、`.toc`、`.synctex.gz`、`.xdv`、`main.pdf` 等，不需要手动修改，也不应作为正文文件提交。
 
+## 2. 正文章节组织
 
+全书由 `main.tex` 统一控制。每一章在 `chapters/chapterX/` 下维护，章入口文件负责组织本章各节内容。
 
-## 🚀 2. 如何编译查看效果
-
-本项目使用包含交叉引用的自动化排版，推荐的编译方式：
-
-- **如果你使用 Overleaf**：只需上传这些文件，直接点击 `Recompile` 即可，系统会自动处理所有图表、目录和文献序号。
-- **如果你使用本地编辑器（如 VS Code + TeXLive）**：由于包含参考文献和缩略语，标准的完整编译顺序为：`XeLaTeX -> BibTeX -> XeLaTeX -> XeLaTeX`。或者直接使用 `latexmk` 工具一键编译。
-
-
-## 📝 3. 常用排版模板速查表 (Cheat Sheet)
-
-### 3.1 如何使用缩略语？
-
-本书在 `acronyms.tex` 中定义了**缩略语表**。
-为了保证前后文规范，正文中请使用 `\ac{缩写名}` 命令。
+例如 Chapter 1 的入口文件是：
 
 ```latex
-未来网络将采用 \ac{ISAC} 技术。
+\chapter{...}
+\input{chapters/chapter1/sec1}
+\input{chapters/chapter1/sec2}
+\input{chapters/chapter1/sec3}
+\input{chapters/chapter1/sec4}
 ```
 
-- **首次出现时**：
-  自动展开为“通信感知一体化 (Integrated Sensing and Communications) (ISAC)”。
-- **第二次及以后出现时**：
-  自动缩写为“ISAC”。
+协作者通常只需要修改自己负责的 `secX.tex` 文件。除非需要新增章节、调整全书宏包、修改页面样式或改变全书编译方式，否则不应改动 `main.tex`。
 
-*(如需添加新的缩略语，请在 `acronyms.tex` 中添加, 并标注告知)*
+## 3. 标题层级规范
 
----
-
-### 3.2 如何引用参考文献？
-
-1. 先把文献的 BibTeX 代码粘贴到 `bib/` 文件夹下的 `.bib` 文件中，
-   找到第一行的“引用键”（比如 `liu2022integrated`）。
-2. 在正文中需要引用的地方，使用 `~\cite{引用键}`：
+本项目使用下面的标题层级。标题层级不要随意跳级。
 
 ```latex
-如文献所示，感知与通信功能的整合，
-可以带来显著的硬件效率提升~\cite{liu2022integrated}。
+\chapter{Chapter Title}
+\section[Short Title for ToC and Header]{Full Section Title}
+\subsection{Subsection Title}
+\subsubsection{Subsubsection Title}
 ```
 
-*(注：`~` 是不可断行的空格，用于防止引用标号换行。编译后会自动生成深蓝色的数字标号如 [1]。)*
+其中，`\section[短标题]{正文标题}` 的方括号内容用于目录和页眉，花括号内容用于正文显示。当正文标题较长时，应设置简洁短标题，避免目录和页眉过长。
 
----
+节内还定义了两个项目专用标题命令：
 
-### 3.3 如何插入图片？
+```latex
+\topichead{Low-Altitude Economy and UAV Scenarios}
 
-请将图片放入 `figures/` 文件夹中，
-尽量使用 `.pdf` (矢量图) 或高清 `.png` 格式。
-直接复制以下代码：
+Low-altitude economy and UAV scenarios usually involve UAV control,
+task data transmission, airspace monitoring, and multi-UAV cooperation.
+```
+
+排版效果：`\topichead{}` 会形成独立的加粗主题块标题，标题单独占一行，后续正文另起一段。它适合用于 section 内部的场景分类、概念分类或并列主题。
+
+```latex
+\runinhead{Frequency-modulated continuous-wave radar.}
+FMCW radar transmits a chirp signal whose instantaneous frequency changes
+with time.
+```
+
+排版效果：`\runinhead{}` 会形成段首嵌入式加粗小标题，标题和正文在同一段中连续排版。它适合用于短定义、短说明或段落内部的局部主题，例如 FMCW radar、CW radar、pulse radar 这类紧凑说明。
+
+使用建议：
+
+- `\section{}` 和 `\subsection{}` 用于正式目录结构。
+- `\topichead{}` 用于节内较明显的主题块，但不进入目录。
+- `\runinhead{}` 用于段落级提示，不进入目录。
+- 不要为了视觉效果随意使用 `\\` 强制换行；标题过长时，应优先使用短标题，必要时再在标题内部谨慎加入手动换行。
+
+## 4. 图表规范
+
+图像统一放在 `figures/chapterX/` 下。若图像由仿真、数据处理或绘图脚本生成，对应脚本应放在 `code/chapterX/` 下。
+
+插图使用下面的基本格式：
 
 ```latex
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{figures/你的图片名.pdf}
-    \caption{这里写图片的图注说明（注意：图注必须在图片下方）。}
-    \label{fig:你的图片标签}
+    \includegraphics[width=0.8\textwidth]{figures/chapter1/figure_name.png}
+    \caption{Caption text.}
+    \label{fig:figure-name}
 \end{figure}
 ```
 
-*在正文中提到这张图时，请使用：`如图~\ref{fig:你的图片标签} 所示`。*
-
----
-
-### 3.4 如何编写数学公式？
-
-**行内公式**用美元符号包裹，
-例如：`信道矩阵表示为 $\mathbf{H}$`。
-
-**独立的多行公式**（且需要编号对齐），
-请使用 `align` 环境，把 `&` 放在等号前面用于对齐：
-
-```latex
-\begin{align}
-    \mathbf{y} &= \mathbf{H}\mathbf{x} + \mathbf{n} \label{eq:channel} \\
-               &= \mathbf{A}\mathbf{s} + \mathbf{n} \label{eq:signal}
-\end{align}
-```
-
-*在正文中提到该公式时，请使用：`根据公式~\eqref{eq:channel}`，
-它会自动为编号加上括号。*
-
----
-
-### 3.5 如何插入学术三线表？
-
-学术排版**禁止在表格中使用竖线**，
-请直接复制以下格式修改表头和内容：
+表格使用三线表风格，避免竖线：
 
 ```latex
 \begin{table}[htbp]
-\centering
-\caption{这里写表格的标题（注意：表格标题必须在上方）}
-\label{tab:isac_features}
-\begin{tabular}{@{} l c p{6cm} @{}} % l:左对齐, c:居中, p:限制宽度
-\toprule
-对比维度 & 纯通信系统 & ISAC 系统 \\
-\midrule
-频谱占用 & 独立频段 & 共享频段 \\
-硬件成本 & 高 & 较低（共用射频前端） \\
-\bottomrule
-\end{tabular}
+    \centering
+    \caption{Caption text.}
+    \label{tab:table-name}
+    \begin{tabular}{lll}
+        \toprule
+        Column 1 & Column 2 & Column 3 \\
+        \midrule
+        A & B & C \\
+        \bottomrule
+    \end{tabular}
 \end{table}
 ```
- 
 
+图题放在图像下方，表题放在表格上方。正文中引用图表时使用 `Fig.~\ref{fig:...}`、`Table~\ref{tab:...}`，不要手写编号。
 
+## 5. 缩略语与参考文献
 
-## ⚠️ 4. 合作者注意事项
+全书缩略语统一维护在 `chapters/acronyms.tex`。正文中优先使用项目已有的缩略语命令，例如：
 
-1. **绝对不要乱用换行符**：
-   在 LaTeX 中，分段只需敲两个回车（即代码中空出一行）。
-   **绝不**要使用 `\\` 来强行换行。
+```latex
+\ac{ISAC}
+\acs{WLAN}
+```
 
-2. **标点符号规范**：
-   中文内容请严格使用**全角标点**（，。！？）；
-   英文或数学公式内部请使用**半角标点加上一个空格**。
-   例如：`Let $x, y$ be...` 
+参考文献统一维护在 `bib/references.bib`。正文引用使用：
 
-3. **文本强调**：
-   加粗请使用 `\textbf{重要文字}`；
-   英文的斜体强调请使用 `\textit{emphasis}`。
+```latex
+... as described in recent standardization documents~\cite{ITU_M2160_2023}.
+```
 
-4. **电子版与纸质版的排版切换**：
-   本书目前的 `main.tex` 针对**电子版阅读**进行了优化（消除了章节间的空白页）。
-   如果后续需要**双面打印装订成纸质书**，请主编在 `main.tex` 中进行如下修改(移除相应的注释符号即可)：
-   - 移除 `\documentclass` 括号内的 `openany` 参数（恢复标准的“右页开篇”）。
-   - 将前言/缩略语表末尾的 `\clearpage` 改回 `\cleardoublepage`，以保证每一章的大标题始终出现在书本右侧（奇数页）。
+本项目采用 IEEE 数字编号引用风格，`main.tex` 中使用：
 
- 
+```latex
+\bibliographystyle{IEEEtran}
+\bibliography{bib/references}
+```
+
+新增标准、技术报告或网页类引用时，应尽量包含机构作者、标题、机构、类型、编号、年份、官方 URL 和访问日期等信息。
+
+## 6. 编译方式
+
+本项目使用 `fontspec`，需要使用 XeLaTeX 编译。推荐完整编译顺序为：
+
+```text
+XeLaTeX -> BibTeX -> XeLaTeX -> XeLaTeX
+```
+
+如果使用 VS Code 或命令行，也可以使用 `latexmk` 自动完成多轮编译。编译后重点检查：
+
+- 目录、图表编号和公式编号是否更新；
+- 参考文献是否正常显示；
+- 缩略语是否正常链接；
+- 是否存在明显的 overfull/underfull 排版警告。
+
+## 7. 协作规则
+
+- 只修改自己负责的章节文件，公共文件改动需要提前说明。
+- 新增图像时，应将图像文件放入对应章节的 `figures/chapterX/` 目录。
+- 新增由代码生成的图像时，应同时提交对应的 `code/chapterX/` 脚本。
+- 新增参考文献时，应写入 `bib/references.bib`，并在正文中使用 `\cite{...}` 引用。
+- 新增缩略语时，应写入 `chapters/acronyms.tex`，避免同一缩略语在不同章节重复定义。
+- 不提交 LaTeX 编译产物和临时审阅文件。
+- 专业术语、章节标题、场景分类和核心技术分类发生变化时，应先与作者确认。

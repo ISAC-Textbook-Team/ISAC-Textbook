@@ -52,11 +52,6 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
-% ==========================================
-% Acronym support
-% ==========================================
-\usepackage{acronym}
-
 % --- User-defined colors ---
 \usepackage{xcolor}
 \definecolor{DeepBlue}{RGB}{0, 0, 139} 
@@ -96,6 +91,11 @@
     urlcolor=DeepBlue
 }
 
+% ==========================================
+% Acronym support
+% ==========================================
+\usepackage[noforwardlinks]{acronym}
+
 \begin{document}
 
 % --- Front matter with Roman page numbering ---
@@ -124,7 +124,7 @@
 % to appear in the table of contents.
 \include{backmatter/companion_code}
 % 1. Set the bibliography style.
-\bibliographystyle{ieeetr}
+\bibliographystyle{IEEEtran}
 
 % 2. Specify the bibliography database without the .bib suffix.
 \bibliography{bib/references}

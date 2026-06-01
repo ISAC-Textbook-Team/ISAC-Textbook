@@ -1,5 +1,5 @@
  
-\section{6G Requirements, Global Standardization Positioning, and Requirement Analysis of Typical Application Scenarios}
+\section[6G Requirements, Standardization, and Scenario Requirements]{6G Requirements, Standardization, and Scenario\\ Requirements}
 
 \subsection{Why ISAC Is Included in the 6G Capability Framework}
 
@@ -59,7 +59,7 @@ These two functions may share spectrum, waveforms, reference signals, antenna ar
 Without common definitions of signals, procedures, resource configuration, and measurement interfaces, different devices and network nodes cannot reliably cooperate.
 Therefore, standardization is an important basis for moving ISAC from standalone techniques to practical network capabilities.
 
-The purpose of ISAC standardization is not to force all systems to adopt the same algorithm.
+The purpose of ISAC standardization is not to mandate identical algorithmic implementations across all systems.
 Instead, it is to define the basic rules required for system interoperability.
 For example, standards need to clarify which communication signals or reference signals can be used for sensing.
 They also need to define how sensing tasks share time, frequency, spatial, and power resources with communication services.
@@ -79,7 +79,7 @@ Furthermore, 3GPP TS 22.137 is a technical specification entitled ``Integrated S
 It focuses on functional requirements and performance requirements for 5G wireless sensing services.
 These documents indicate that cellular ISAC standardization is moving from conceptual discussion toward service requirement and system capability definition.
 
-IEEE 802.11bf focuses on WLAN sensing.
+IEEE 802.11bf focuses on \acs{WLAN} sensing.
 It studies how IEEE 802.11 devices and Wi-Fi signal features can be used to support sensing functions~\cite{IEEE_80211bf}.
 It is not part of the cellular 6G ISAC standardization framework.
 Nevertheless, it provides a representative example of how sensing capability can be introduced into an existing wireless communication standard.
@@ -138,14 +138,14 @@ Spatial scale affects coverage strategy and cooperative architecture.
 Network form determines how sensing information is acquired and fused.
 Service objective determines the priority between communication and sensing metrics.
 
-Based on this classification framework, the following part will further analyze the underlying requirements of several typical application scenarios.
-It will also discuss how these requirements influence the design of ISAC systems.
+Based on this classification framework, the next subsection further analyzes the underlying requirements of several typical application scenarios.
+It also discusses how these requirements influence the design of ISAC systems.
 
 \subsection{Requirement Analysis of Typical Application Scenarios}
 
 The differences among typical application scenarios are essentially reflected in their communication requirements, sensing requirements, and system constraints.
-The previous part introduced a classification framework based on mobility, spatial scale, network form, and service objective.
-This part further discusses several representative network-level application scenarios.
+The previous subsection introduced a classification framework based on mobility, spatial scale, network form, and service objective.
+This subsection further discusses several representative network-level application scenarios.
 The purpose is to explain why these scenarios require ISAC and how their requirements may influence system design.
 
 \topichead{Vehicle-Road Cooperation and Intelligent Transportation}
@@ -165,8 +165,7 @@ Therefore, vehicle-road cooperation requires not only single-node sensing accura
 \topichead{Low-Altitude Economy and UAV Scenarios}
 
 Low-altitude economy and UAV scenarios usually involve UAV control, task data transmission, airspace monitoring, and multi-UAV cooperation.
-The communication link needs to provide reliable and continuous control connectivity.
-It also needs to support the transmission of images, videos, mapping data, or mission-related data.
+The communication link should provide reliable and continuous control connectivity while also supporting the transmission of images, videos, mapping data, and other mission-related payloads.
 For tasks such as cooperative UAV operation, inspection, logistics, emergency communication, and low-altitude traffic management, the communication system must also adapt to dynamic topology and air-ground cooperation.
 
 From the sensing perspective, the system needs to continuously obtain UAV position, velocity, trajectory, surrounding obstacles, and airspace states.
