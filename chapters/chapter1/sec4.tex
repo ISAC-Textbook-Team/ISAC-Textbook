@@ -6,13 +6,24 @@
 
 \subsection{Purpose of This Section}
 \label{subsec:ch1-prerequisites-purpose}
+ 
 
-% TODO:
-% 1. Explain why a review of prerequisite knowledge is needed;
-% 2. Clarify the scope and boundary of this section;
-% 3. Explain the relationship between this section and the subsequent ISAC chapters.
+This section does not aim to provide a complete treatment of digital
+communication or radar sensing theory.
+Instead, it reviews the essential concepts needed for the subsequent discussion
+of ISAC system models and joint design.
+By briefly summarizing the core principles of digital communication and radar
+sensing, this section helps readers build a basic cross-disciplinary framework.
+It also clarifies the connections and differences between communication and
+sensing in terms of signal propagation, receiver processing, performance
+metrics, and system objectives.
+These concepts provide the necessary background for later discussions on ISAC
+waveform design, resource allocation, and communication--sensing performance
+tradeoffs.
+ 
 
-Text to be added.
+
+ 
 
 \subsection{Core Principles of Digital Communication}
 \label{subsec:ch1-digital-comm}
@@ -57,7 +68,7 @@ channel modeling,
 MIMO beamforming,
 and resource optimization.
 
-Fig.~\ref{fig:communication_chain} shows a basic block diagram of a typical digital communication system.
+Fig.~\ref{fig:comm_system_block_diagram} shows a basic block diagram of a typical digital communication system.
 The purpose of this diagram is not to cover all details of a communication system.
 Rather,
 it is intended to help readers build the minimum necessary understanding of the link:
@@ -66,106 +77,9 @@ how the signal propagates through the channel,
 and how the receiver recovers information from the distorted signal.
 \begin{figure}[htbp]
     \centering
-    \resizebox{0.92\textwidth}{!}{
-    \begin{tikzpicture}[
-        block/.style={
-            rectangle,
-            draw=black,
-            thick,
-            fill=white,
-            minimum width=2.1cm,
-            minimum height=0.9cm,
-            align=center,
-            font=\sffamily\normalsize
-        },
-        arrow/.style={
-            ->,
-            >=Stealth,
-            thick
-        },
-        label_text/.style={
-            font=\sffamily\small,
-            align=center
-        }
-    ]
-
-    % ------------------------------------------------
-    % Transmitter
-    % ------------------------------------------------
-    \node[block] (source) at (0,0) {Source};
-    \node[block] (src_enc) at (2.8,0) {Source\\Coding};
-    \node[block] (chn_enc) at (5.6,0) {Channel\\Coding};
-    \node[block] (mod) at (8.4,0) {Modulation};
-
-    \node[
-        draw,
-        dashed,
-        thick,
-        inner sep=10pt,
-        fit=(source) (src_enc) (chn_enc) (mod)
-    ] (tx_box) {};
-
-    \node[
-        above=0.12cm of tx_box.north,
-        font=\sffamily\large\bfseries
-    ] {Transmitter};
-
-    % ------------------------------------------------
-    % Channel
-    % ------------------------------------------------
-    \node[block] (channel) at (8.4,-2.3) {Wireless\\Channel};
-
-    \node[
-        label_text,
-        left=1.3cm of channel
-    ] (noise) {Noise/\\Interference};
-
-    \draw[arrow, dashed, gray] (noise) -- (channel);
-
-    % ------------------------------------------------
-    % Receiver
-    % ------------------------------------------------
-    \node[block] (recv) at (8.4,-4.6) {Reception};
-    \node[block] (demod) at (5.6,-4.6) {Demodulation};
-    \node[block] (dec) at (2.8,-4.6) {Decoding};
-    \node[block] (sink) at (0,-4.6) {Destination};
-
-    \node[
-        draw,
-        dashed,
-        thick,
-        inner sep=10pt,
-        fit=(recv) (demod) (dec) (sink)
-    ] (rx_box) {};
-
-    \node[
-        below=0.12cm of rx_box.south,
-        font=\sffamily\large\bfseries
-    ] {Receiver};
-
-    % ------------------------------------------------
-    % Connections
-    % ------------------------------------------------
-    \draw[arrow] (source) -- (src_enc);
-    \draw[arrow] (src_enc) -- (chn_enc);
-    \draw[arrow] (chn_enc) -- (mod);
-
-    \draw[arrow] (mod) -- 
-        node[midway, right, font=\sffamily\small] {RF signal}
-        (channel);
-
-    \draw[arrow] (channel) -- 
-        node[midway, right, font=\sffamily\small, align=center] {Distorted\\signal}
-        (recv);
-
-    \draw[arrow] (recv) -- (demod);
-    \draw[arrow] (demod) -- (dec);
-    \draw[arrow] (dec) -- (sink);
-
-    \end{tikzpicture}
-    }
-    \caption{Basic link diagram of a digital communication system}
-    \label{fig:communication_chain}
+    \includegraphics[width=0.88\textwidth]{figures/chapter1/fig_comm_system_block_diagram.png}
+    \caption{Basic link diagram of a digital communication system.}
+    \label{fig:comm_system_block_diagram}
 \end{figure}
 \begin{itemize}
     \item \textbf{Information source:}
@@ -2643,3 +2557,305 @@ be considered jointly with communication coverage, resource allocation, and
 beam scheduling, because system resources usually need to be shared between
 communication transmission and environmental sensing.
 
+\topichead{Typical Radar Waveforms and Processing Flow}
+\runinhead{Pulse radar.}
+Pulse radar is one of the most fundamental radar waveform schemes.
+Its basic idea is to transmit a pulse signal within a short time interval and
+receive the delayed echo reflected or scattered by the target.
+Since a more distant target leads to a longer propagation time, pulse radar can
+estimate the target range by measuring the round-trip propagation delay between
+the transmitted pulse and the received echo.
+
+If the round-trip delay of the echo relative to the transmitted pulse is
+denoted by \(\tau\), the target range can be expressed as
+\[
+    R=\frac{c\tau}{2},
+\]
+where \(c\) is the propagation speed of the electromagnetic wave.
+The factor \(1/2\) comes from the two-way propagation of the radar signal,
+from the radar to the target and then back to the radar.
+Therefore, in pulse radar, the target range information is mainly represented
+by the time delay of the echo relative to the transmitted pulse.
+The basic concept of pulse radar is illustrated in
+Fig.~\ref{fig:pulse_radar_concept}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{figures/chapter1/fig_pulse_radar.png}
+    \caption{Concept of pulse radar.}
+    \label{fig:pulse_radar_concept}
+\end{figure}
+
+Pulse radar has a clear physical interpretation and provides a direct intuition
+for radar ranging.
+However, there is a tradeoff among pulse width, signal bandwidth, transmitted
+energy, and range resolution.
+A shorter pulse helps improve range resolution, but the energy carried by a
+single pulse may be limited.
+A longer pulse can increase the transmitted energy, but without additional
+processing, the delay resolution may be degraded.
+Therefore, practical radar systems often use modulated pulses together with
+pulse compression or matched filtering to achieve a tradeoff between detection
+capability and range resolution.
+
+\runinhead{Continuous-wave radar.}
+Continuous-wave radar is another representative radar waveform scheme.
+Unlike pulse radar, which transmits short-duration pulses, continuous-wave
+radar usually transmits a continuous single-frequency or approximately
+single-frequency signal.
+For a stationary target, the echo frequency is approximately the same as the
+transmitted frequency.
+When the target has radial motion relative to the radar, the received echo
+experiences a Doppler frequency shift.
+Therefore, continuous-wave radar mainly uses the frequency shift of the echo
+to sense the radial velocity of the target.
+The basic concept is illustrated in Fig.~\ref{fig:cw_radar_concept}.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{figures/chapter1/fig_cw_radar.png}
+    \caption{Concept of continuous-wave radar.}
+    \label{fig:cw_radar_concept}
+\end{figure}
+
+As introduced earlier, for a monostatic radar, the Doppler frequency shift is
+related to the radial velocity by
+\[
+    f_D=\frac{2v}{\lambda},
+    \qquad
+    v=\frac{\lambda f_D}{2}.
+\]
+Here, \(\lambda\) denotes the carrier wavelength.
+This relationship indicates that, in continuous-wave radar, the target velocity
+information is mainly represented by the frequency shift of the echo relative
+to the transmitted signal.
+
+Continuous-wave radar has a relatively simple structure and is suitable for
+velocity sensing.
+However, a purely continuous single-frequency signal does not provide an
+explicit time marker, and therefore it is generally difficult to directly
+obtain target range information.
+In other words, continuous-wave radar can naturally capture the frequency
+change caused by target motion, but its ranging capability is limited.
+To obtain range information within a continuous-wave framework, the transmitted
+frequency can be varied with time so that the propagation delay is converted
+into a measurable frequency difference.
+This leads to the basic idea of frequency-modulated continuous-wave radar.
+
+\runinhead{Frequency-modulated continuous-wave radar.}
+Frequency-modulated continuous-wave radar can be regarded as an extension of
+continuous-wave radar.
+Unlike a purely continuous-wave radar that transmits a signal with a fixed
+frequency, an FMCW radar transmits a continuous signal whose frequency varies
+with time.
+For a linear frequency-modulated chirp, the instantaneous frequency can be
+written as
+\[
+    f(t)=f_0+St,
+\]
+where \(f(t)\) denotes the instantaneous frequency at time \(t\), \(f_0\)
+denotes the starting frequency, and \(S\) denotes the chirp slope, which
+describes the rate of frequency variation over time.
+If the target echo has a propagation delay \(\tau\) relative to the local
+transmitted signal, the frequency difference obtained after mixing is denoted
+by \(f_b\), which is commonly referred to as the beat frequency.
+
+To illustrate the frequency structure of an FMCW chirp, a simplified
+\(77\,\mathrm{GHz}\) automotive millimeter-wave radar example is considered.
+In this example, the starting frequency is \(77\,\mathrm{GHz}\), the sweep
+bandwidth is \(0.5\,\mathrm{GHz}\), the duration of each chirp is
+\(40\,\mu\mathrm{s}\), and several up-chirps are transmitted consecutively.
+Figure~\ref{fig:fmcw_chirp_sequence} shows the instantaneous frequency of the
+chirp sequence as a function of time.
+Each chirp has an approximately linear frequency increase within its duration,
+and multiple chirps together form a repeated frequency-modulated structure.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{figures/chapter1/fig_fmcw_chirp_sequence.png}
+    \caption{Illustration of an FMCW chirp sequence in the \(77\,\mathrm{GHz}\) band.}
+    \label{fig:fmcw_chirp_sequence}
+\end{figure}
+
+The corresponding simulation script is listed in the Companion Code section.
+
+
+For a linear frequency-modulated signal, the propagation delay \(\tau\) causes
+a difference between the instantaneous frequency of the delayed echo and that
+of the current local transmitted signal.
+When the Doppler effect is ignored or when the target velocity is relatively
+low, the beat frequency approximately satisfies
+\[
+    f_b \approx S\tau.
+\]
+Combining this relationship with the delay--range relation
+\[
+    R=\frac{c\tau}{2},
+\]
+the target range can be approximated as
+\[
+    R\approx \frac{c f_b}{2S}.
+\]
+
+This relationship indicates that an important idea of FMCW radar is to map the
+propagation delay of the target echo into a measurable frequency difference.
+For a fixed chirp slope \(S\), a larger target range leads to a larger
+propagation delay and therefore a larger beat frequency.
+As a result, the receiver can estimate the dominant frequency component in the
+beat signal through spectral analysis and then obtain the target range.
+
+To further illustrate the formation of the beat frequency, the simulation
+considers a target at a range of \(60\,\mathrm{m}\).
+Under the above chirp parameters, the round-trip propagation delay is
+approximately \(0.4\,\mu\mathrm{s}\), and the corresponding beat frequency is
+approximately \(5\,\mathrm{MHz}\).
+Figure~\ref{fig:fmcw_beat_frequency} shows the frequency offset between the
+local transmitted chirp and the delayed echo, together with the low-frequency
+beat signal obtained after mixing.
+This example focuses on the beat frequency induced by the target range, and
+the Doppler effect is not considered.
+
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=0.82\textwidth]{figures/chapter1/fig_fmcw_beat_frequency.png}
+    \caption{Illustration of beat frequency formation in FMCW radar.}
+    \label{fig:fmcw_beat_frequency}
+\end{figure}
+
+The corresponding simulation script is listed in the Companion Code section.
+
+
+When the target has significant radial motion, the Doppler frequency shift also
+affects the beat frequency.
+Therefore, the beat frequency in a single chirp may contain both range and
+velocity information.
+In practical FMCW radar systems, multiple chirps are usually transmitted
+consecutively.
+The fast-time samples within a chirp are mainly used for range processing,
+whereas the phase variation or frequency variation across multiple chirps in
+slow time can be further used for Doppler and velocity estimation.
+
+```tex
+\topichead{Comparison Between Digital Communication and Radar Sensing}
+
+\runinhead{Common characteristics.}
+Although digital communication and radar sensing are designed for different
+tasks, they are both built upon wireless electromagnetic propagation and signal
+processing.
+In both systems, a designed signal is transmitted, propagates through the
+environment, is observed at the receiver, and is then processed to extract the
+required information.
+From a system perspective, both communication and radar sensing involve a
+transmitter, a propagation environment, a receiver, and signal processing
+modules.
+From a physical propagation perspective, both are affected by path loss,
+multipath propagation, noise, interference, synchronization errors, and
+hardware nonidealities.
+Therefore, digital communication and radar sensing are not completely separate
+systems.
+They share common foundations in electromagnetic propagation, hardware
+architecture, and signal processing methods.
+
+\runinhead{Fundamental differences.}
+The fundamental difference between the two systems first lies in their
+objectives.
+The main goal of digital communication is to reliably deliver information bits,
+symbols, or messages to the receiver.
+Therefore, the receiver focuses on recovering the transmitted information as
+accurately as possible in the presence of channel effects, noise, and
+interference.
+In contrast, the main goal of radar sensing is to extract environmental
+information from target echoes or environmental scattering signals.
+This includes detecting whether a target is present and estimating target
+parameters such as range, velocity, angle, and reflection properties.
+In this sense, communication emphasizes correct information reception, whereas
+sensing emphasizes reliable detection and accurate parameter estimation.
+
+Communication and radar sensing also interpret the propagation environment
+differently.
+In communication systems, the wireless channel is usually treated as a medium
+for information transmission.
+It introduces fading, phase rotation, delay spread, and interference, and the
+receiver therefore needs to perform channel estimation, equalization,
+demodulation, and decoding to compensate for the signal distortion caused by
+the channel.
+In radar sensing, however, the propagation environment and the target response
+are themselves the quantities to be inferred.
+The propagation delay, Doppler frequency shift, array phase difference, and
+reflection strength contained in the echo are not merely distortions to be
+removed; instead, they are key features that carry target-state information.
+
+There is also a clear difference in propagation path and path loss.
+A typical communication link involves one-way propagation from the transmitter
+to the receiver, and the received power is mainly affected by one-way path
+loss.
+In a monostatic radar system, the signal first propagates from the radar to the
+target and is then reflected or scattered back to the radar.
+The echo therefore experiences a two-way propagation process.
+Compared with a communication link, a radar echo not only travels over a longer
+propagation path, but is also affected by the radar cross section and
+reflection properties of the target.
+As a result, the received echo power usually decays more rapidly with distance.
+This is one of the important reasons why radar systems require special
+considerations in transmit power, antenna gain, waveform design, and receiver
+processing.
+
+\runinhead{Basis for integration.}
+Despite these differences, digital communication and radar sensing still have
+a strong basis for integration.
+First, they use the same electromagnetic propagation medium and occupy limited
+spectrum resources.
+Second, modern wireless communication systems already rely on large-scale
+antenna arrays, wideband radio-frequency front ends, beamforming capability,
+and high-speed digital signal processing.
+These hardware capabilities can also support environmental sensing.
+Third, communication and sensing share many signal processing tools, such as
+synchronization, correlation-based detection, frequency-domain analysis, array
+processing, interference suppression, detection theory, and estimation theory.
+Therefore, a communication system is not only an information transmission
+platform, but can also potentially serve as an environmental sensing platform.
+
+\runinhead{Challenges of integration.}
+Having a common basis does not mean that communication and sensing can be
+simply combined.
+Their performance metrics are different.
+Communication systems usually focus on bit error rate, throughput, spectral
+efficiency, latency, and reliability, whereas sensing systems focus on
+detection probability, false alarm probability, range resolution, velocity
+resolution, angle resolution, parameter estimation accuracy, and sensing
+coverage.
+Their optimal waveforms are also not necessarily the same.
+Communication waveforms often need to support high spectral efficiency,
+multi-user access, and low implementation complexity, while radar sensing
+waveforms emphasize range-velocity resolution, correlation properties, sidelobe
+levels, and target-parameter estimability.
+Therefore, a waveform that is optimal for communication may not be optimal for
+sensing, and a sensing-friendly waveform may reduce communication efficiency or
+increase receiver complexity.
+
+Differences in receiver processing and engineering constraints further
+increase the difficulty of integration.
+A communication receiver mainly focuses on synchronization, channel estimation,
+equalization, symbol detection, and decoding, whereas a sensing receiver
+focuses more on echo enhancement, target detection, spectral analysis,
+parameter estimation, and tracking.
+In addition, an ISAC system must simultaneously deal with synchronization
+accuracy, dynamic range, self-interference suppression, sensing resolution,
+mismatch between communication coverage and sensing coverage, multi-user
+interference, and real-time resource scheduling.
+Therefore, ISAC is not a simple superposition of a communication system and a
+radar system.
+Instead, it requires joint design across waveform design, hardware
+architecture, resource allocation, and receiver processing.
+
+Overall, digital communication and radar sensing share common physical and
+signal processing foundations, but they also differ fundamentally in task
+objectives, propagation paths, performance metrics, and receiver processing
+flows.
+These commonalities make integration possible, while these differences
+determine the complexity of ISAC system design.
+Understanding the similarities and differences between communication and
+sensing provides a basis for the subsequent discussion of ISAC system models,
+waveform design, resource allocation, and communication--sensing performance
+tradeoffs.
+```

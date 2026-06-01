@@ -1,25 +1,250 @@
-% chapters/chapter1/sec3.tex
+ 
+\section{6G Requirements, Global Standardization Positioning, and Requirement Analysis of Typical Application Scenarios}
 
-\section{ISAC 演进的三阶段逻辑}
-\label{sec:ch1-isac-evolution}
+\subsection{Why ISAC Is Included in the 6G Capability Framework}
 
-% TODO: 本节由 XXX 负责撰写。
-% 写作目标：
-% 1. 梳理 ISAC 从频谱共存到双功能平台，再到 6G 内生通感一体化的发展逻辑；
-% 2. 说明不同阶段的主要特征、典型问题和技术边界；
-% 3. 为后续章节中的 ISAC 系统建模与关键技术讨论做铺垫。
+From 3G to 5G, the evolution of mobile communication systems was mainly driven by the improvement of communication performance.
+3G enabled the development of mobile data services.
+4G made mobile broadband and all-IP networking more mature.
+5G further enhanced the network capabilities for enhanced mobile broadband, ultra-reliable low-latency communication, and massive machine-type communication.
+As a result, key performance indicators such as data rate, transmission latency, connection density, reliability, and spectrum efficiency have been significantly improved.
+These communication capabilities remain important foundations for 6G networks.
+However, they are no longer sufficient to fully describe the mobile communication vision for 2030 and beyond.
 
-\subsection{第一阶段：频谱共存与交叉应用阶段}
-\label{subsec:ch1-isac-evolution-stage1}
+In Recommendation ITU-R M.2160-0, the ITU-R describes the framework and overall objectives for the development of IMT-2030, including usage scenarios and capabilities for 2030 and beyond~\cite{ITU_M2160_2023}.
+Future mobile communication systems are not expected to merely continue the pursuit of higher peak data rates, larger system capacity, and higher connection density.
+Instead, 6G is expected to support the coordinated development of multiple network capabilities.
+In addition to the enhancement of conventional communication capabilities, 6G also needs to support broader system objectives, such as ubiquitous connectivity, artificial intelligence, sensing capability, sustainability, security, and resilience.
+This indicates that 6G should not be understood simply as a higher-rate network.
+Rather, it should be regarded as a next-generation network system that supports multi-scenario, multi-functional, and multi-service coordination.
 
-正文待补充。
+This transition is closely related to the changing role of future wireless networks.
+As wireless networks are increasingly involved in transportation, industry, low-altitude airspace, urban governance, and digital twin applications, their tasks are no longer limited to bit transmission.
+Many emerging services require the network to obtain information directly related to the physical world, such as target location, motion state, spatial structure, environmental variation, and service control state.
+In other words, future networks need not only to ensure reliable information transmission.
+They also need to acquire real-time awareness of the physical environment and use such awareness to support network optimization, service decision-making, and closed-loop control.
 
-\subsection{第二阶段：双功能平台与联合信号设计阶段}
-\label{subsec:ch1-isac-evolution-stage2}
+Traditional communication networks can evaluate link quality through channel state information, received power, signal-to-noise ratio, bit error rate, and other communication-oriented metrics.
+However, these metrics mainly serve the purpose of data transmission.
+They can indicate whether a link becomes better or worse, but they do not necessarily reveal the physical reasons behind the link variation.
+For example, a decrease in link quality may be caused by blockage, stronger multipath propagation, target motion, device posture variation, or changes in the surrounding environment.
+In conventional communication systems, these factors are usually treated as uncertainties to be compensated for.
+In 6G networks, however, they may also become important sources of information for understanding the environment and target states.
 
-正文待补充。
+In this context, the role of ISAC becomes clear.
+During wireless propagation, radio signals interact with the surrounding environment through reflection, scattering, diffraction, and Doppler effects.
+These propagation phenomena affect communication links.
+At the same time, they also carry sensing information related to target range, velocity, angle, and environmental structure.
+Conventional communication systems mainly focus on overcoming these propagation effects in order to reliably recover the transmitted information.
+ISAC further exploits these effects, enabling the same wireless infrastructure to acquire environmental information while transmitting data.
+Therefore, ISAC should not be regarded as simply adding a radar module beside a communication system.
+Instead, it represents a new way of understanding the relationship among wireless signals, communication links, and the physical environment.
 
-\subsection{第三阶段：6G 内生通感一体化阶段}
-\label{subsec:ch1-isac-evolution-stage3}
+From the perspective of 6G network capabilities, the role of ISAC is not limited to a single performance indicator.
+By sharing spectrum, signals, antennas, and radio-frequency platforms, ISAC can improve resource utilization efficiency.
+By providing real-time environmental information for scenarios such as vehicle-road cooperation, low-altitude networks, and industrial control, it can support low-latency closed-loop services.
+It can also provide environmental context for beam management, mobility prediction, resource scheduling, and edge intelligence.
+Furthermore, sensing results themselves may become a new type of network service, providing basic data for localization, tracking, monitoring, imaging, and digital twin construction.
 
-正文待补充。
+Therefore, ISAC is included in the 6G capability framework not merely because it is a new physical-layer function, but because it reflects the expansion of future network capabilities.
+A 6G network is not only a higher-rate communication network.
+It is also a multi-functional network that can connect, sense, and understand the physical world.
+ISAC is one of the key technical paths supporting this transition.
+It enables wireless networks to evolve from conventional information transmission infrastructure toward infrastructure for physical-world sensing and intelligent services.
+ 
+\subsection{Positioning of ISAC in Global Standardization}
+
+The need for ISAC standardization comes from the fact that communication and sensing must operate within the same wireless system.
+These two functions may share spectrum, waveforms, reference signals, antenna arrays, radio-frequency chains, baseband processing resources, and network infrastructure.
+Without common definitions of signals, procedures, resource configuration, and measurement interfaces, different devices and network nodes cannot reliably cooperate.
+Therefore, standardization is an important basis for moving ISAC from standalone techniques to practical network capabilities.
+
+The purpose of ISAC standardization is not to force all systems to adopt the same algorithm.
+Instead, it is to define the basic rules required for system interoperability.
+For example, standards need to clarify which communication signals or reference signals can be used for sensing.
+They also need to define how sensing tasks share time, frequency, spatial, and power resources with communication services.
+In addition, sensing measurements must be represented and reported in a form that can be understood by the network.
+The network also needs mechanisms to fuse sensing information from different nodes.
+These issues determine whether ISAC can be deployed in networks with multiple devices, multiple nodes, and multiple scenarios.
+
+Several standardization activities provide useful references for understanding the current positioning of ISAC.
+Recommendation ITU-R M.2160-0 defines the framework and overall objectives for the future development of IMT-2030 and beyond~\cite{ITU_M2160_2023}.
+It mainly provides a high-level 6G capability framework.
+It does not define a specific ISAC air-interface protocol.
+
+The 3GPP documents are more closely related to ISAC requirements and service definitions in cellular mobile communication systems.
+For example, 3GPP TR 22.837 is a study report on Integrated Sensing and Communication~\cite{3GPP_TR_22837}.
+It studies ISAC scenarios, requirements, and system capabilities in cellular systems.
+Furthermore, 3GPP TS 22.137 is a technical specification entitled ``Integrated Sensing and Communication''~\cite{3GPP_TS_22137}.
+It focuses on functional requirements and performance requirements for 5G wireless sensing services.
+These documents indicate that cellular ISAC standardization is moving from conceptual discussion toward service requirement and system capability definition.
+
+IEEE 802.11bf focuses on WLAN sensing.
+It studies how IEEE 802.11 devices and Wi-Fi signal features can be used to support sensing functions~\cite{IEEE_80211bf}.
+It is not part of the cellular 6G ISAC standardization framework.
+Nevertheless, it provides a representative example of how sensing capability can be introduced into an existing wireless communication standard.
+This direction shows that sensing is gradually extending from dedicated radar systems to standardized wireless communication systems.
+
+This chapter only provides a high-level positioning discussion of ISAC standardization.
+Detailed standard clauses are not discussed here.
+Reference signal design, sensing procedures, measurement reporting, channel models, network architecture, and test specifications will be revisited in later chapters when needed.
+ 
+
+\subsection{Classification Framework of Typical Application Scenarios}
+
+ISAC application scenarios exhibit significant differences in their underlying requirements.
+Different scenarios may involve different communication objects, sensing objects, spatial scales, mobility levels, network forms, and service objectives.
+Therefore, ISAC applications should not be described using a single uniform scenario model.
+
+The purpose of scenario classification is not simply to list application names.
+Rather, it is to identify the communication requirements, sensing requirements, and system constraints behind different applications.
+This classification provides a basis for understanding why different ISAC scenarios may require different waveform designs, beamforming strategies, resource allocation methods, and network architectures.
+
+\topichead{Classification by Mobility and Spatial Scale}
+
+ISAC scenarios can first be understood from the perspectives of mobility and spatial scale.
+For static or low-mobility scenarios, such as indoor monitoring, fixed equipment status sensing, and some industrial applications, the system usually pays more attention to stable observation, long-term monitoring, and deployment cost.
+For high-mobility scenarios, such as vehicle-road cooperation, unmanned aerial vehicle networks, and high-speed mobile terminals, the system needs to place more emphasis on Doppler effects, target tracking, beam maintenance, latency constraints, and link reliability.
+
+Spatial scale also has a direct impact on ISAC system design.
+Local-area scenarios usually emphasize short-range sensing, high sensing accuracy, and low-cost deployment.
+Cellular and wide-area scenarios pay more attention to coverage, cooperative sensing, and resource management.
+Global or full-domain scenarios further involve the cooperation among heterogeneous networks in space, air, ground, and sea domains.
+
+\topichead{Classification by Network Form}
+
+ISAC scenarios can also be classified according to the network form.
+The simplest form is single-node ISAC, where one base station, user equipment, or access point performs both communication and sensing functions.
+This structure is relatively simple to implement.
+It is suitable for local detection, localization, or environmental sensing.
+
+In more complex scenarios, a single node is often limited by its coverage range, observation angle, and blockage conditions.
+Multi-node, cellular, cell-free, or distributed ISAC can exploit multiple base stations, roadside units, user terminals, unmanned aerial vehicles, or edge nodes for cooperative sensing.
+This makes it possible to obtain a larger sensing coverage and more observation perspectives.
+However, these architectures also introduce new system issues, such as synchronization, fronthaul or backhaul transmission, information fusion, and resource coordination.
+
+\topichead{Classification by Service Objective}
+
+Different ISAC scenarios can further be classified according to their service objectives.
+Some applications focus on environmental perception or regional state acquisition, such as area imaging, environmental monitoring, and crowd sensing.
+Some applications focus on target detection, such as intruder detection, drone detection, and fall detection.
+Some applications focus on localization and tracking, such as high-precision localization, vehicle tracking, and drone trajectory management.
+Other applications emphasize closed-loop control or resource optimization, such as sensing-assisted beam management, sensing-assisted resource allocation, and robot coordination in smart manufacturing.
+Different service objectives directly affect the system requirements on range resolution, velocity resolution, angular resolution, detection probability, latency, reliability, and data rate.
+
+Therefore, scenario classification provides a bridge between application requirements and technical design.
+Mobility determines the requirements on Doppler robustness and tracking capability.
+Spatial scale affects coverage strategy and cooperative architecture.
+Network form determines how sensing information is acquired and fused.
+Service objective determines the priority between communication and sensing metrics.
+
+Based on this classification framework, the following part will further analyze the underlying requirements of several typical application scenarios.
+It will also discuss how these requirements influence the design of ISAC systems.
+
+\subsection{Requirement Analysis of Typical Application Scenarios}
+
+The differences among typical application scenarios are essentially reflected in their communication requirements, sensing requirements, and system constraints.
+The previous part introduced a classification framework based on mobility, spatial scale, network form, and service objective.
+This part further discusses several representative network-level application scenarios.
+The purpose is to explain why these scenarios require ISAC and how their requirements may influence system design.
+
+\topichead{Vehicle-Road Cooperation and Intelligent Transportation}
+
+In vehicle-road cooperation and intelligent transportation, communication and sensing are strongly coupled.
+Vehicles, roadside units, base stations, and edge nodes need to exchange road information, vehicle states, control messages, and safety warnings with low latency and high reliability.
+From the sensing perspective, the system needs to detect road users, obstacles, pedestrians, non-line-of-sight targets, and changes in the traffic environment.
+Therefore, target detection, range estimation, velocity estimation, angle estimation, and trajectory tracking are all important sensing functions in this scenario.
+
+The main challenges come from high mobility, complex multipath propagation, and blockage.
+The sensing capability of a single vehicle is usually limited by line-of-sight conditions, sensor field of view, and occlusion.
+As a result, it may be difficult for an individual vehicle to obtain complete information about the surrounding traffic environment.
+With ISAC, roadside units, base stations, and vehicles can acquire environmental information during communication.
+The sensed information can then be fused at edge nodes to support blockage compensation, trajectory prediction, and traffic situation awareness.
+Therefore, vehicle-road cooperation requires not only single-node sensing accuracy, but also network-level cooperative sensing, low-latency processing, and robust system design.
+
+\topichead{Low-Altitude Economy and UAV Scenarios}
+
+Low-altitude economy and UAV scenarios usually involve UAV control, task data transmission, airspace monitoring, and multi-UAV cooperation.
+The communication link needs to provide reliable and continuous control connectivity.
+It also needs to support the transmission of images, videos, mapping data, or mission-related data.
+For tasks such as cooperative UAV operation, inspection, logistics, emergency communication, and low-altitude traffic management, the communication system must also adapt to dynamic topology and air-ground cooperation.
+
+From the sensing perspective, the system needs to continuously obtain UAV position, velocity, trajectory, surrounding obstacles, and airspace states.
+Compared with conventional terrestrial cellular scenarios, low-altitude networks have clear three-dimensional spatial characteristics.
+The mobility of aerial nodes is high, and both link conditions and network topology may change rapidly.
+The original coverage direction, beam configuration, and interference management of terrestrial base stations may not be sufficient for low-altitude targets.
+Therefore, low-altitude ISAC needs to consider wide-area coverage, continuous tracking, air-ground cooperative sensing, and lightweight deployment.
+For high-speed or dense UAV scenarios, sensing results can also support beam prediction, trajectory management, and collision warning, thereby improving communication reliability and flight safety.
+
+\topichead{Industrial Internet and Smart Manufacturing}
+
+Industrial Internet and smart manufacturing emphasize highly reliable communication, deterministic transmission, and real-time control.
+Robots, automated guided vehicles, sensors, controllers, and production equipment in factories need to work cooperatively under strict latency constraints.
+Therefore, communication requirements in this scenario usually include low latency, high reliability, stable networking, and massive device access.
+Unlike ordinary mobile communication services, communication failures in industrial scenarios may directly affect production processes, equipment safety, or control accuracy.
+
+From the sensing perspective, the system needs to obtain equipment states, target positions, posture variations, process anomalies, defect information, and environmental states.
+For example, robot coordination, equipment condition monitoring, defect detection, warehouse management, and production line optimization all require continuous perception of the physical environment and equipment behavior.
+Industrial environments usually contain many metallic objects, complex blockages, and strong reflections.
+As a result, multipath propagation and interference are often significant.
+In this scenario, ISAC can integrate communication, localization, condition monitoring, and process sensing to provide real-time information for industrial control loops.
+Accordingly, industrial ISAC places strong emphasis on high-precision sensing, deterministic latency, stable coverage, and fast edge processing.
+
+\topichead{Public Safety and Smart City Scenarios}
+
+Public safety and smart city scenarios involve wide coverage, diverse target types, and complex service forms.
+Communication systems need to support wide-area connectivity, emergency coordination, massive terminal access, and information sharing across different service entities.
+Sensing systems need to support regional situation awareness, target monitoring, anomaly detection, traffic flow monitoring, human activity sensing, and event warning.
+In these scenarios, ISAC does not always pursue extremely high accuracy for a single target.
+Instead, it often focuses on large-area, continuous, and multi-node sensing capability.
+
+The main challenges come from the complexity of urban environments.
+Buildings, traffic flows, human activities, and unexpected events may all affect system operation.
+A single node is usually unable to cover a large region or accurately interpret complex events from one observation perspective.
+By reusing existing communication infrastructure, ISAC can organize base stations, roadside units, terminals, and edge nodes into a distributed sensing network.
+This enables wider-area situation awareness and event detection.
+For public safety and smart city applications, the key requirements of ISAC include multi-node cooperation, wide-area monitoring, reliable information fusion, and service-level coordination.
+
+\topichead{Space-Air-Ground-Sea Integrated Scenarios}
+
+Space-air-ground-sea integrated scenarios involve a wider and more heterogeneous network environment.
+Typical nodes may include satellites, UAVs, aerial platforms, terrestrial base stations, maritime platforms, and ships.
+From the communication perspective, the system needs to support cross-domain connectivity, long-distance coverage, heterogeneous network cooperation, and emergency communication.
+From the sensing perspective, it needs to support wide-area remote sensing, target monitoring, maritime situation awareness, airspace monitoring, disaster assessment, and environmental observation.
+
+The main difficulties in this scenario include complex propagation environments, long link distances, large delay variations, different mobility patterns of heterogeneous nodes, and difficult synchronization and cooperation among different platforms.
+Compared with terrestrial cellular networks, space-air-ground-sea integrated ISAC relies more heavily on distributed cooperation and cross-domain information fusion.
+Satellites, UAVs, ground stations, and maritime nodes can collect sensing information from different heights, angles, and coverage ranges.
+Communication links can then be used to exchange and fuse these data.
+Therefore, ISAC in this scenario needs to support long-distance sensing, wide-area coverage, heterogeneous network cooperation, synchronization mechanisms, and full-domain integration architecture.
+
+Overall, the above scenarios are different in system scale, mobility, network form, and service objective.
+However, they all reflect a common trend.
+Future networks need both information transmission capability and physical-environment sensing capability.
+Different scenarios change the priority between communication and sensing.
+They also influence the design of waveforms, beams, resource allocation, edge processing, and network architecture.
+Therefore, ISAC system design should not only optimize a single communication metric or a single sensing metric.
+Instead, it should start from the underlying requirements of specific scenarios and balance communication performance, sensing performance, deployment cost, and system complexity.
+
+\subsection{Mapping from Scenario Requirements to Technical Design}
+
+The previous classification of typical scenarios and the analysis of their requirement characteristics show that the differences among ISAC applications are not only reflected in the application scenarios themselves.
+More fundamentally, they arise from different communication requirements, sensing requirements, and system constraints.
+Scenario requirements can be regarded as an intermediate link between the 6G vision and ISAC technical design.
+On the one hand, they make the general 6G requirements on connectivity, sensing, intelligence, and service capabilities more concrete.
+On the other hand, they provide design guidance for waveform design, beam design, resource allocation, and network architecture.
+
+Specifically, scenario requirements first affect the performance priorities of the system.
+Some scenarios place more emphasis on communication reliability and low latency.
+Some scenarios place more emphasis on sensing accuracy and detection capability.
+Other scenarios focus on whether communication and sensing results can jointly support closed-loop control.
+Scenario requirements also affect system architecture choices.
+For example, the system may adopt single-node sensing or multi-node cooperation.
+It may use a unified waveform or separated resources.
+Sensing results may be processed at the edge side or fused at the central side.
+Furthermore, these choices will be reflected in specific technical modules, including ISAC waveform design, MIMO and beamforming, communication-sensing resource allocation, joint receiver processing, network cooperation, and standardization interfaces.
+
+Therefore, ISAC system design should not start only from a single communication metric or a single sensing metric.
+Instead, it should start from the underlying requirements of specific scenarios.
+A reasonable trade-off needs to be established among communication performance, sensing performance, deployment cost, and system complexity.
+This requirement-to-design mapping also forms the basic logic for the subsequent technical chapters.
