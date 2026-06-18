@@ -1,0 +1,76 @@
+% chapters/chapter2/exercises/sec1_exercises.tex
+
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\begin{enumerate}[label=\textbf{Exercise 2.\arabic*.}, leftmargin=*]
+    \item \textbf{Link Budget, SNR, and Capacity.}
+
+    Consider a wireless communication link with carrier frequency
+    \(f_c=3\,\mathrm{GHz}\), propagation distance \(d=1\,\mathrm{km}\),
+    transmit power \(P_t=0\,\mathrm{dBm}\), system bandwidth
+    \(B=10\,\mathrm{MHz}\), and noise power spectral density
+    \(N_0=-174\,\mathrm{dBm/Hz}\). Assume free-space propagation and unit
+    antenna gains.
+    Compute the free-space path loss, received power, noise power, SNR, and
+    Shannon capacity.
+
+    \item \textbf{SINR and Throughput.}
+
+    A receiver observes useful signal power \(P_s=-80\,\mathrm{dBm}\),
+    interference power \(P_i=-86\,\mathrm{dBm}\), and noise power
+    \(P_n=-90\,\mathrm{dBm}\). If the nominal transmission rate is
+    \(R=20\,\mathrm{Mbit/s}\) and the block error rate is
+    \(\mathrm{BLER}=0.1\), compute the SINR and the approximate actual
+    throughput.
+
+    \item \textbf{Coherence Time and Coherence Bandwidth.}
+
+    Consider a mobile link with carrier frequency \(f_c=28\,\mathrm{GHz}\),
+    relative velocity \(v=30\,\mathrm{m/s}\), symbol duration
+    \(T_s=20\,\mu\mathrm{s}\), root-mean-square delay spread
+    \(\tau_{\mathrm{rms}}=0.5\,\mu\mathrm{s}\), and signal bandwidth
+    \(B=100\,\mathrm{MHz}\). Using the approximate relationships
+    \(T_c\approx 1/f_D\) and \(B_c\approx 1/\tau_{\mathrm{rms}}\), determine
+    whether the channel is closer to slow or fast fading, and whether it is
+    closer to flat or frequency-selective fading.
+
+    \item \textbf{MIMO Signal Model and Spatial Streams.}
+
+    A MIMO-OFDM system has \(N_t=4\) transmit antennas and \(N_r=2\) receive
+    antennas. On one subcarrier, the channel matrix has
+    \(\operatorname{rank}(\mathbf{H}[k])=2\), and the transmitter sends
+    \(N_s=2\) spatial streams.
+    Give the dimensions of \(\mathbf{H}[k]\), \(\mathbf{W}[k]\),
+    \(\mathbf{s}[k]\), \(\mathbf{x}[k]\), and \(\mathbf{y}[k]\). How many
+    spatial streams can be supported at most on this subcarrier?
+
+    \item \textbf{Radar Range and Velocity Estimation.}
+
+    In a monostatic radar system, the measured round-trip delay is
+    \(\tau=0.8\,\mu\mathrm{s}\). The carrier frequency is
+    \(f_c=77\,\mathrm{GHz}\), and the measured Doppler shift is
+    \(f_D=3\,\mathrm{kHz}\). Compute the target range and the radial velocity.
+
+    \item \textbf{Range and Velocity Resolution.}
+
+    A radar waveform has bandwidth \(B=500\,\mathrm{MHz}\), carrier frequency
+    \(f_c=77\,\mathrm{GHz}\), and coherent observation time
+    \(T_{\mathrm{obs}}=20\,\mathrm{ms}\). Compute the approximate range
+    resolution and velocity resolution.
+
+    \item \textbf{Angle Estimation with a Uniform Linear Array.}
+
+    A uniform linear array has adjacent antenna spacing \(d=\lambda/2\). If
+    the measured phase difference between adjacent antenna elements is
+    \(\Delta\phi=\pi/3\), compute the angle of arrival \(\theta\) relative to
+    the array broadside direction.
+
+    \item \textbf{Neyman--Pearson Detection Threshold.}
+
+    Consider a scalar detection statistic satisfying
+    \(T|H_0\sim\mathcal{N}(0,1)\) and
+    \(T|H_1\sim\mathcal{N}(3,1)\). If the false alarm probability constraint is
+    \(P_{FA}=0.05\), compute the threshold \(\gamma\) and estimate the
+    detection probability \(P_D\).
+\end{enumerate}

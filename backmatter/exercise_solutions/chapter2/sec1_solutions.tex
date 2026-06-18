@@ -1,0 +1,208 @@
+% backmatter/exercise_solutions/chapter2/sec1_solutions.tex
+
+\section*{Chapter 2: Communication and Sensing Fundamentals}
+\addcontentsline{toc}{section}{Chapter 2: Communication and Sensing Fundamentals}
+
+\subsection*{Section 2.1 Exercises}
+
+\begin{enumerate}[label=\textbf{Exercise 2.\arabic*.}, leftmargin=*]
+    \item The wavelength is
+    \[
+        \lambda=\frac{c}{f_c}=\frac{3\times10^8}{3\times10^9}=0.1\,\mathrm{m}.
+    \]
+    The free-space path loss is
+    \[
+        \mathrm{FSPL}_{\mathrm{dB}}
+        =
+        20\log_{10}\left(\frac{4\pi d}{\lambda}\right)
+        =
+        20\log_{10}\left(\frac{4\pi\times1000}{0.1}\right)
+        \approx 102\,\mathrm{dB}.
+    \]
+    With unit antenna gains,
+    \[
+        P_r \approx 0\,\mathrm{dBm}-102\,\mathrm{dB}
+        =
+        -102\,\mathrm{dBm}.
+    \]
+    The noise power is
+    \[
+        P_n=-174+10\log_{10}(10\times10^6)
+        =
+        -104\,\mathrm{dBm}.
+    \]
+    Hence
+    \[
+        \mathrm{SNR}_{\mathrm{dB}}
+        =
+        P_r-P_n
+        \approx 2\,\mathrm{dB}.
+    \]
+    In linear scale, \(\mathrm{SNR}\approx 10^{2/10}\approx1.59\). The
+    capacity is
+    \[
+        C=B\log_2(1+\mathrm{SNR})
+        \approx
+        10^7\log_2(1+1.59)
+        \approx 13.7\,\mathrm{Mbit/s}.
+    \]
+
+    \item Taking \(P_s\) as the reference, the interference power is \(6\) dB
+    below \(P_s\), and the noise power is \(10\) dB below \(P_s\). Therefore,
+    \[
+        \frac{P_i}{P_s}=10^{-6/10}\approx0.251,
+        \qquad
+        \frac{P_n}{P_s}=10^{-10/10}=0.1.
+    \]
+    The SINR is
+    \[
+        \mathrm{SINR}
+        =
+        \frac{P_s}{P_i+P_n}
+        =
+        \frac{1}{0.251+0.1}
+        \approx2.85,
+    \]
+    or
+    \[
+        \mathrm{SINR}_{\mathrm{dB}}\approx10\log_{10}(2.85)\approx4.5\,\mathrm{dB}.
+    \]
+    The approximate throughput is
+    \[
+        R_{\mathrm{throughput}}
+        \approx R(1-\mathrm{BLER})
+        =
+        20(1-0.1)
+        =
+        18\,\mathrm{Mbit/s}.
+    \]
+
+    \item The maximum Doppler shift is
+    \[
+        f_D=\frac{v f_c}{c}
+        =
+        \frac{30\times28\times10^9}{3\times10^8}
+        =
+        2800\,\mathrm{Hz}.
+    \]
+    Thus,
+    \[
+        T_c\approx\frac{1}{f_D}\approx3.57\times10^{-4}\,\mathrm{s}
+        =
+        357\,\mu\mathrm{s}.
+    \]
+    Since \(T_s=20\,\mu\mathrm{s}\ll T_c\), the channel is closer to slow
+    fading. The coherence bandwidth is
+    \[
+        B_c\approx\frac{1}{\tau_{\mathrm{rms}}}
+        =
+        \frac{1}{0.5\times10^{-6}}
+        =
+        2\,\mathrm{MHz}.
+    \]
+    Since \(B=100\,\mathrm{MHz}>B_c\), the channel is closer to
+    frequency-selective fading.
+
+    \item The MIMO channel matrix has dimension
+    \[
+        \mathbf{H}[k]\in\mathbb{C}^{N_r\times N_t}
+        =
+        \mathbb{C}^{2\times4}.
+    \]
+    Since \(N_s=2\),
+    \[
+        \mathbf{s}[k]\in\mathbb{C}^{2\times1},
+        \quad
+        \mathbf{W}[k]\in\mathbb{C}^{4\times2},
+        \quad
+        \mathbf{x}[k]\in\mathbb{C}^{4\times1},
+        \quad
+        \mathbf{y}[k]\in\mathbb{C}^{2\times1}.
+    \]
+    The maximum number of supportable spatial streams is limited by
+    \[
+        N_s\leq\operatorname{rank}(\mathbf{H}[k])=2.
+    \]
+    Therefore, at most two spatial streams can be supported on this subcarrier.
+
+    \item The range is obtained from the round-trip delay:
+    \[
+        R=\frac{c\tau}{2}
+        =
+        \frac{3\times10^8\times0.8\times10^{-6}}{2}
+        =
+        120\,\mathrm{m}.
+    \]
+    The wavelength is
+    \[
+        \lambda=\frac{c}{f_c}
+        =
+        \frac{3\times10^8}{77\times10^9}
+        \approx3.90\times10^{-3}\,\mathrm{m}.
+    \]
+    The radial velocity is
+    \[
+        v=\frac{\lambda f_D}{2}
+        =
+        \frac{3.90\times10^{-3}\times3000}{2}
+        \approx5.84\,\mathrm{m/s}.
+    \]
+
+    \item The range resolution is
+    \[
+        \Delta R=\frac{c}{2B}
+        =
+        \frac{3\times10^8}{2\times500\times10^6}
+        =
+        0.3\,\mathrm{m}.
+    \]
+    With \(f_c=77\,\mathrm{GHz}\),
+    \[
+        \lambda=\frac{c}{f_c}
+        =
+        \frac{3\times10^8}{77\times10^9}
+        \approx3.90\,\mathrm{mm}.
+    \]
+    The velocity resolution is
+    \[
+        \Delta v\approx\frac{\lambda}{2T_{\mathrm{obs}}}
+        =
+        \frac{3.90\times10^{-3}}{2\times20\times10^{-3}}
+        \approx0.097\,\mathrm{m/s}.
+    \]
+
+    \item The phase difference of adjacent array elements is
+    \[
+        \Delta\phi=\frac{2\pi d\sin\theta}{\lambda}.
+    \]
+    Since \(d=\lambda/2\),
+    \[
+        \Delta\phi=\pi\sin\theta.
+    \]
+    With \(\Delta\phi=\pi/3\),
+    \[
+        \sin\theta=\frac{1}{3},
+        \qquad
+        \theta=\sin^{-1}\left(\frac{1}{3}\right)\approx19.5^\circ.
+    \]
+
+    \item The Neyman--Pearson threshold satisfies
+    \[
+        P(T>\gamma|H_0)=0.05.
+    \]
+    Since \(T|H_0\sim\mathcal{N}(0,1)\),
+    \[
+        \gamma=\Phi^{-1}(0.95)\approx1.645.
+    \]
+    Under \(H_1\), \(T\sim\mathcal{N}(3,1)\). Therefore,
+    \[
+        P_D=P(T>\gamma|H_1)
+        =
+        1-\Phi(\gamma-3)
+        =
+        1-\Phi(-1.355)
+        =
+        \Phi(1.355)
+        \approx0.91.
+    \]
+\end{enumerate}

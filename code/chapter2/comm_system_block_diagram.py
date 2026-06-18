@@ -16,7 +16,7 @@ BOX_LINEWIDTH = 1.8
 ARROW_LINEWIDTH = 1.6
 
 SAVE_FIGURE = True
-OUTPUT_PATH = "figures/chapter1/fig_comm_system_block_diagram.png"
+OUTPUT_PATH = "figures/chapter2/fig_comm_system_block_diagram.png"
 
 
 # ============================================================

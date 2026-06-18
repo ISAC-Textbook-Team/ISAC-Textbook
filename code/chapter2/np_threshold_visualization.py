@@ -38,7 +38,7 @@ P_FA_MAX = 0.30      # Maximum slider value
 NUM_POINTS = 1200
 
 SAVE_STATIC_FIGURE = True
-STATIC_OUTPUT_PATH = "fig_np_threshold_static.png"
+STATIC_OUTPUT_PATH = "figures/chapter2/fig_np_estimation.png"
 
 
 # ============================================================

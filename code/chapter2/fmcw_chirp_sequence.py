@@ -16,7 +16,7 @@ POINTS_PER_CHIRP = 400           # number of sampled points per chirp
 FIG_WIDTH = 8
 FIG_HEIGHT = 4.8
 SAVE_FIGURE = False
-OUTPUT_PATH = "fig_fmcw_chirp_sequence.png"
+OUTPUT_PATH = "figures/chapter2/fig_fmcw_chirp_sequence.png"
 
 
 # ============================================================

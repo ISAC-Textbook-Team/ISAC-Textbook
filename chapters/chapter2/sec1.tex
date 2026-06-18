@@ -1,200 +1,182 @@
-% chapters/chapter1/sec4.tex
+% chapters/chapter2/sec1.tex
 
-\section[Prerequisite Knowledge: Digital Communication and Radar Sensing]{Review of Prerequisite Knowledge: Digital Communication and Radar Sensing}
-\label{sec:ch1-prerequisites}
+\section{Purpose of This Chapter}
+\label{sec:ch2-prerequisites-purpose}
  
 
-\subsection{Purpose of This Section}
-\label{subsec:ch1-prerequisites-purpose}
- 
-
-This section does not aim to provide a complete treatment of digital
-communication or radar sensing theory.
-Instead, it reviews the essential concepts needed for the subsequent discussion
-of ISAC system models and joint design.
-By briefly summarizing the core principles of digital communication and radar
-sensing, this section helps readers build a basic cross-disciplinary framework.
-It also clarifies the connections and differences between communication and
-sensing in terms of signal propagation, receiver processing, performance
-metrics, and system objectives.
-These concepts provide the necessary background for later discussions on ISAC
-waveform design, resource allocation, and communication--sensing performance
-tradeoffs.
- 
-
-
- 
-
-\subsection{Core Principles of Digital Communication}
-\label{subsec:ch1-digital-comm}
-
-
-\topichead{Basic Link of a Digital Communication System}
-
-In a digital communication system,
-information transmission is not simply the process of sending a signal from the transmitter to the receiver.
-Instead,
-it is a systematic process centered on the reliable recovery of information bits.
-The transmitter first converts the information to be transmitted into an electromagnetic signal
-that is suitable for propagation over the wireless channel.
-The receiver then needs to recover the original information bits from the received signal
-as accurately as possible under unfavorable conditions such as noise,
-fading,
-multipath propagation,
-and interference.
-Therefore,
-from the communication perspective,
-the core objective of system design can be summarized as follows:
-to achieve reliable and efficient information transmission under limited bandwidth,
-limited power,
-and complex wireless environments.
-
-This basic link is also the starting point for understanding ISAC.
-ISAC does not construct an independent sensing system outside the communication system.
-Instead,
-it further exploits the sensing capability of wireless signals on the basis of an existing communication link.
-In other words,
-the same transmitted signal can carry communication bits,
-and it may also carry environmental or target information through propagation,
-reflection,
-and reception.
-Therefore,
-before discussing ISAC,
-it is necessary to clarify the basic components of a digital communication link
-and how these components provide the foundation for subsequent joint waveform design,
-channel modeling,
-MIMO beamforming,
-and resource optimization.
-
-Fig.~\ref{fig:comm_system_block_diagram} shows a basic block diagram of a typical digital communication system.
-The purpose of this diagram is not to cover all details of a communication system.
+This chapter reviews the basic knowledge of digital communication and radar
+sensing that is needed for the subsequent discussion of ISAC system models and
+joint design methods.
+The purpose is not to provide a complete treatment of either communication
+theory or radar theory.
 Rather,
-it is intended to help readers build the minimum necessary understanding of the link:
-how information bits are converted into wireless signals,
-how the signal propagates through the channel,
-and how the receiver recovers information from the distorted signal.
+the chapter focuses on the concepts that are most directly related to ISAC,
+including signal propagation,
+wireless channels,
+modulation waveforms,
+antenna arrays,
+receiver processing,
+and sensing performance metrics.
+
+Through this review,
+readers can build a common background for understanding how the same wireless
+signal may support information transmission and environmental sensing.
+This background will be used in later chapters when discussing ISAC waveform
+design,
+MIMO beamforming,
+resource allocation,
+and communication--sensing performance tradeoffs.
+ 
+
+
+ 
+
+\section{Core Principles of Digital Communication}
+\label{sec:ch2-digital-comm}
+
+
+\subsection{Basic Link of a Digital Communication System}
+
+A digital communication system is designed to deliver information from a
+transmitter to a receiver reliably and efficiently.
+In this process,
+information bits are represented by a suitable waveform,
+propagated through a wireless channel,
+and recovered at the receiver in the presence of bandwidth,
+power,
+noise,
+fading,
+and interference constraints.
+Therefore,
+the communication link should be understood not only as a sequence of
+functional modules,
+but also as a signal-processing chain that determines how information is
+represented,
+transmitted,
+distorted,
+and recovered.
+
+This link is also an important starting point for understanding ISAC.
+ISAC does not simply attach an independent sensing module to a communication
+system.
+Instead,
+it exploits several components that already exist in the communication link.
+The modulation waveform determines how signal energy is distributed in time,
+frequency,
+and space.
+The wireless channel contains propagation,
+reflection,
+and scattering information.
+The antenna array provides spatial selectivity,
+and the received-signal processing chain provides the basis for recovering
+communication symbols while also extracting sensing-related parameters.
+
+Fig.~\ref{fig:comm_system_block_diagram} shows a simplified digital
+communication link.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.82\textwidth]{figures/chapter1/fig_comm_system_block_diagram.png}
+    \includegraphics[width=0.82\textwidth]{figures/chapter2/fig_comm_system_block_diagram.png}
     \caption{Basic link diagram of a digital communication system.}
     \label{fig:comm_system_block_diagram}
 \end{figure}
 \begin{itemize}
-    \item \textbf{Information source:}
-    The information source generates the raw information to be transmitted.
-    In a digital communication system,
-    this information can usually be abstracted as a raw bit sequence.
-    For example,
-    text,
-speech,
-images,
-or sensor data need to be represented as discrete digital bits
-    before entering the communication system.
-
-    \item \textbf{Source coding:}
-    The main role of source coding is to compress redundancy in the information
-    and improve the efficiency of information representation.
-    After source coding,
-    the raw information is converted into a more compact information bit stream,
-    so as to reduce the resource overhead required for subsequent transmission.
+    \item \textbf{Information source and source coding:}
+    The information source produces the raw data to be transmitted,
+    such as text,
+    speech,
+    images,
+    or sensor measurements.
+    Source coding removes redundancy and represents the information as a compact
+    bit stream.
+    These modules determine the content of communication,
+    but they are usually not the direct source of sensing information in ISAC.
 
     \item \textbf{Channel coding:}
-    The main role of channel coding is to enhance the reliability of the communication system.
-    It introduces controlled redundancy into the information bits,
-    so that the receiver can detect and correct a certain level of transmission errors
-    in the presence of noise,
-fading,
-and interference.
-    Therefore,
-    the bits after channel coding are also often referred to as coded bits.
+    Channel coding introduces controlled redundancy into the bit stream so that
+    the receiver can detect or correct transmission errors caused by noise,
+    fading,
+    and interference.
+    In ISAC,
+    channel coding remains important because communication reliability must be
+    maintained even when time,
+    frequency,
+    spatial,
+    or power resources are jointly used for sensing tasks.
 
-    \item \textbf{Modulation:}
-    The role of modulation is to map discrete coded bits into modulation symbols
-    suitable for wireless transmission,
-    and further form an RF signal for transmission.
-    Common modulation schemes include PSK and QAM.
-    In an ISAC system,
-    the modulation waveform affects not only the transmission efficiency of communication data,
-    but also the ability to estimate range,
-velocity,
-and angle in sensing tasks.
+    \item \textbf{Modulation and waveform formation:}
+    Modulation maps coded bits to symbols and forms a transmitted waveform that
+    is suitable for wireless propagation.
+    This module is one of the most direct bridges between communication and
+    sensing,
+    because the waveform bandwidth,
+    duration,
+    subcarrier structure,
+    and correlation properties affect not only communication efficiency,
+    but also sensing resolution and parameter estimation capability.
 
     \item \textbf{Wireless channel:}
-    The wireless channel describes the changes experienced by an RF signal during spatial propagation.
-    During propagation,
-    the signal is affected by path loss,
-multipath fading,
-noise,
-and interference.
-    Therefore,
-    the signal obtained at the receiver is a distorted signal after channel distortion
-    and noise superposition.
-    For ISAC,
-    the wireless channel not only affects communication quality,
-    but also carries sensing information related to the environment,
-targets,
-and propagation paths.
+    The wireless channel describes how the transmitted waveform is affected by
+    path loss,
+    fading,
+    multipath,
+    noise,
+    and interference.
+    For communication,
+    these effects are usually impairments that need to be estimated,
+    compensated,
+    or suppressed.
+    For sensing,
+    the same propagation and reflection effects may carry information about
+    range,
+    velocity,
+    angle,
+    and the surrounding environment.
 
-    \item \textbf{Reception:}
-    The reception module obtains the received signal from the wireless channel
-    and performs front-end processing such as down-conversion,
-sampling,
-and synchronization.
-    The received signal contains the useful signal,
-noise,
-interference,
-and channel propagation effects.
-    In an ISAC system,
-    the received signal may also contain echo information generated by reflections from targets or the environment.
+    \item \textbf{Antenna array and reception:}
+    The receiver captures the propagated signal and performs front-end operations
+    such as down-conversion,
+    sampling,
+    and synchronization.
+    When multiple antennas are used,
+    the array response provides spatial information and supports beamforming.
+    This capability is essential for MIMO communication,
+    spatial interference management,
+    and angle-related sensing.
 
-    \item \textbf{Demodulation:}
-    The role of demodulation is to estimate the modulation symbols sent by the transmitter
-    based on the received signal,
-    and further obtain the corresponding soft information or hard-decision bits.
-    Since the signal is affected by noise and interference in the wireless channel,
-    demodulation results may contain decision errors.
-    Therefore,
-    subsequent channel decoding is still needed to further improve reliability.
-
-    \item \textbf{Decoding:}
-    The decoding module recovers the original information bits according to the channel coding rule
-    adopted at the transmitter,
-    using the soft information or hard-decision bits output by the demodulator.
-    The goal of decoding is to correct transmission errors as much as possible,
-    so that the information recovered at the receiver is as close as possible to the transmitted information.
-
-    \item \textbf{Destination:}
-    The destination is the final endpoint of information transmission.
-    It receives the information recovered after decoding
-    and uses it for subsequent data processing,
-display,
-storage,
-or control tasks.
+    \item \textbf{Demodulation, decoding, and destination:}
+    Demodulation estimates the transmitted modulation symbols from the received
+    signal,
+    while decoding recovers the information bits according to the channel coding
+    rule.
+    In ISAC,
+    this receiver chain may need to coexist or cooperate with sensing processing,
+    such as echo enhancement,
+    parameter estimation,
+    or tracking.
+    The recovered data are then delivered to the destination for processing,
+    storage,
+    display,
+    or control.
 \end{itemize}
-From the perspective of ISAC,
-the most important components are the modulation waveform,
-the wireless channel,
-the antenna array,
-and the received-signal processing chain.
-This is because the sensing function usually does not act directly on the ``bits'' themselves.
-Instead,
-it exploits the environmental information carried by wireless signals during propagation and reflection.
-For example,
-the transmitted waveform determines the range and velocity resolution,
-the channel response contains the spatial characteristics of targets or the environment,
-and received-signal processing determines whether the system can extract sensing parameters
-while recovering communication information.
 Therefore,
-the digital communication link is not only the basis of information transmission,
-but also the physical carrier that enables the integration of communication and sensing in ISAC.
+the digital communication link provides more than a reference model for data
+transmission.
+It identifies the main technical interfaces through which ISAC later integrates
+waveform design,
+channel modeling,
+MIMO beamforming,
+receiver processing,
+and resource allocation.
 
 
-\topichead{Basic Signal Model of a Communication System}
+\subsection{Basic Signal Model of a Communication System}
 
-In a communication system,
-the transmitted signal experiences fading and multipath spreading after passing through the wireless channel,
-and noise or interference is also added.
-The time-domain baseband model can be written as
+A basic communication signal model describes the relationship among the
+transmitted waveform,
+the wireless channel,
+and the received observation in the presence of noise or interference.
+In the time domain,
+this relationship is commonly represented by the baseband model
 \begin{equation}
     y(t) = h(t) * x(t) + n(t),
     \label{eq:comm_time_domain_model}
@@ -233,15 +215,17 @@ after coding and modulation,
 \(\mathbf{H}\) denotes the discrete channel response or channel matrix,
 \(\mathbf{N}\) denotes noise or interference,
 and \(\mathbf{Y}\) denotes the received-signal representation.
-This form is widely used in MIMO,
+This compact form is widely used in MIMO,
 OFDM,
-and multi-user communication systems,
-and it also provides a unified mathematical basis for subsequent joint waveform design,
-channel modeling,
-and receiver processing in ISAC systems.
+and multi-user communication systems.
+It also provides the mathematical starting point for later ISAC models,
+where a designed transmit signal interacts with both communication channels
+and sensing or target responses before being observed at the receiver.
 
-\topichead{Basic Signal Model of an ISAC System}
+\subsection{Basic Signal Model of an ISAC System}
 
+The communication signal model above can be extended naturally to describe the
+basic signal relationship in an ISAC system.
 In a traditional communication system,
 the transmitted signal mainly serves as the physical carrier of information bits.
 Its core task is to be correctly demodulated and decoded at the receiver
@@ -295,10 +279,9 @@ where \(\mathbf{Y}_{\mathrm{R}}\) denotes the echo signal obtained by the sensin
 \(\mathbf{G}\) denotes the target response matrix,
 also referred to as the sensing channel in this context,
 and \(\mathbf{N}_{\mathrm{R}}\) denotes the noise at the sensing receiver.
-Unlike the communication channel \(\mathbf{H}\),
-\(\mathbf{G}\) describes not only the signal propagation process,
-but is also closely related to target or environmental parameters,
-such as target range,
+Compared with the communication channel \(\mathbf{H}\),
+the sensing response \(\mathbf{G}\) has a more explicit physical interpretation:
+it is associated with target range,
 velocity,
 angle,
 reflection coefficient,
@@ -323,81 +306,61 @@ and parameter estimation.
 Therefore,
 the basic signal model of ISAC can be understood as a natural extension
 of the traditional communication model.
-The traditional communication model emphasizes how to reliably transmit information through the channel,
-whereas the ISAC model further emphasizes how to use the same wireless signal
-to achieve information transmission and environmental sensing at the same time.
-This point also forms the basis for subsequent discussions of joint waveform design,
+In this sense,
+the ISAC signal model is not a separate model placed beside the communication
+model.
+It is an extension of the same input--channel--output view,
+with the important difference that the channel or response now carries both
+communication and sensing meanings.
+This point also forms the basis for subsequent discussions of joint waveform
+design,
 MIMO beamforming,
 the trade-off between communication and sensing performance,
 and resource optimization.
 
 
-\topichead{Basic Concepts of Wireless Channels and Communication Quality}
+\subsection{Basic Concepts of Wireless Channels and Communication Quality}
 
-The previous discussion established basic signal models from the perspectives of both communication systems
-and ISAC systems.
-In an ISAC system,
-the communication observation and the sensing observation can be written as
-\[
-    \mathbf{Y}_{\mathrm{C}}
-    =
-    \mathbf{H}\mathbf{X}
-    +
-    \mathbf{N}_{\mathrm{C}},
-\]
-\[
-    \mathbf{Y}_{\mathrm{R}}
-    =
-    \mathbf{G}\mathbf{X}
-    +
-    \mathbf{N}_{\mathrm{R}}.
-\]
-These two models show that the same transmitted signal \(\mathbf{X}\)
-plays different roles in communication and sensing tasks.
-For the communication receiver,
-\(\mathbf{X}\) is the signal carrying information bits,
-and the communication channel \(\mathbf{H}\) determines whether the receiver can reliably recover the information.
-For the sensing receiver,
-\(\mathbf{X}\) is the probing signal that illuminates targets or the environment,
-and the target response matrix or sensing channel \(\mathbf{G}\)
-contains information related to range,
-velocity,
-angle,
-reflection characteristics,
-and other physical properties.
-The noise or interference terms \(\mathbf{N}_{\mathrm{C}}\) and \(\mathbf{N}_{\mathrm{R}}\)
-further affect the accuracy of communication demodulation and sensing parameter estimation.
+The signal models introduced above show that both communication reception and
+sensing observation are shaped by the transmitted signal,
+the propagation environment,
+and noise or interference.
+For communication,
+the wireless channel determines how reliably information symbols can be
+recovered at the receiver.
+For sensing,
+the same propagation process may contain physical information about targets,
+scatterers,
+and the surrounding environment.
 
-The wireless channel is therefore not an ideal,
-stable,
-or transparent transmission pipe.
-Instead,
-it is a complex environment jointly affected by propagation distance,
+Therefore,
+the wireless channel should not be regarded as an ideal or transparent
+transmission pipe.
+It is affected by propagation distance,
 blockage,
 multipath reflection,
 user mobility,
 noise,
 and external interference.
-For communication systems,
-these factors directly determine the received signal quality
-and further affect performance metrics such as BER,
+These factors determine communication quality metrics such as BER,
 throughput,
 and spectral efficiency.
-For ISAC systems,
-they not only affect the reliability of the communication link,
-but may also carry sensing information related to targets,
-the environment,
-and propagation paths.
-Therefore,
-after understanding the basic signal models,
-it is necessary to further review the main influencing factors in wireless channels,
+In ISAC systems,
+they also influence whether useful sensing information can be extracted from
+the received signal.
+
+For this reason,
+the following discussion reviews several basic concepts:
+path loss,
+multipath propagation,
+fading,
 communication quality metrics,
-and the role of channel state information,
-so as to lay the foundation for understanding OFDM,
+and channel state information.
+These concepts provide the necessary background for understanding OFDM,
 MIMO beamforming,
-and ISAC joint design.
+and later ISAC joint design.
  
-\topichead{Path Loss}
+\subsection{Path Loss}
 
 When a wireless signal propagates in space,
 the received power usually decreases as the propagation distance increases.
@@ -500,7 +463,7 @@ path loss mainly describes the average trend of received signal strength with di
 whereas rapid local fluctuations need to be further explained together with multipath propagation
 and fading phenomena.
 
-\topichead{Multipath Propagation}
+\subsection{Multipath Propagation}
 
 In a practical wireless environment,
 the transmitted signal usually does not reach the receiver along only one path.
@@ -628,7 +591,7 @@ the received signal further exhibits different forms of fading.
 The next part explains the concept of fading and its basic classifications.
 
 
-\topichead{Fading}
+\subsection{Fading}
 
 Fading in wireless channels refers to the phenomenon in which the amplitude,
 phase,
@@ -689,7 +652,7 @@ whereas small-scale fading appears as local rapid fluctuations superimposed on t
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/chapter1/fig_fading.png}
+    \includegraphics[width=0.75\textwidth]{figures/chapter2/fig_fading.png}
     \caption{Comparison between large-scale fading and small-scale fading.}
     \label{fig:spatial-fading}
 \end{figure}
@@ -965,21 +928,20 @@ and jointly affect the communication link quality and the sensing performance of
 \end{table}
 
 
-\topichead{Classification of Communication Quality Metrics}
+\subsection{Classification of Communication Quality Metrics}
 
 The path loss,
 multipath propagation,
 fading,
 noise,
-and interference discussed above all change the signal quality observed at the receiver.
-To evaluate the impact of these factors on information transmission,
-a communication system needs to introduce a series of quality metrics.
-Different metrics focus on different levels.
-Some metrics describe the quality of the received signal itself,
-some measure whether information recovery is reliable,
-and others reflect how much useful information the system can transmit under limited spectrum and time resources.
-Therefore,
-communication quality metrics can be roughly divided into three categories:
+and interference discussed above ultimately appear at the receiver as changes in signal quality.
+To evaluate their impact on information transmission,
+communication systems use a set of performance metrics at different levels.
+Some metrics describe the received signal condition,
+some describe the reliability of information recovery,
+and others describe how efficiently limited time-frequency resources are used.
+Accordingly,
+the following discussion organizes communication quality metrics into three categories:
 \textbf{link quality metrics},
 \textbf{reliability metrics},
 and \textbf{efficiency metrics}.
@@ -1046,15 +1008,13 @@ resource scheduling,
 power control,
 and beamforming become more important.
 For ISAC systems,
-the meaning of SINR is even more important,
-because communication and sensing functions may share time,
-frequency,
-space,
-and power resources.
-Communication signals,
+SINR is also important because communication signals,
 sensing echoes,
 clutter,
-and signals from other users may form more complex interactions.
+and multi-user interference may coexist over shared time,
+frequency,
+spatial,
+and power resources.
 
 \textbf{Reliability metrics} are used to measure whether the receiver can correctly recover the information sent by the transmitter.
 The most common reliability metric is the bit error rate (BER),
@@ -1203,42 +1163,28 @@ to transmit information within limited spectrum resources.
 Against the background of increasingly scarce spectrum resources,
 spectral efficiency is one of the important metrics for evaluating wireless communication systems.
 For ISAC,
-spectral efficiency has a more specific meaning:
-ISAC aims to support information transmission and environmental sensing at the same time
-by sharing spectrum,
+spectral efficiency is closely related to whether communication and sensing can reuse spectrum,
 hardware,
-and waveform resources between communication and sensing,
-without occupying a large amount of additional spectrum.
+and waveform resources without requiring a separate band for sensing.
 Therefore,
 spectral efficiency not only reflects the resource utilization capability of the communication link itself,
-but is also closely related to communication-sensing resource reuse
+but is also closely related to communication--sensing resource reuse
 and the overall system efficiency.
 
-In practical systems,
-there is a clear logical relationship among these communication quality metrics.
-Path loss,
-multipath,
-fading,
-noise,
-and interference first affect the SNR or SINR at the receiver.
-The SNR or SINR then determines the reliability of demodulation and decoding,
-which is reflected in metrics such as BER or BLER.
-Reliability further affects the actual throughput.
-Under a given bandwidth,
-the effective transmission rate further determines the spectral efficiency.
-Therefore,
-communication quality metrics can be understood as layered measures
-from ``received signal quality''
-to ``information recovery reliability''
-and then to ``resource utilization efficiency.''
+In summary,
+the above metrics form a layered evaluation chain.
+Channel effects first influence SNR or SINR;
+SNR or SINR affects demodulation and decoding reliability,
+reflected by BER or BLER;
+reliability then influences throughput;
+and under a given bandwidth,
+the effective rate determines spectral efficiency.
 For ISAC systems,
-these metrics remain the basis for evaluating communication performance.
-At the same time,
-they also provide an important basis for subsequent discussions of the trade-off between communication and sensing performance,
+these communication-side metrics provide the basis for analyzing communication--sensing tradeoffs,
 resource allocation,
 and joint optimization.
 
-\topichead{Channel State Information: Definition, Acquisition, and Role}
+\subsection{Channel State Information: Definition, Acquisition, and Role}
 
 If a communication system needs to perform receiver processing and transmission optimization
 according to the wireless channel state,
@@ -1383,10 +1329,10 @@ target,
 and motion information from channel variations.
 This is also a fundamental concept that will be repeatedly used in subsequent discussions of OFDM channel estimation,
 MIMO beamforming,
-and joint communication-sensing processing.
+and joint communication--sensing processing.
 
 
-\topichead{Fundamentals of MIMO and Beamforming}
+\subsection{Fundamentals of MIMO and Beamforming}
 
 Modern broadband wireless systems usually combine OFDM with multi-antenna techniques.
 The basic signal processing flow is illustrated in Fig.~\ref{fig:mimo_ofdm_flow}.
@@ -1405,7 +1351,7 @@ an equivalent MIMO input-output relationship can be established.
 \begin{figure}[htbp]
     \centering
     % Replace the following file with the final generated flowchart.
-    \includegraphics[width=0.86\textwidth]{figures/chapter1/fig_mimo_ofdm_flow.png}
+    \includegraphics[width=0.86\textwidth]{figures/chapter2/fig_mimo_ofdm_flow.png}
     \caption{Basic signal processing flow of a MIMO-OFDM system.}
     \label{fig:mimo_ofdm_flow}
 \end{figure}
@@ -1419,7 +1365,7 @@ rather than the complete time-domain OFDM waveform after IFFT.
 This modeling viewpoint allows us to separate the roles of OFDM and MIMO more clearly:
 OFDM decomposes a wideband frequency-selective channel into multiple relatively manageable narrowband subcarrier channels,
 whereas MIMO further exploits the spatial degrees of freedom provided by multiple antennas on each subcarrier.
-\runinhead{MIMO and the spatial dimension.}
+\topichead{MIMO and the Spatial Dimension}
 In the above MIMO-OFDM processing flow,
 the central role of MIMO is to introduce the spatial dimension into the wireless link.
 Compared with a single-input single-output (SISO) system,
@@ -1441,7 +1387,7 @@ but also the foundation for target illumination,
 angle estimation,
 and joint beam design in later discussions.
 
-\runinhead{Basic MIMO signal model.}
+\topichead{Basic MIMO Signal Model}
 On the \(k\)-th subcarrier,
 the equivalent input-output relationship of a MIMO system can be written as
 \begin{equation}
@@ -1496,7 +1442,7 @@ spatial diversity,
 array gain,
 and beamforming.
 
-\runinhead{Beamforming and spatial processing.}
+\topichead{Beamforming and Spatial Processing}
 In the MIMO channel matrix \(\mathbf{H}[k]\),
 the channel coefficients between different transmit and receive antennas jointly describe
 the spatial channel relationships of a multi-antenna system.
@@ -1528,7 +1474,7 @@ and it also provides a basis for later discussions on spatial multiplexing,
 spatial diversity,
 and joint beam design. 
 
-\runinhead{Main gains of MIMO.}
+\topichead{Main Gains of MIMO}
 Based on the above MIMO channel representation and spatial processing perspective,
 a MIMO system can provide several typical performance gains.
 In this subsection,
@@ -1544,7 +1490,7 @@ Figure~\ref{fig:mimo_gains_comparison} provides a conceptual comparison of these
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures/chapter1/fig_mimo_gain.png}
+    \includegraphics[width=0.88\textwidth]{figures/chapter2/fig_mimo_gain.png}
     \caption{Conceptual comparison of spatial multiplexing, spatial diversity, and array gain via beamforming in MIMO systems.}
     \label{fig:mimo_gains_comparison}
 \end{figure}
@@ -1613,7 +1559,7 @@ it can lead to array gain,
 interference suppression,
 and spatial selectivity.
 
-\runinhead{Transmit precoding and receive processing.}
+\topichead{Transmit Precoding and Receive Processing}
 The above MIMO gains do not arise automatically simply because multiple antennas are deployed.
 They rely on spatial signal processing at both the transmitter and the receiver.
 On the \(k\)-th subcarrier,
@@ -1708,7 +1654,7 @@ wireless propagation,
 and receive processing,
 rather than from the mere increase in antenna number.
 
-\runinhead{Connection to ISAC.}
+\topichead{Connection to ISAC}
 From the communication perspective,
 MIMO and beamforming are mainly used to improve link rate,
 reliability,
@@ -1749,16 +1695,16 @@ for extending conventional communication systems toward MIMO-ISAC systems.
 They provide not only effective means for improving communication link performance,
 but also basic tools for controlling spatial energy distribution,
 acquiring spatial sensing information,
-and designing joint communication-sensing beams.
+and designing joint communication--sensing beams.
 In later discussions on MIMO-ISAC,
-joint communication-sensing beam design,
+joint communication--sensing beam design,
 and spatial resource allocation,
 the concepts of spatial channels,
 precoding,
 and receive processing established in this subsection
 will continue to serve as a foundation.
 
-\subsection{Core Principles of Radar and Sensing}
+\section{Core Principles of Radar and Sensing}
 
 In the previous discussion, we reviewed how a wireless system transmits,
 receives, and recovers information bits from the perspective of digital
@@ -1769,13 +1715,13 @@ to obtain state information about targets and the surrounding physical
 environment from the echoes generated through the interaction between the
 transmitted signal and the environment.
 
-This subsection does not provide a complete derivation of radar theory.
+This section does not provide a complete derivation of radar theory.
 Instead, it focuses on target detection, parameter estimation, target tracking,
 echo formation, performance metrics, and the basic processing flow.
 The purpose is to outline the fundamental concepts in radar sensing that are
 closely related to subsequent ISAC system modeling and joint design.
 
-\topichead{Basic Tasks of Radar Sensing Systems}
+\subsection{Basic Tasks of Radar Sensing Systems}
 
 The basic tasks of a radar sensing system can be understood as a layered
 process from target existence determination to target state characterization.
@@ -1790,7 +1736,7 @@ Parameter estimation further obtains physical parameters such as range,
 velocity, and angle.
 Target tracking describes the continuous evolution of these states over time.
 
-\runinhead{Target detection.}
+\topichead{Target Detection}
 Target detection is a fundamental task in radar sensing systems,
 and its core purpose is to determine whether a target exists in the
 observation region.
@@ -1807,7 +1753,7 @@ missed detection refers to the case where a real target is not detected by
 the system, whereas false alarm refers to the case where noise, clutter, or
 interference is incorrectly judged as a target.
 
-\runinhead{Parameter estimation.}
+\topichead{Parameter Estimation}
 Parameter estimation is the process of further obtaining the physical state
 of a target based on target detection.
 While target detection only determines whether a target exists in the
@@ -1820,7 +1766,7 @@ whereas velocity describes the motion state of the target relative to the radar.
 Together, these parameters provide a basic description of the target state,
 and their estimation accuracy affects the reliability of subsequent target
 tracking and scene understanding.
-\runinhead{Target tracking.}
+\topichead{Target Tracking}
 Target tracking is the process of continuously updating the target state
 based on target detection and parameter estimation.
 Unlike single-frame parameter estimation, target tracking focuses on the
@@ -1832,9 +1778,9 @@ turning, or accelerating.
 Therefore, target tracking provides more continuous sensing information for
 dynamic scene understanding and subsequent decision-making.
 
-\topichead{Basic Idea of Echo Formation and Parameter Extraction}
+\subsection{Basic Idea of Echo Formation and Parameter Extraction}
 
-\runinhead{Echo formation.}
+\topichead{Echo Formation}
 The formation of radar echoes can be understood as the result of the
 interaction between the transmitted signal, the target, and the propagation
 environment.
@@ -1852,7 +1798,7 @@ Therefore, the basic idea of radar parameter extraction is to infer the state
 information of the target and the environment by analyzing how the received
 echo differs from the transmitted signal.
 
-\runinhead{Range estimation.}
+\topichead{Range Estimation}
 Range estimation is based on the propagation delay of the echo relative to
 the transmitted signal.
 To describe this relationship, the received signal can first be represented
@@ -1883,7 +1829,7 @@ rather than the one-way propagation time.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter1/fig_range_estimation.png}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_range_estimation.png}
     \caption{Range estimation in a monostatic radar.}
     \label{fig:range_estimation_monostatic_radar}
 \end{figure}
@@ -1904,7 +1850,7 @@ The factor \(2\) in the denominator reflects the round-trip propagation process
 of the radar signal, namely, radar--target--radar propagation.
 Therefore, once the propagation delay \(\tau\) is estimated from the received
 echo, the target range can be further obtained.
-\runinhead{Velocity estimation.}
+\topichead{Velocity Estimation}
 Velocity estimation is based on the Doppler shift of the echo relative to the
 transmitted signal.
 When a target moves with respect to the radar, the distance between the target
@@ -1926,7 +1872,7 @@ shift associated with this velocity component.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter1/fig_velocity_estimation.png}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_velocity_estimation.png}
     \caption{Velocity estimation in a monostatic radar.}
     \label{fig:velocity_estimation_monostatic_radar}
 \end{figure}
@@ -1961,7 +1907,7 @@ away from the radar correspond to Doppler shifts with opposite signs.
 In this section, we mainly focus on the basic relationship between the
 magnitude of the Doppler shift and the magnitude of the radial velocity.
 
-\runinhead{Angle estimation.}
+\topichead{Angle Estimation}
 Angle estimation is based on the spatial phase differences in the signals
 received by an antenna array.
 Unlike range estimation and velocity estimation, angle information usually
@@ -1994,7 +1940,7 @@ difference between adjacent antenna elements can be expressed as
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter1/fig_angle_estimation.jpeg}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_angle_estimation.jpeg}
     \caption{Angle estimation using an antenna array.}
     \label{fig:angle_estimation_antenna_array}
 \end{figure}
@@ -2018,16 +1964,16 @@ of the received signals through the path difference.
 Once the phase difference between antenna elements is estimated, the direction
 of arrival of the target echo can be further inferred.
 
-\topichead{Key Performance Metrics of Sensing Systems}
+\subsection{Key Performance Metrics of Sensing Systems}
 
-\runinhead{Detection performance.}
+\topichead{Detection Performance}
 Detection performance characterizes whether a sensing system can reliably
 determine the presence or absence of a target under noise, clutter, and
 interference.
 It is commonly described by detection probability, false alarm probability,
 and missed detection probability.
 
-\runinhead{Binary hypothesis model.}
+\topichead{Binary Hypothesis Model}
 In radar sensing systems, the target detection problem can usually be
 simplified as a binary hypothesis testing problem.
 Let \(\mathbf{y}\) denote the received observation, and let \(\mathbf{s}\)
@@ -2059,7 +2005,7 @@ Therefore, the task of the detector is to determine, based on the received
 observation \(\mathbf{y}\), whether the current observation is more consistent
 with \(H_0\) or \(H_1\).
 
-\runinhead{Detection statistic and threshold.}
+\topichead{Detection Statistic and Threshold}
 In practical detection, the detector usually does not make a decision directly
 from the raw received observation \(\mathbf{y}\).
 Instead, it first constructs a detection statistic from the received observation,
@@ -2093,7 +2039,7 @@ Therefore, the choice of the threshold \(\gamma\) directly affects the decision
 result of the detector and further influences performance metrics such as
 detection probability and false alarm probability.
 
-\runinhead{Detection outcomes and probability metrics.}
+\topichead{Detection Outcomes and Probability Metrics}
 Given the true state and the detector decision, target detection may lead to
 four basic outcomes.
 The true state indicates whether a target is actually present, while the
@@ -2163,7 +2109,7 @@ different perspectives:
 \(P_{FA}\) reflects the tendency to generate false alarms when no target is
 present, and \(P_M\) reflects the risk of missing a real target.
 
-\runinhead{Threshold tradeoff.}
+\topichead{Threshold Tradeoff}
 The setting of the threshold \(\gamma\) directly affects the decision behavior
 of the detector.
 For a given detection statistic \(T(\mathbf{y})\), lowering the threshold
@@ -2195,7 +2141,7 @@ increase the risk of missing real targets.
 Hence, \(P_D\) and \(P_{FA}\) should be analyzed as coupled
 detection-performance metrics rather than being evaluated in isolation.
 
-\runinhead{Neyman--Pearson criterion.}
+\subsubsection{Neyman--Pearson Criterion}
 Based on the tradeoff between detection probability and false alarm probability,
 the Neyman--Pearson criterion provides a classical decision principle for
 detector design.
@@ -2303,14 +2249,14 @@ exceeds the same threshold under \(H_1\), namely
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.76\textwidth]{figures/chapter1/fig_np_estimation.png}
+    \includegraphics[width=0.76\textwidth]{figures/chapter2/fig_np_estimation.png}
     \caption{Illustration of Neyman--Pearson threshold selection using a one-dimensional Gaussian detection statistic.}
     \label{fig:np_threshold_illustration}
 \end{figure}
 The corresponding simulation script is listed in the Companion Code section,
 where readers can also find the interactive version for adjusting \(P_{FA}\).
 
-\runinhead{Resolution.}
+\subsubsection{Resolution}
 Resolution describes the ability of a sensing system to distinguish closely
 spaced targets.
 Unlike detection probability, which mainly characterizes whether a target can
@@ -2478,7 +2424,7 @@ metrics and the main physical factors that control them.
     \end{tabularx}
 \end{table}
 
-\runinhead{Estimation accuracy.}
+\topichead{Estimation Accuracy}
 Estimation accuracy describes how close the estimated target parameters are
 to their true values.
 It is closely related to resolution, but the two concepts focus on different
@@ -2549,7 +2495,7 @@ consider not only whether a target can be detected and whether multiple targets
 can be resolved, but also how accurately the target parameters can be
 estimated.
 
-\runinhead{Sensing coverage.}
+\topichead{Sensing Coverage}
 Sensing coverage describes the spatial or state region in which a system can
 effectively perform target detection and parameter estimation.
 Unlike individual metrics such as detection probability, resolution, and
@@ -2603,8 +2549,8 @@ be considered jointly with communication coverage, resource allocation, and
 beam scheduling, because system resources usually need to be shared between
 communication transmission and environmental sensing.
 
-\topichead{Typical Radar Waveforms and Processing Flow}
-\runinhead{Pulse radar.}
+\subsection{Typical Radar Waveforms and Processing Flow}
+\topichead{Pulse Radar}
 Pulse radar is one of the most fundamental radar waveform schemes.
 Its basic idea is to transmit a pulse signal within a short time interval and
 receive the delayed echo reflected or scattered by the target.
@@ -2627,7 +2573,7 @@ Fig.~\ref{fig:pulse_radar_concept}.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter1/fig_pulse_radar.png}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_pulse_radar.png}
     \caption{Concept of pulse radar.}
     \label{fig:pulse_radar_concept}
 \end{figure}
@@ -2644,7 +2590,7 @@ Therefore, practical radar systems often use modulated pulses together with
 pulse compression or matched filtering to achieve a tradeoff between detection
 capability and range resolution.
 
-\runinhead{Continuous-wave radar.}
+\topichead{Continuous-Wave Radar}
 Continuous-wave radar is another representative radar waveform scheme.
 Unlike pulse radar, which transmits short-duration pulses, continuous-wave
 radar usually transmits a continuous single-frequency or approximately
@@ -2659,7 +2605,7 @@ The basic concept is illustrated in Fig.~\ref{fig:cw_radar_concept}.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.78\textwidth]{figures/chapter1/fig_cw_radar.png}
+    \includegraphics[width=0.78\textwidth]{figures/chapter2/fig_cw_radar.png}
     \caption{Concept of continuous-wave radar.}
     \label{fig:cw_radar_concept}
 \end{figure}
@@ -2688,7 +2634,7 @@ frequency can be varied with time so that the propagation delay is converted
 into a measurable frequency difference.
 This leads to the basic idea of frequency-modulated continuous-wave radar.
 
-\runinhead{Frequency-modulated continuous-wave radar.}
+\topichead{Frequency-Modulated Continuous-Wave Radar}
 Frequency-modulated continuous-wave radar can be regarded as an extension of
 continuous-wave radar.
 Unlike a purely continuous-wave radar that transmits a signal with a fixed
@@ -2718,7 +2664,7 @@ and multiple chirps together form a repeated frequency-modulated structure.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.78\textwidth]{figures/chapter1/fig_fmcw_chirp_sequence.png}
+    \includegraphics[width=0.78\textwidth]{figures/chapter2/fig_fmcw_chirp_sequence.png}
     \caption{Illustration of an FMCW chirp sequence in the \(77\,\mathrm{GHz}\) band.}
     \label{fig:fmcw_chirp_sequence}
 \end{figure}
@@ -2763,7 +2709,7 @@ the Doppler effect is not considered.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.76\textwidth]{figures/chapter1/fig_fmcw_beat_frequency.png}
+    \includegraphics[width=0.76\textwidth]{figures/chapter2/fig_fmcw_beat_frequency.png}
     \caption{Illustration of beat frequency formation in FMCW radar.}
     \label{fig:fmcw_beat_frequency}
 \end{figure}
@@ -2781,9 +2727,9 @@ The fast-time samples within a chirp are mainly used for range processing,
 whereas the phase variation or frequency variation across multiple chirps in
 slow time can be further used for Doppler and velocity estimation.
 
-\topichead{Comparison Between Digital Communication and Radar Sensing}
+\subsection{Comparison Between Digital Communication and Radar Sensing}
 
-\runinhead{Common characteristics.}
+\topichead{Common Characteristics}
 Although digital communication and radar sensing are designed for different
 tasks, they are both built upon wireless electromagnetic propagation and signal
 processing.
@@ -2801,7 +2747,7 @@ systems.
 They share common foundations in electromagnetic propagation, hardware
 architecture, and signal processing methods.
 
-\runinhead{Fundamental differences.}
+\topichead{Fundamental Differences}
 The fundamental difference between the two systems first lies in their
 objectives.
 The main goal of digital communication is to reliably deliver information bits,
@@ -2845,7 +2791,7 @@ This is one of the important reasons why radar systems require special
 considerations in transmit power, antenna gain, waveform design, and receiver
 processing.
 
-\runinhead{Basis for integration.}
+\topichead{Basis for Integration}
 Despite these differences, digital communication and radar sensing still have
 a strong basis for integration.
 First, they use the same electromagnetic propagation medium and occupy limited
@@ -2860,7 +2806,7 @@ processing, interference suppression, detection theory, and estimation theory.
 Therefore, a communication system is not only an information transmission
 platform, but can also potentially serve as an environmental sensing platform.
 
-\runinhead{Challenges of integration.}
+\topichead{Challenges of Integration}
 Having a common basis does not mean that communication and sensing can be
 simply combined.
 Their performance metrics are different.

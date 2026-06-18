@@ -41,7 +41,7 @@ FIG_WIDTH = 8.5
 FIG_HEIGHT = 6.0
 
 SAVE_FIGURE = True
-OUTPUT_PATH = "figures/chapter1/fig_fmcw_beat_frequency.png"
+OUTPUT_PATH = "figures/chapter2/fig_fmcw_beat_frequency.png"
 
 
 # ============================================================
