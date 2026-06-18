@@ -1,31 +1,18 @@
 % chapters/chapter2/sec1.tex
 
-\section{Purpose of This Chapter}
+\topichead{Purpose of This Chapter}
 \label{sec:ch2-prerequisites-purpose}
  
 
-This chapter reviews the basic knowledge of digital communication and radar
-sensing that is needed for the subsequent discussion of ISAC system models and
-joint design methods.
-The purpose is not to provide a complete treatment of either communication
-theory or radar theory.
-Rather,
-the chapter focuses on the concepts that are most directly related to ISAC,
-including signal propagation,
-wireless channels,
-modulation waveforms,
-antenna arrays,
-receiver processing,
-and sensing performance metrics.
-
-Through this review,
-readers can build a common background for understanding how the same wireless
-signal may support information transmission and environmental sensing.
-This background will be used in later chapters when discussing ISAC waveform
-design,
-MIMO beamforming,
-resource allocation,
-and communication--sensing performance tradeoffs.
+This chapter reviews the digital communication and radar sensing concepts
+needed for later discussions of ISAC system models and joint design methods.
+It is not intended to replace a complete course on communication or radar
+theory.
+Instead, it focuses on signal propagation, wireless channels, modulation
+waveforms, antenna arrays, receiver processing, and sensing performance
+metrics, which together provide the common background for understanding how one
+wireless signal may support both information transmission and environmental
+sensing.
  
 
 
@@ -35,148 +22,87 @@ and communication--sensing performance tradeoffs.
 \label{sec:ch2-digital-comm}
 
 
-\subsection{Basic Link of a Digital Communication System}
+\subsection{Digital Communication Link and Signal Models}
 
-A digital communication system is designed to deliver information from a
-transmitter to a receiver reliably and efficiently.
-In this process,
-information bits are represented by a suitable waveform,
-propagated through a wireless channel,
-and recovered at the receiver in the presence of bandwidth,
-power,
-noise,
-fading,
-and interference constraints.
-Therefore,
-the communication link should be understood not only as a sequence of
-functional modules,
-but also as a signal-processing chain that determines how information is
-represented,
-transmitted,
-distorted,
-and recovered.
+\topichead{Basic Link of a Digital Communication System}
 
-This link is also an important starting point for understanding ISAC.
-ISAC does not simply attach an independent sensing module to a communication
-system.
-Instead,
-it exploits several components that already exist in the communication link.
-The modulation waveform determines how signal energy is distributed in time,
-frequency,
-and space.
-The wireless channel contains propagation,
-reflection,
-and scattering information.
-The antenna array provides spatial selectivity,
-and the received-signal processing chain provides the basis for recovering
-communication symbols while also extracting sensing-related parameters.
+A digital communication system delivers information bits by representing them
+as a suitable waveform, transmitting the waveform through a wireless channel,
+and recovering the intended information at the receiver under bandwidth, power,
+noise, fading, and interference constraints.
+Thus, the communication link is both a sequence of functional modules and a
+signal-processing chain that determines how information is represented,
+transmitted, distorted, and recovered.
+
+This link is also a natural starting point for ISAC.
+Rather than attaching sensing as an unrelated module, ISAC exploits components
+already present in the communication link: the modulation waveform controls
+signal energy in time, frequency, and space; the wireless channel contains
+propagation and scattering information; the antenna array provides spatial
+selectivity; and the received-signal processing chain supports both symbol
+recovery and sensing-parameter extraction.
 
 Fig.~\ref{fig:comm_system_block_diagram} shows a simplified digital
 communication link.
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.82\textwidth]{figures/chapter2/fig_comm_system_block_diagram.png}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_comm_system_block_diagram.png}
     \caption{Basic link diagram of a digital communication system.}
     \label{fig:comm_system_block_diagram}
 \end{figure}
 \begin{itemize}
     \item \textbf{Information source and source coding:}
-    The information source produces the raw data to be transmitted,
-    such as text,
-    speech,
-    images,
-    or sensor measurements.
-    Source coding removes redundancy and represents the information as a compact
-    bit stream.
-    These modules determine the content of communication,
-    but they are usually not the direct source of sensing information in ISAC.
+    The information source produces raw data such as text, speech, images, or
+    sensor measurements, and source coding represents it as a compact bit
+    stream.
+    These modules determine the communication content, but they are usually not
+    the direct source of sensing information in ISAC.
 
     \item \textbf{Channel coding:}
-    Channel coding introduces controlled redundancy into the bit stream so that
-    the receiver can detect or correct transmission errors caused by noise,
-    fading,
-    and interference.
-    In ISAC,
-    channel coding remains important because communication reliability must be
-    maintained even when time,
-    frequency,
-    spatial,
-    or power resources are jointly used for sensing tasks.
+    Channel coding adds controlled redundancy so that the receiver can detect or
+    correct errors caused by noise, fading, and interference.
+    In ISAC, it helps maintain communication reliability when time, frequency,
+    spatial, or power resources are shared with sensing.
 
     \item \textbf{Modulation and waveform formation:}
-    Modulation maps coded bits to symbols and forms a transmitted waveform that
-    is suitable for wireless propagation.
-    This module is one of the most direct bridges between communication and
-    sensing,
-    because the waveform bandwidth,
-    duration,
-    subcarrier structure,
-    and correlation properties affect not only communication efficiency,
-    but also sensing resolution and parameter estimation capability.
+    Modulation maps coded bits to symbols and forms the transmitted waveform.
+    Common schemes such as PSK and QAM represent bits through phase or joint
+    amplitude-phase changes of the carrier.
+    It is one of the most direct bridges to ISAC, because waveform bandwidth,
+    duration, subcarrier structure, and correlation properties affect both
+    communication efficiency and sensing resolution.
 
     \item \textbf{Wireless channel:}
-    The wireless channel describes how the transmitted waveform is affected by
-    path loss,
-    fading,
-    multipath,
-    noise,
-    and interference.
-    For communication,
-    these effects are usually impairments that need to be estimated,
-    compensated,
-    or suppressed.
-    For sensing,
-    the same propagation and reflection effects may carry information about
-    range,
-    velocity,
-    angle,
-    and the surrounding environment.
+    The wireless channel introduces path loss, fading, multipath, noise, and
+    interference.
+    For communication, these effects are impairments to be estimated or
+    compensated; for sensing, the same propagation and reflection effects may
+    carry information about range, velocity, angle, and the environment.
 
     \item \textbf{Antenna array and reception:}
-    The receiver captures the propagated signal and performs front-end operations
-    such as down-conversion,
-    sampling,
-    and synchronization.
-    When multiple antennas are used,
-    the array response provides spatial information and supports beamforming.
-    This capability is essential for MIMO communication,
-    spatial interference management,
-    and angle-related sensing.
+    The receiver captures the propagated signal and performs front-end
+    operations such as down-conversion, sampling, and synchronization.
+    With multiple antennas, the array response supports beamforming, spatial
+    interference management, MIMO communication, and angle-related sensing.
 
-    \item \textbf{Demodulation, decoding, and destination:}
-    Demodulation estimates the transmitted modulation symbols from the received
-    signal,
-    while decoding recovers the information bits according to the channel coding
-    rule.
-    In ISAC,
-    this receiver chain may need to coexist or cooperate with sensing processing,
-    such as echo enhancement,
-    parameter estimation,
-    or tracking.
-    The recovered data are then delivered to the destination for processing,
-    storage,
-    display,
-    or control.
+    \item \textbf{Demodulation and decoding:}
+    Demodulation estimates the transmitted symbols, while decoding recovers the
+    information bits.
+    In ISAC, this receiver chain may coexist with echo enhancement, parameter
+    estimation, or tracking before the recovered data are delivered to the
+    destination.
 \end{itemize}
-Therefore,
-the digital communication link provides more than a reference model for data
-transmission.
-It identifies the main technical interfaces through which ISAC later integrates
-waveform design,
-channel modeling,
-MIMO beamforming,
-receiver processing,
-and resource allocation.
+Therefore, the digital communication link identifies the main technical
+interfaces through which ISAC integrates waveform design, channel modeling,
+MIMO beamforming, receiver processing, and resource allocation.
 
 
-\subsection{Basic Signal Model of a Communication System}
+\topichead{Communication Signal Model}
 
 A basic communication signal model describes the relationship among the
-transmitted waveform,
-the wireless channel,
-and the received observation in the presence of noise or interference.
-In the time domain,
-this relationship is commonly represented by the baseband model
+transmitted waveform, the wireless channel, and the received observation in the
+presence of noise or interference.
+In the time domain, this relationship is commonly represented by
 \begin{equation}
     y(t) = h(t) * x(t) + n(t),
     \label{eq:comm_time_domain_model}
@@ -186,21 +112,18 @@ where \(x(t)\) is the transmitted baseband signal,
 \(n(t)\) is noise or interference,
 \(y(t)\) is the received signal,
 and \(*\) denotes convolution.
-This model indicates that the signal observed at the receiver is the result of the joint effect
-of the transmitted signal,
-the channel,
-and noise.
+This model shows that the received signal is jointly determined by the
+transmitted signal, the channel, and noise.
 
-After the Fourier transform,
-the above convolution relationship can be written as a multiplicative form in the frequency domain:
+After the Fourier transform, the convolution becomes a multiplicative
+frequency-domain relationship:
 \begin{equation}
     Y(f) = H(f)X(f) + N(f).
     \label{eq:comm_frequency_domain_model}
 \end{equation}
-The frequency-domain model provides an intuitive description of how different frequency components
-are affected differently by the channel,
-and it lays the foundation for understanding OFDM multi-carrier transmission
-and frequency-domain resource allocation.
+This form explains how different frequency components are affected by the
+channel and provides the basis for OFDM and frequency-domain resource
+allocation.
 
 In discrete-time,
 multi-carrier,
@@ -210,8 +133,8 @@ the communication link is also often written in a unified form as
     \mathbf{Y} = \mathbf{H}\mathbf{X} + \mathbf{N},
     \label{eq:comm_matrix_model}
 \end{equation}
-where \(\mathbf{X}\) denotes the transmitted-signal representation generated from information bits
-after coding and modulation,
+where \(\mathbf{X}\) denotes the transmitted-signal representation after coding
+and modulation,
 \(\mathbf{H}\) denotes the discrete channel response or channel matrix,
 \(\mathbf{N}\) denotes noise or interference,
 and \(\mathbf{Y}\) denotes the received-signal representation.
@@ -222,31 +145,21 @@ It also provides the mathematical starting point for later ISAC models,
 where a designed transmit signal interacts with both communication channels
 and sensing or target responses before being observed at the receiver.
 
-\subsection{Basic Signal Model of an ISAC System}
+\topichead{ISAC Signal Model}
 
-The communication signal model above can be extended naturally to describe the
-basic signal relationship in an ISAC system.
-In a traditional communication system,
-the transmitted signal mainly serves as the physical carrier of information bits.
-Its core task is to be correctly demodulated and decoded at the receiver
-after transmission through the wireless channel.
-In an ISAC system,
-however,
-the same transmitted signal has a richer role:
-it not only needs to carry communication information,
-but also illuminates targets or the environment during propagation,
-and carries information about the external physical world through reflection,
-scattering,
-and related processes.
-Therefore,
-the ISAC signal model needs to describe both the communication reception process
-and the sensing echo process.
+The communication signal model above can be extended naturally to ISAC.
+In a traditional communication system, the transmitted signal mainly carries
+information bits to be demodulated and decoded after propagation.
+In an ISAC system, the same signal also illuminates targets or the environment
+and carries physical information through reflection, scattering, and related
+propagation processes.
+Thus, the ISAC signal model needs to describe both communication reception and
+sensing echoes.
 
-To reflect this dual function,
-the received signal in an ISAC system can be divided into communication observation
-and sensing observation.
-For the communication function,
-the received signal can still be written in a form similar to that of traditional communication:
+To reflect this dual function, the received signal can be described through a
+communication observation and a sensing observation.
+For communication, the received signal keeps a form similar to that of a
+traditional link:
 \begin{equation}
     \mathbf{Y}_{\mathrm{C}}
     =
@@ -259,14 +172,11 @@ where \(\mathbf{X}\) denotes the ISAC transmitted signal,
 \(\mathbf{H}\) denotes the communication channel matrix,
 \(\mathbf{N}_{\mathrm{C}}\) denotes noise or interference at the communication receiver,
 and \(\mathbf{Y}_{\mathrm{C}}\) denotes the communication received signal.
-In this case,
-the receiver focuses on how to recover the information bits carried by \(\mathbf{X}\)
-from \(\mathbf{Y}_{\mathrm{C}}\).
+The receiver then recovers the information bits carried by \(\mathbf{X}\) from
+\(\mathbf{Y}_{\mathrm{C}}\).
 
-For the sensing function,
-the same transmitted signal \(\mathbf{X}\) illuminates the target or the environment
-and generates a sensing echo.
-The sensing reception model can be written as
+For sensing, the same transmitted signal \(\mathbf{X}\) illuminates the target
+or environment and generates an echo:
 \begin{equation}
     \mathbf{Y}_{\mathrm{R}}
     =
@@ -286,40 +196,22 @@ velocity,
 angle,
 reflection coefficient,
 and scattering characteristics.
-Therefore,
-the sensing receiver does not focus on recovering information bits,
-but on estimating target or environmental parameters from \(\mathbf{Y}_{\mathrm{R}}\).
+The sensing receiver therefore estimates target or environmental parameters
+from \(\mathbf{Y}_{\mathrm{R}}\) rather than recovering information bits.
 
-These models show that the key difference between ISAC and traditional communication systems
-is not merely the addition of a sensing receiver.
-Rather,
-the same transmitted signal \(\mathbf{X}\) is assigned a dual role:
-for communication users,
-\(\mathbf{X}\) is the carrier of information bits;
-for sensing tasks,
-\(\mathbf{X}\) is the illumination signal for probing targets and the environment.
-Correspondingly,
-the communication channel \(\mathbf{H}\) mainly serves information transmission,
-whereas the target response matrix \(\mathbf{G}\) serves environmental sensing
-and parameter estimation.
-
-Therefore,
-the basic signal model of ISAC can be understood as a natural extension
-of the traditional communication model.
-In this sense,
-the ISAC signal model is not a separate model placed beside the communication
-model.
-It is an extension of the same input--channel--output view,
-with the important difference that the channel or response now carries both
-communication and sensing meanings.
-This point also forms the basis for subsequent discussions of joint waveform
-design,
-MIMO beamforming,
-the trade-off between communication and sensing performance,
-and resource optimization.
+The key difference is therefore not merely the addition of a sensing receiver,
+but the dual role of \(\mathbf{X}\): it is both the carrier of information bits
+and the illumination signal for probing targets and the environment.
+The ISAC model extends the same input--channel--output view, with the important
+difference that the channel or response now carries both communication and
+sensing meanings.
+This view will be used later for waveform design, MIMO beamforming,
+communication--sensing tradeoffs, and resource optimization.
 
 
-\subsection{Basic Concepts of Wireless Channels and Communication Quality}
+\subsection{Wireless Channels and Communication Quality}
+
+\topichead{Basic Concepts of Wireless Channels and Communication Quality}
 
 The signal models introduced above show that both communication reception and
 sensing observation are shaped by the transmitted signal,
@@ -360,15 +252,12 @@ These concepts provide the necessary background for understanding OFDM,
 MIMO beamforming,
 and later ISAC joint design.
  
-\subsection{Path Loss}
+\topichead{Path Loss}
 
-When a wireless signal propagates in space,
-the received power usually decreases as the propagation distance increases.
-This average power attenuation caused by the propagation process is called path loss.
-Path loss describes the most basic propagation trend in a wireless channel:
-under otherwise identical conditions,
-the farther the transmitter and receiver are from each other,
-the lower the signal power that can usually be obtained at the receiver.
+When a wireless signal propagates in space, the received power usually
+decreases with distance.
+This average attenuation is called path loss, and it describes the most basic
+large-scale trend of a wireless channel.
 
 Under ideal free-space propagation conditions,
 the received power is commonly described by the Friis transmission formula:
@@ -381,22 +270,12 @@ the received power is commonly described by the Friis transmission formula:
     \right)^2 .
     \label{eq:friis-transmission}
 \end{equation}
-Here,
-\(P_t\) denotes the transmit power,
-\(P_r\) denotes the received power,
-\(G_t\) and \(G_r\) denote the transmit antenna gain and receive antenna gain,
-respectively,
-\(\lambda\) denotes the signal wavelength,
-and \(d\) denotes the propagation distance between the transmitter and the receiver.
-Eq.~\eqref{eq:friis-transmission} shows that the received power is related not only to the transmit power and antenna gains,
-but also closely to the propagation distance and the signal wavelength.
-When the propagation distance \(d\) increases,
-the received power \(P_r\) decreases.
-When the signal frequency becomes higher and the wavelength \(\lambda\) becomes shorter,
-the received power also decreases under the same propagation distance.
-
-From Eq.~\eqref{eq:friis-transmission},
-it can be further seen that the attenuation caused by free-space propagation is mainly determined by the factor
+Here, \(P_t\) and \(P_r\) denote the transmit and received powers,
+\(G_t\) and \(G_r\) denote the antenna gains, \(\lambda\) is the wavelength,
+and \(d\) is the propagation distance.
+Eq.~\eqref{eq:friis-transmission} shows that received power depends on
+transmit power, antenna gains, distance, and wavelength.
+The free-space attenuation is mainly determined by
 \[
     \left(
         \frac{\lambda}{4\pi d}
@@ -437,55 +316,24 @@ the received power in a link budget can also be written as
     \mathrm{FSPL}_{\mathrm{dB}}(d).
     \label{eq:link-budget-fspl}
 \end{equation}
-Eq.~\eqref{eq:link-budget-fspl} more intuitively illustrates the role of path loss
-in a communication link:
-transmit power and antenna gains increase the received power,
-whereas path loss reduces the received power.
+Eq.~\eqref{eq:link-budget-fspl} shows the link-budget role of path loss:
+transmit power and antenna gains increase received power, whereas propagation
+loss reduces it.
 
-It should be noted that the free-space path loss model is an idealized model.
-It assumes a clear line-of-sight propagation path between the transmitter and the receiver,
-and does not consider complex environmental factors such as building blockage,
-ground reflection,
-scatterers,
-and diffraction.
-In practical urban,
-indoor,
-industrial,
-and vehicular-network scenarios,
-the wireless propagation environment is more complex.
-The received signal strength is also affected by blockage,
-multipath propagation,
-material reflection properties,
-antenna height,
-and other factors.
-Therefore,
-path loss mainly describes the average trend of received signal strength with distance,
-whereas rapid local fluctuations need to be further explained together with multipath propagation
-and fading phenomena.
+The free-space model is idealized because it assumes a clear line-of-sight
+path and ignores blockage, reflection, scattering, and diffraction.
+In urban, indoor, industrial, or vehicular scenarios, these factors also affect
+received signal strength.
+Thus, path loss mainly describes the average distance-dependent trend, while
+local fluctuations are better explained by multipath propagation and fading.
 
-\subsection{Multipath Propagation}
+\topichead{Multipath Propagation}
 
-In a practical wireless environment,
-the transmitted signal usually does not reach the receiver along only one path.
-In addition to the direct path,
-the signal may also be reflected,
-scattered,
-or diffracted by buildings,
-the ground,
-walls,
-vehicles,
-human bodies,
-or other scatterers,
-and then arrive at the receiver from different directions and with different propagation distances.
-The phenomenon in which the same transmitted signal forms multiple signal copies through multiple propagation paths
-and these copies arrive jointly at the receiver is called multipath propagation.
-It should be noted that multipath propagation does not mean that there are multiple independent transmitted signals.
-Rather,
-it means that the same transmitted signal is ``decomposed'' by the wireless environment during propagation
-into multiple components with different delays,
-amplitudes,
-phases,
-and angles of arrival.
+In a practical wireless environment, the transmitted signal may reach the
+receiver through direct, reflected, scattered, or diffracted paths.
+The same transmitted signal is therefore observed as multiple components with
+different delays, amplitudes, phases, and angles of arrival; this phenomenon is
+called multipath propagation.
 
 In a relatively simple time-invariant multipath channel,
 the channel impulse response can be written as
@@ -500,26 +348,13 @@ the channel impulse response can be written as
     \right),
     \label{eq:time-invariant-multipath-channel}
 \end{equation}
-where
-\(L\) denotes the number of resolvable propagation paths,
-\(\alpha_{\ell}\) denotes the complex gain of the \(\ell\)-th path,
-which describes the amplitude attenuation and phase variation on that path,
-\(\tau_{\ell}\) denotes the propagation delay of the \(\ell\)-th path,
-and \(\delta(\cdot)\) denotes the impulse function.
-Eq.~\eqref{eq:time-invariant-multipath-channel} shows that the signal observed at the receiver
-can be understood as the superposition of multiple delayed signal copies.
+where \(L\) is the number of resolvable paths, \(\alpha_{\ell}\) is the
+complex gain of the \(\ell\)-th path, \(\tau_{\ell}\) is its delay, and
+\(\delta(\cdot)\) is the impulse function.
+The received signal can thus be viewed as a superposition of delayed copies.
 
-In mobile communication,
-vehicular networks,
-low-altitude UAV systems,
-and dynamic industrial scenarios,
-the transmitter,
-the receiver,
-or scatterers in the environment may change with time.
-In this case,
-the multipath channel also becomes time-varying.
-More generally,
-a time-varying multipath channel can be expressed as
+When the transmitter, receiver, or scatterers move, the multipath channel
+becomes time-varying and can be written as
 \begin{equation}
     h(t,\tau)
     =
@@ -531,142 +366,63 @@ a time-varying multipath channel can be expressed as
     \right),
     \label{eq:time-varying-multipath-channel}
 \end{equation}
-where
-\(\alpha_{\ell}(t)\) and \(\tau_{\ell}(t)\)
-denote the time-varying complex gain and propagation delay of the \(\ell\)-th path,
-respectively.
-If mobility is further considered,
-each path may also correspond to different Doppler shifts and angle information.
-Therefore,
-a multipath channel not only has a delay structure,
-but may also exhibit variations in the time,
-frequency,
-and spatial dimensions.
+where \(\alpha_{\ell}(t)\) and \(\tau_{\ell}(t)\) denote the time-varying
+complex gain and delay.
+With mobility, each path may also contain Doppler and angle information, so a
+multipath channel may vary in delay, time, frequency, and space.
 
-For communication systems,
-multipath propagation changes the amplitude,
-phase,
-and delay structure of the received signal.
-Without proper processing,
-it may cause signal distortion,
-ISI,
-or fluctuations in received power.
-However,
-in multi-antenna systems such as MIMO,
-rich scattering and multipath propagation may also increase the degrees of freedom of the spatial channel,
-thereby providing conditions for diversity gain and spatial multiplexing.
-Therefore,
-multipath is not always purely detrimental.
-Instead,
-it needs to be compensated,
-suppressed,
-or exploited according to the system structure and design objective.
-
-For ISAC systems,
-multipath propagation has a more direct physical meaning.
-Different propagation paths often correspond to different targets,
-reflectors,
-or scattering structures in the real environment.
-Thus,
-multipath components may carry sensing information such as range,
-velocity,
-angle,
-and reflection characteristics.
-For example,
-in urban road scenarios,
-signals transmitted by a base station or roadside unit may be reflected by vehicles,
-buildings,
-road surfaces,
-and pedestrians.
-Some reflected paths may help target localization and environmental sensing,
-whereas others may form clutter or false echoes.
-Thus, multipath in ISAC is not only a channel effect that affects communication quality,
-but also an important information source for understanding and sensing the physical environment.
-
-Multipath propagation itself mainly describes the path structure through which the signal arrives at the receiver.
-When these path components overlap and vary in time,
-frequency,
-or space,
-the received signal further exhibits different forms of fading.
-The next part explains the concept of fading and its basic classifications.
+For communication, multipath changes the amplitude, phase, and delay structure
+of the received signal and may cause distortion, ISI, or received-power
+fluctuations.
+In MIMO systems, however, rich scattering can also provide spatial degrees of
+freedom for diversity gain and spatial multiplexing.
+For ISAC, multipath has a more direct physical meaning: different paths may
+correspond to targets, reflectors, or scattering structures and may carry range,
+velocity, angle, and reflection information.
+When these components overlap and vary in time, frequency, or space, the
+received signal further exhibits fading.
 
 
-\subsection{Fading}
+\topichead{Fading}
 
-Fading in wireless channels refers to the phenomenon in which the amplitude,
-phase,
-or power of the received signal changes with spatial position,
-time,
-or frequency.
-It is not caused by a single factor.
-Instead,
-it is the result of the joint effects of propagation distance,
-blockage,
-multipath propagation,
-mobility,
-carrier frequency,
-and the surrounding environment.
-Path loss and shadowing mainly affect the average received signal power.
-Coherent superposition of multipath components causes rapid local fluctuations.
-The motion of the transmitter,
-receiver,
-or scatterers makes the channel vary with time.
-Therefore,
-we understand its physical origins and manifestations from the spatial,
-time,
-and frequency perspectives.
+Fading refers to variations in the amplitude, phase, or power of the received
+signal over space, time, or frequency.
+It results from propagation distance, blockage, multipath, mobility, carrier
+frequency, and the surrounding environment.
+Path loss and shadowing affect average received power, multipath superposition
+causes local fluctuations, and motion makes the channel time-varying.
+Fading is therefore commonly understood from spatial, temporal, and frequency
+perspectives.
 
 
 \noindent\textbullet\quad\textbf{From the spatial scale: large-scale fading and small-scale fading}
 
-\textbf{Large-scale fading} refers to the variation of the average received signal power over a relatively large spatial range.
-It is mainly caused by path loss and shadowing.
-For example,
-when a user gradually moves away from the base station,
-the received power usually decreases as the propagation distance increases.
-When the signal propagation path is blocked by obstacles such as buildings,
-trees,
-or vehicles,
-the received power may also drop significantly.
-Large-scale fading reflects the average variation trend of a wireless link over a large spatial scale,
-and is usually closely related to coverage,
-link budget,
-and shadowing.
+\textbf{Large-scale fading} refers to the variation of average received power
+over a relatively large spatial range.
+It is mainly caused by path loss and shadowing, and is closely related to
+coverage and link budget.
 
-\textbf{Small-scale fading} refers to the rapid fluctuation of the received signal over a short time interval
-or a short spatial distance.
-It is mainly caused by the coherent superposition of multipath components.
-Because different propagation paths have different propagation distances,
-phases,
-and delays,
-these components may reinforce or cancel each other when they are superimposed at the receiver.
-Therefore,
-even if the receiver moves only a small distance,
-the received signal may be significantly strengthened or weakened.
-Compared with large-scale fading,
-small-scale fading focuses more on the rapid local fluctuations caused by multipath superposition.
+\textbf{Small-scale fading} refers to rapid fluctuations over a short time
+interval or spatial distance.
+It is mainly caused by coherent multipath superposition: delayed components may
+reinforce or cancel each other, so the received signal can change significantly
+even over a small movement.
 
-As shown in Fig.~\ref{fig:spatial-fading},
-large-scale fading is mainly reflected as the average decreasing trend of received power with increasing distance,
-whereas small-scale fading appears as local rapid fluctuations superimposed on this average trend.
+As shown in Fig.~\ref{fig:spatial-fading}, large-scale fading appears as the
+average power trend, whereas small-scale fading appears as local fluctuations
+around that trend.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.75\textwidth]{figures/chapter2/fig_fading.png}
+    \includegraphics[width=0.66\textwidth]{figures/chapter2/fig_fading.png}
     \caption{Comparison between large-scale fading and small-scale fading.}
     \label{fig:spatial-fading}
 \end{figure}
 \noindent\textbullet\quad\textbf{From the time dimension: Doppler shift, coherence time, and fast/slow fading}
 
-From the time dimension,
-fading is closely related to the time-varying characteristics of the channel.
-When there is relative motion among the transmitter,
-receiver,
-or scatterers in the environment,
-the amplitude and phase of each propagation path may vary with time,
-so that the channel exhibits non-stationary or time-varying characteristics.
-In particular,
-the phase variation caused by relative motion appears as a Doppler shift.
+From the time dimension, fading is related to channel variation caused by
+relative motion among the transmitter, receiver, or scatterers.
+The resulting phase variation appears as a Doppler shift.
 The maximum Doppler shift is usually written as
 \begin{equation}
     f_D
@@ -681,157 +437,76 @@ where
 \(\lambda\) denotes the carrier wavelength,
 \(f_c\) denotes the carrier frequency,
 and \(c\) denotes the speed of light.
-Eq.~\eqref{eq:maximum-doppler-shift} shows that,
-for the same carrier frequency,
-a higher relative velocity leads to a larger Doppler shift.
-For the same moving speed,
-a higher carrier frequency and a shorter wavelength make the Doppler effect more significant.
-Therefore,
-the time variation of the channel becomes more prominent in high-mobility scenarios
-and high-frequency communication scenarios such as millimeter-wave and terahertz systems.
+Eq.~\eqref{eq:maximum-doppler-shift} shows that Doppler shift increases with
+relative velocity and carrier frequency, making time variation more prominent
+in high-mobility and high-frequency systems.
 
-To describe the temporal stability of the channel,
-the concept of \textbf{coherence time} \(T_c\) is usually introduced.
-Coherence time can be understood as the time scale over which the channel remains approximately unchanged.
-In general,
-coherence time is approximately inversely proportional to the maximum Doppler shift,
-namely
+The \textbf{coherence time} \(T_c\) describes the time scale over which the
+channel remains approximately unchanged and is roughly inversely proportional
+to the maximum Doppler shift:
 \begin{equation}
     T_c
     \propto
     \frac{1}{f_D}.
     \label{eq:coherence-time}
 \end{equation}
-A larger Doppler shift leads to a shorter coherence time,
-which indicates that the channel varies faster.
-A smaller Doppler shift leads to a longer coherence time,
-which indicates that the channel remains more stable over a longer period.
+A larger Doppler shift therefore implies a shorter coherence time and faster
+channel variation.
 
 Based on this concept,
 the difference between slow fading and fast fading can be understood.
 Let the symbol duration of the signal be \(T_s\).
 
-\textbf{Slow fading} refers to the case where the channel varies slowly relative to the signal.
-If \(T_s \ll T_c\),
-the channel remains almost unchanged within one symbol duration,
-and the received signal can be approximately regarded as passing through a relatively fixed channel.
-In this case,
-the channel variation mainly occurs over a longer time scale,
-and this is usually called slow fading.
+\textbf{Slow fading} occurs when the channel varies slowly relative to the
+signal.
+If \(T_s \ll T_c\), the channel is nearly constant within one symbol duration.
 
-\textbf{Fast fading} refers to the case where the channel varies rapidly relative to the signal.
-If \(T_s\) is close to \(T_c\),
-or even larger than \(T_c\),
-the channel may change significantly within one symbol duration,
-so that the received signal experiences time-varying channel effects even inside a symbol.
-In this case,
-synchronization,
-channel estimation,
-and equalization at the receiver become more difficult,
-and this is usually called fast fading.
-
-Therefore,
-fast fading and slow fading are not absolute concepts determined only by whether the moving speed is high.
-Rather,
-they are determined by the relative relationship between the time scale of channel variation
-and the time scale of the signal.
+\textbf{Fast fading} occurs when the channel varies rapidly relative to the
+signal, for example when \(T_s\) is close to or larger than \(T_c\).
+In this case, synchronization, channel estimation, and equalization become more
+difficult.
+Thus, slow and fast fading are determined by the relationship between the
+channel-variation time scale and the signal time scale.
 
 \noindent\textbullet\quad\textbf{From the frequency dimension: delay spread, coherence bandwidth, and frequency selectivity}
 
-From the frequency dimension,
-fading is closely related to multipath delay spread.
-In multipath propagation,
-different paths have different propagation distances,
-so their arrival times at the receiver are not exactly the same.
-The phenomenon in which multiple path components spread along the delay axis is called delay spread.
-The root-mean-square delay spread \(\tau_{\mathrm{rms}}\) is commonly used
-to describe the dispersion of multipath energy along the delay axis.
-A larger delay spread means that the arrival-time differences among different multipath components are more significant,
-and the fluctuations of the channel frequency response with frequency are usually stronger.
+From the frequency dimension, fading is closely related to multipath delay
+spread.
+The root-mean-square delay spread \(\tau_{\mathrm{rms}}\) describes the
+dispersion of multipath energy along the delay axis.
+A larger delay spread usually leads to stronger variation of the channel
+frequency response.
 
-To describe the correlation range of the channel in frequency,
-the concept of \textbf{coherence bandwidth} \(B_c\) is usually introduced.
-Coherence bandwidth can be understood as the frequency range over which the channel frequency response remains approximately consistent.
-In general,
-coherence bandwidth is approximately inversely proportional to the root-mean-square delay spread,
-namely
+The \textbf{coherence bandwidth} \(B_c\) describes the frequency range over
+which the channel response remains approximately consistent and is roughly
+inversely proportional to the delay spread:
 \begin{equation}
     B_c
     \propto
     \frac{1}{\tau_{\mathrm{rms}}}.
     \label{eq:coherence-bandwidth}
 \end{equation}
-A larger delay spread leads to a smaller coherence bandwidth,
-which means that the channel may vary significantly even over a narrower frequency range.
-A smaller delay spread leads to a larger coherence bandwidth,
-which means that the channel response may remain similar over a wider frequency band.
+A larger delay spread leads to a smaller coherence bandwidth.
 
-\textbf{Flat fading} refers to the fading condition in which the signal bandwidth \(B\)
-is much smaller than the coherence bandwidth \(B_c\),
-namely \(B \ll B_c\).
-In this case,
-all frequency components within the signal bandwidth experience approximately the same channel response,
-and the entire signal band can be approximately regarded as being affected by a single complex channel coefficient.
-Therefore,
-although flat fading changes the overall amplitude and phase of the signal,
-it usually does not cause significantly different distortions among different frequency components.
+\textbf{Flat fading} occurs when the signal bandwidth \(B\) is much smaller
+than the coherence bandwidth \(B_c\), namely \(B \ll B_c\).
+All frequency components then experience approximately the same channel
+response, so the signal band can be represented by a single complex coefficient.
 
-\textbf{Frequency-selective fading} refers to the fading condition in which the signal bandwidth \(B\)
-is close to the coherence bandwidth \(B_c\),
-or \(B > B_c\).
-In this case,
-different frequency components may experience different amplitude attenuations and phase variations,
-so the received signal exhibits non-uniform distortion in the frequency domain.
-Frequency-selective fading is an important problem in wideband wireless communication,
-and it is also one of the main motivations for OFDM multi-carrier transmission.
-OFDM divides a wideband signal into multiple narrowband subcarriers,
-so that the channel on each subcarrier approximately behaves as a flat-fading channel,
-thereby reducing the complexity of equalization and receiver processing.
+\textbf{Frequency-selective fading} occurs when \(B\) is close to or larger
+than \(B_c\).
+Different frequency components then experience different channel responses.
+This is a central issue in wideband communication and motivates OFDM, which
+divides a wideband signal into narrowband subcarriers that approximately
+experience flat fading.
 
-It should be emphasized that large-scale fading,
-small-scale fading,
-slow fading,
-fast fading,
-flat fading,
-and frequency-selective fading are not mutually exclusive classifications.
-They describe the variation characteristics of wireless channels from different observation perspectives:
-the spatial scale focuses on the trend of the received signal with position,
-the time dimension focuses on how fast the channel varies with time,
-and the frequency dimension focuses on how the channel affects different frequency components differently.
-A practical wireless channel may be affected simultaneously by path loss,
-shadowing,
-multipath superposition,
-mobility,
-and frequency selectivity.
-
-For traditional communication systems,
-fading is mainly regarded as an adverse factor that affects reliable transmission and link quality.
-For ISAC systems,
-however,
-the physical quantities behind fading,
-such as delay,
-Doppler,
-angle,
-and path gain,
-may also carry sensing information about target motion,
-spatial structure,
-and environmental state.
-Therefore,
-in ISAC,
-understanding fading is not only for compensating channel effects,
-but also for further exploiting environmental information in the wireless propagation process.
-
-The above fading concepts describe different characteristics of wireless channels
-from the perspectives of spatial scale,
-time variation,
-and frequency response.
-For ease of comparison and memorization,
-Table~\ref{tab:fading-types-comparison} summarizes the main sources,
-criteria,
-and intuitive meanings of common fading types.
-In practical wireless environments,
-these fading phenomena often coexist
-and jointly affect the communication link quality and the sensing performance of ISAC systems.
+These fading types are not mutually exclusive; they describe wireless-channel
+variation from spatial, temporal, and frequency perspectives.
+For communication, fading is mainly an impairment to reliable transmission.
+For ISAC, the quantities behind fading, such as delay, Doppler, angle, and path
+gain, may also carry sensing information.
+Table~\ref{tab:fading-types-comparison} summarizes the main sources, criteria,
+and meanings of common fading types.
 \begin{table}[htbp]
     \centering
     \caption{Comparison of different fading types.}
@@ -928,30 +603,16 @@ and jointly affect the communication link quality and the sensing performance of
 \end{table}
 
 
-\subsection{Classification of Communication Quality Metrics}
+\topichead{Communication Quality Metrics}
 
-The path loss,
-multipath propagation,
-fading,
-noise,
-and interference discussed above ultimately appear at the receiver as changes in signal quality.
-To evaluate their impact on information transmission,
-communication systems use a set of performance metrics at different levels.
-Some metrics describe the received signal condition,
-some describe the reliability of information recovery,
-and others describe how efficiently limited time-frequency resources are used.
-Accordingly,
-the following discussion organizes communication quality metrics into three categories:
-\textbf{link quality metrics},
-\textbf{reliability metrics},
-and \textbf{efficiency metrics}.
+Path loss, multipath, fading, noise, and interference ultimately appear at the
+receiver as changes in signal quality.
+Communication systems therefore use layered performance metrics: link quality
+metrics describe the received signal condition, reliability metrics describe
+information recovery, and efficiency metrics describe resource utilization.
 
-\textbf{Link quality metrics} are mainly used to describe the strength of the useful signal
-relative to noise or interference at the receiver.
-Typical metrics include the signal-to-noise ratio (SNR)
-and the signal-to-interference-plus-noise ratio (SINR).
-The SNR is defined as the ratio between useful signal power and noise power,
-namely
+\textbf{Link quality metrics} include SNR and SINR.
+The signal-to-noise ratio (SNR) is
 \begin{equation}
     \mathrm{SNR}
     =
@@ -961,35 +622,15 @@ namely
 where
 \(P_s\) denotes the useful signal power at the receiver,
 and \(P_n\) denotes the noise power.
-If the noise power spectral density is \(N_0\)
-and the system bandwidth is \(B\),
-the noise power can often be written as
+If the noise power spectral density is \(N_0\) and the bandwidth is \(B\),
 \begin{equation}
     P_n
     =
     N_0 B.
     \label{eq:noise-power-bandwidth}
 \end{equation}
-Therefore,
-when the received signal power is fixed,
-an increase in bandwidth introduces more noise power,
-which may reduce the SNR.
-In general,
-higher transmit power,
-smaller path loss,
-and larger antenna gain or beamforming gain lead to stronger received signal power
-and a higher SNR;
-larger noise power leads to a lower SNR.
-
-In practical systems,
-the undesired components at the receiver often include not only noise,
-but also interference from other users,
-neighboring cells,
-co-channel systems,
-or spectrum-sharing devices.
-Therefore,
-SINR is more suitable than SNR for describing the actual communication link quality.
-It is defined as
+When interference from other users, neighboring cells, or spectrum-sharing
+devices is present, SINR is more suitable:
 \begin{equation}
     \mathrm{SINR}
     =
@@ -998,27 +639,13 @@ It is defined as
 \end{equation}
 where
 \(P_i\) denotes the interference power.
-When the interference power is small,
-SINR approximately reduces to SNR.
-When the system is interference-limited,
-communication performance may improve only slightly even if the transmit power is increased.
-In this case,
-interference coordination,
-resource scheduling,
-power control,
-and beamforming become more important.
-For ISAC systems,
-SINR is also important because communication signals,
-sensing echoes,
-clutter,
-and multi-user interference may coexist over shared time,
-frequency,
-spatial,
-and power resources.
+For ISAC, SINR is particularly important because communication signals, sensing
+echoes, clutter, and multi-user interference may coexist over shared time,
+frequency, spatial, and power resources.
 
-\textbf{Reliability metrics} are used to measure whether the receiver can correctly recover the information sent by the transmitter.
-The most common reliability metric is the bit error rate (BER),
-which is defined as the ratio between the number of erroneous bits and the total number of transmitted bits:
+\textbf{Reliability metrics} measure whether transmitted information is
+correctly recovered.
+The bit error rate (BER) is
 \begin{equation}
     \mathrm{BER}
     =
@@ -1028,41 +655,17 @@ which is defined as the ratio between the number of erroneous bits and the total
 where
 \(N_{\mathrm{error}}\) denotes the number of bits incorrectly decided at the receiver,
 and \(N_{\mathrm{total}}\) denotes the total number of transmitted bits.
-A lower BER indicates higher communication link reliability.
-Usually,
-a higher SNR or SINR makes it easier for the receiver to distinguish different modulation symbols,
-thereby reducing the BER.
-When fading is severe,
-interference becomes stronger,
-or noise power increases,
-the BER often increases.
+A higher SNR or SINR generally reduces BER, whereas severe fading, stronger
+interference, or higher noise increases it.
+BER is also affected by modulation and channel coding: higher-order modulation
+improves spectral efficiency but is more sensitive to noise, while coding
+improves reliability at the cost of redundancy.
+Block error rate (BLER) is often used in practical systems because it is
+directly related to link adaptation, retransmission, and throughput.
 
-The bit error rate is also closely related to the modulation scheme and channel coding.
-Under the same SNR condition,
-higher-order modulation can carry more bits in each symbol,
-but the distance between constellation points becomes smaller.
-Therefore,
-it is usually more susceptible to noise and interference.
-Lower-order modulation has lower spectral efficiency,
-but stronger robustness.
-Channel coding can help the receiver detect and correct errors by introducing redundancy,
-thereby reducing the BER,
-but it also introduces a certain rate overhead.
-In practical mobile communication systems,
-the block error rate (BLER) is also commonly used
-to describe whether a transport block is correctly decoded.
-Compared with BER,
-BLER is closer to the evaluation needs of link adaptation,
-retransmission mechanisms,
-and actual throughput.
-
-\textbf{Efficiency metrics} are used to measure the capability of a communication system
-to transmit information under limited resources.
-The most basic rate metric is the data rate,
-which denotes the number of information bits transmitted per unit time.
-In an ideal Gaussian channel,
-the channel capacity can be used as a theoretical upper-bound reference,
-which is given by
+\textbf{Efficiency metrics} describe how effectively limited time-frequency
+resources are used.
+For an ideal Gaussian channel, capacity provides an upper-bound reference:
 \begin{equation}
     C
     =
@@ -1075,10 +678,8 @@ which is given by
 where
 \(C\) denotes the channel capacity,
 and \(B\) denotes the system bandwidth.
-If interference is considered,
-and the interference is treated as an additional Gaussian-like noise term,
-SNR is often replaced by SINR,
-leading to the commonly used achievable-rate approximation
+With interference treated as an additional noise-like term, SNR is often
+replaced by SINR:
 \begin{equation}
     C
     =
@@ -1088,19 +689,10 @@ leading to the commonly used achievable-rate approximation
     \right).
     \label{eq:capacity-sinr}
 \end{equation}
-Eq.~\eqref{eq:capacity-snr} and Eq.~\eqref{eq:capacity-sinr} show that the ideal rate reference is related to both bandwidth
-and link quality.
-Increasing bandwidth provides more frequency resources,
-while increasing SNR or SINR improves the amount of information that can be carried per unit bandwidth.
-However,
-capacity increases logarithmically with SNR or SINR.
-Therefore,
-in the high-SNR region,
-the rate gain brought by further increasing power gradually diminishes.
-
-Throughput is closer to the amount of information successfully transmitted in a practical system.
-It can be understood as the amount of useful data correctly received per unit time,
-and is commonly written as
+These formulas show that the rate reference depends on bandwidth and link
+quality, but grows only logarithmically with SNR or SINR.
+Throughput describes the amount of useful data successfully received per unit
+time:
 \begin{equation}
     R_{\mathrm{throughput}}
     =
@@ -1109,9 +701,7 @@ and is commonly written as
 \end{equation}
 where
 \(N_{\mathrm{success}}\) denotes the number of information bits successfully received within time \(T\).
-If \(R\) denotes the nominal transmission rate
-and BLER denotes the block error rate,
-the actual throughput can be approximately written as
+If \(R\) is the nominal transmission rate,
 \begin{equation}
     R_{\mathrm{throughput}}
     \approx
@@ -1121,13 +711,10 @@ the actual throughput can be approximately written as
     \right).
     \label{eq:throughput-bler}
 \end{equation}
-This expression indicates that a higher nominal rate does not necessarily mean a higher actual throughput.
-If the channel condition is unfavorable,
-leading to a higher error rate or retransmission probability,
-the amount of successfully transmitted data may even decrease.
+so a higher nominal rate does not necessarily imply higher useful throughput
+when BLER is large.
 
-Spectral efficiency is used to measure how much information can be transmitted per unit bandwidth,
-and is usually defined as
+Spectral efficiency measures the rate per unit bandwidth:
 \begin{equation}
     \eta
     =
@@ -1135,8 +722,7 @@ and is usually defined as
     \label{eq:spectral-efficiency-definition}
 \end{equation}
 with the unit bit/s/Hz.
-If channel capacity is used as an ideal reference,
-spectral efficiency can be written as
+Using capacity as an ideal reference,
 \begin{equation}
     \eta
     =
@@ -1158,50 +744,26 @@ as
     \right).
     \label{eq:spectral-efficiency-sinr}
 \end{equation}
-A higher spectral efficiency means that the system has a stronger ability
-to transmit information within limited spectrum resources.
-Against the background of increasingly scarce spectrum resources,
-spectral efficiency is one of the important metrics for evaluating wireless communication systems.
-For ISAC,
-spectral efficiency is closely related to whether communication and sensing can reuse spectrum,
-hardware,
-and waveform resources without requiring a separate band for sensing.
-Therefore,
-spectral efficiency not only reflects the resource utilization capability of the communication link itself,
-but is also closely related to communication--sensing resource reuse
-and the overall system efficiency.
+For ISAC, spectral efficiency is closely related to whether communication and
+sensing can reuse spectrum, hardware, and waveform resources.
+In summary, channel effects first influence SNR or SINR; SNR or SINR affects
+BER and BLER; reliability then influences throughput; and under a given
+bandwidth, the effective rate determines spectral efficiency.
+These communication-side metrics provide the basis for later analysis of
+communication--sensing tradeoffs, resource allocation, and joint optimization.
 
-In summary,
-the above metrics form a layered evaluation chain.
-Channel effects first influence SNR or SINR;
-SNR or SINR affects demodulation and decoding reliability,
-reflected by BER or BLER;
-reliability then influences throughput;
-and under a given bandwidth,
-the effective rate determines spectral efficiency.
-For ISAC systems,
-these communication-side metrics provide the basis for analyzing communication--sensing tradeoffs,
-resource allocation,
-and joint optimization.
+\topichead{Channel State Information}
 
-\subsection{Channel State Information: Definition, Acquisition, and Role}
-
-If a communication system needs to perform receiver processing and transmission optimization
-according to the wireless channel state,
-it must first obtain descriptive information about the current channel.
-Such information is usually called \textbf{channel state information} (CSI).
-CSI reflects the effects of amplitude attenuation,
-phase rotation,
-delay spread,
-frequency selectivity,
-and spatial direction that the signal experiences during propagation.
-In other words,
-CSI can be viewed as a mathematical description of the current state of the wireless channel
-from the perspective of the communication system.
+To perform receiver processing and transmission optimization, a communication
+system needs descriptive information about the current wireless channel, called
+\textbf{channel state information} (CSI).
+CSI captures amplitude attenuation, phase rotation, delay spread, frequency
+selectivity, and spatial direction from the viewpoint of the communication
+system.
 
 The specific form of CSI depends on the system structure.
-In a single-antenna narrowband system,
-CSI can be simplified as a complex channel coefficient
+In a single-antenna narrowband system, CSI can be simplified as a complex
+coefficient
 \begin{equation}
     h
     =
@@ -1211,8 +773,8 @@ CSI can be simplified as a complex channel coefficient
 where
 \(|h|\) describes the change in signal amplitude,
 and \(\phi\) describes the change in signal phase.
-In an OFDM system,
-CSI is usually represented as the frequency-domain channel response on different subcarriers:
+In an OFDM system, CSI is represented by the frequency-domain channel response
+on different subcarriers:
 \begin{equation}
     H[k],
     \label{eq:csi-ofdm-subcarrier}
@@ -1220,172 +782,77 @@ CSI is usually represented as the frequency-domain channel response on different
 where
 \(k\) denotes the subcarrier index,
 and \(H[k]\) describes the channel amplitude and phase variation on the \(k\)-th subcarrier.
-In a MIMO system,
-CSI is often represented as a channel matrix
+In a MIMO system, CSI is represented as a channel matrix
 \begin{equation}
     \mathbf{H},
     \label{eq:csi-mimo-matrix}
 \end{equation}
-whose matrix elements describe the spatial channel relationships
-between different transmit antennas and receive antennas.
-Thus, CSI does not have a fixed single form,
-but its core role is always to describe the effect of the wireless channel on the transmitted signal.
+whose elements describe the spatial relationships between transmit and receive
+antennas.
+Although CSI has different forms, its core role is always to describe how the
+channel affects the transmitted signal.
 
-CSI is usually estimated through pilot signals or reference signals.
-The transmitter sends pilot symbols known to the receiver at predefined time,
-frequency,
-or spatial resource positions.
-The receiver then estimates the channel based on the known transmitted values of the pilots
-and the corresponding received values.
-Under different systems and assumptions,
-different channel estimation algorithms can be used,
-such as least-squares (LS) estimation,
-linear minimum mean square error (LMMSE) estimation,
-and methods based on interpolation,
-filtering,
-or compressed sensing.
-In an OFDM system,
-CSI often needs to be obtained on multiple pilot subcarriers.
-The channel responses at other resource positions are then estimated through frequency-domain or time-domain interpolation.
-In a MIMO system,
-it is also necessary to estimate the channel matrix between different transmit antennas and receive antennas.
+CSI is usually estimated through pilot or reference signals known to the
+receiver.
+By comparing the transmitted pilots with the received pilot observations, the
+receiver estimates the channel using methods such as LS, LMMSE, interpolation,
+filtering, or compressed sensing, depending on system assumptions.
+In OFDM and MIMO systems, this estimation is performed across subcarriers and
+antenna pairs.
 
-The acquisition method of CSI is also related to the duplexing mode.
-In an FDD system,
-uplink and downlink usually use different frequency bands,
-and the two channels are not exactly the same.
-Therefore,
-after the receiver estimates the downlink CSI,
-it usually needs to feed back channel quality or precoding-related information to the transmitter through a feedback link.
-In a TDD system,
-uplink and downlink use different time slots in the same frequency band.
-Ideally,
-the wireless propagation channel has reciprocity.
-Thus,
-the base station can estimate the channel from uplink pilots
-and use it for downlink transmission design.
-However,
-in practical systems,
-channel reciprocity is also affected by mismatches in the RF front ends,
-so certain calibration is usually required.
+CSI acquisition also depends on the duplexing mode.
+In FDD systems, downlink CSI usually needs to be fed back because uplink and
+downlink use different frequency bands.
+In TDD systems, channel reciprocity allows uplink pilots to support downlink
+transmission design, although RF-chain calibration is often required in
+practice.
 
-CSI plays a fundamental role in communication system design.
-First,
-the receiver can use CSI for channel equalization
-to compensate for amplitude attenuation,
-phase rotation,
-and frequency-selective distortion caused by the channel,
-thereby improving the reliability of demodulation and decoding.
-Second,
-the transmitter or system scheduler can perform adaptive modulation and coding according to channel quality.
-When the channel condition is favorable,
-higher-order modulation and a higher coding rate can be used to improve the data rate.
-When the channel condition is unfavorable,
-lower-order modulation and stronger channel coding can be used to guarantee reliability.
-In addition,
-CSI can also be used for power control,
-user scheduling,
-resource allocation,
-and retransmission strategy design.
+CSI supports equalization, adaptive modulation and coding, power control, user
+scheduling, resource allocation, retransmission design, and MIMO precoding.
+In multi-user MIMO, it helps determine beamforming weights and select users for
+spatial multiplexing on the same time-frequency resource.
+Thus, CSI is a key foundation for adaptive transmission.
 
-In MIMO systems,
-the role of CSI is even more prominent.
-The transmitter or receiver can design beamforming and precoding weights according to the channel matrix,
-so that the transmit energy is concentrated as much as possible toward the target user
-while suppressing interference to other users.
-For multi-user MIMO systems,
-CSI can also help the system determine which users are suitable for spatial multiplexing
-on the same time-frequency resource,
-thereby improving system capacity and spectral efficiency.
-CSI is therefore an important foundation for communication systems
-to move from fixed transmission toward adaptive transmission.
-
-From the perspective of ISAC,
-the meaning of CSI is further extended.
-In traditional communication systems,
-CSI is mainly used to compensate for channel effects
-and improve communication reliability and transmission efficiency.
-In ISAC systems,
-however,
-CSI itself may also contain target and environmental information.
-For example,
-delay information in the channel may correspond to propagation path length or target range,
-Doppler shift may reflect the relative motion of a target or scatterer,
-angle information may correspond to target direction or spatial structure,
-and path gain and reflection characteristics may reflect target scattering strength
-or material properties of the environment.
-Therefore,
-CSI is not only the basis for adaptive communication link design,
-but may also become an important entry point for ISAC systems
-to sense the environment and understand the target state.
-
-CSI therefore connects the physical characteristics of the wireless channel
-with communication system design.
-For communication,
-CSI is used to adapt to and compensate for the channel.
-For ISAC,
-CSI can further help the system extract environmental,
-target,
-and motion information from channel variations.
-This is also a fundamental concept that will be repeatedly used in subsequent discussions of OFDM channel estimation,
-MIMO beamforming,
-and joint communication--sensing processing.
+In ISAC, CSI has an additional sensing meaning.
+Delay may correspond to range, Doppler may indicate target or scatterer motion,
+angle may describe spatial direction, and path gain may reflect scattering
+strength or material properties.
+CSI therefore connects wireless propagation with both adaptive communication
+and environmental sensing, and will reappear in OFDM channel estimation, MIMO
+beamforming, and joint communication--sensing processing.
 
 
-\subsection{Fundamentals of MIMO and Beamforming}
+\subsection{MIMO and Beamforming Fundamentals}
 
-Modern broadband wireless systems usually combine OFDM with multi-antenna techniques.
-The basic signal processing flow is illustrated in Fig.~\ref{fig:mimo_ofdm_flow}.
-After channel coding and modulation, data symbols are first assigned to different subcarriers.
-In a multi-antenna system, the symbols on each subcarrier can be further organized into spatial data streams
-and then mapped to multiple transmit antennas through MIMO precoding.
-After this mapping in both the frequency and spatial domains,
-each transmit antenna obtains its own set of frequency-domain subcarrier symbols,
-which are then transformed by an IFFT into the time-domain OFDM signal transmitted by that antenna.
-At the receiver, each receive antenna observes a time-domain signal.
-After synchronization, cyclic-prefix removal, and FFT processing,
-the receiver obtains the frequency-domain received symbols on each subcarrier.
-Therefore, on the \(k\)-th subcarrier,
-an equivalent MIMO input-output relationship can be established.
+Modern broadband wireless systems often combine OFDM with multi-antenna
+processing.
+As illustrated in Fig.~\ref{fig:mimo_ofdm_flow}, coded and modulated symbols
+are assigned to subcarriers, organized into spatial data streams, and mapped to
+transmit antennas through MIMO precoding.
+After IFFT-based OFDM modulation and receiver FFT processing, each subcarrier
+can be described by an equivalent MIMO input-output relationship.
 
 \begin{figure}[htbp]
     \centering
     % Replace the following file with the final generated flowchart.
-    \includegraphics[width=0.86\textwidth]{figures/chapter2/fig_mimo_ofdm_flow.png}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_mimo_ofdm_flow.png}
     \caption{Basic signal processing flow of a MIMO-OFDM system.}
     \label{fig:mimo_ofdm_flow}
 \end{figure}
 
-Based on this flow,
-the transmit and receive vectors discussed in this subsection are understood at the frequency-domain subcarrier level.
-In other words,
-\(\mathbf{x}[k]\) and \(\mathbf{y}[k]\) usually denote the frequency-domain antenna-symbol vectors
-on the \(k\)-th subcarrier,
-rather than the complete time-domain OFDM waveform after IFFT.
-This modeling viewpoint allows us to separate the roles of OFDM and MIMO more clearly:
-OFDM decomposes a wideband frequency-selective channel into multiple relatively manageable narrowband subcarrier channels,
-whereas MIMO further exploits the spatial degrees of freedom provided by multiple antennas on each subcarrier.
+In this subsection, \(\mathbf{x}[k]\) and \(\mathbf{y}[k]\) denote
+frequency-domain antenna-symbol vectors on the \(k\)-th subcarrier, not the
+complete time-domain OFDM waveform.
+OFDM converts a wideband frequency-selective channel into narrowband subcarrier
+channels, while MIMO exploits spatial degrees of freedom on each subcarrier.
 \topichead{MIMO and the Spatial Dimension}
-In the above MIMO-OFDM processing flow,
-the central role of MIMO is to introduce the spatial dimension into the wireless link.
-Compared with a single-input single-output (SISO) system,
-MIMO does not merely increase the number of antennas;
-more importantly,
-it turns the spatial domain itself into a communication resource that can be designed and exploited.
-The spatial channel relationships among multiple transmit and receive antennas make it possible for the system
-to transmit multiple data streams over the same time-frequency resource,
-improve reliability by allowing the same information to experience different spatial paths,
-and enhance the desired signal or suppress interference through coherent multi-antenna processing.
-
-For ISAC systems,
-this spatial dimension is equally important.
-A communication system is expected not only to deliver information reliably to users,
-but also to control how signal energy is distributed in space.
-Therefore,
-MIMO and beamforming are not only important techniques for improving communication link quality,
-but also the foundation for target illumination,
-angle estimation,
-and joint beam design in later discussions.
+MIMO introduces the spatial dimension into the wireless link.
+Compared with SISO, it turns the spatial domain into a design resource: the
+system can transmit multiple streams on the same time-frequency resource,
+improve reliability through multiple spatial paths, and enhance or suppress
+signals through coherent antenna processing.
+For ISAC, this spatial control is also the basis for target illumination, angle
+estimation, and joint beam design.
 
 \topichead{Basic MIMO Signal Model}
 On the \(k\)-th subcarrier,
@@ -1398,20 +865,11 @@ the equivalent input-output relationship of a MIMO system can be written as
 \mathbf{n}[k].
 \label{eq:mimo_ofdm_subcarrier_model}
 \end{equation}
-Here,
-\(\mathbf{x}[k]\) denotes the frequency-domain transmit-symbol vector associated with all transmit antennas
-on the \(k\)-th subcarrier,
-while \(\mathbf{y}[k]\) denotes the frequency-domain received-symbol vector observed across all receive antennas
-on the same subcarrier.
-The vector \(\mathbf{n}[k]\) denotes the noise vector,
-and \(\mathbf{H}[k]\) denotes the MIMO frequency-domain channel matrix on the \(k\)-th subcarrier.
-It should be noted that \(\mathbf{x}[k]\) denotes the frequency-domain transmit-symbol vector
-on the \(k\)-th subcarrier before the IFFT at the transmitter,
-whereas \(\mathbf{y}[k]\) denotes the frequency-domain received-symbol vector
-on the \(k\)-th subcarrier after the FFT at the receiver.
-Therefore,
-this model describes an equivalent input-output relationship at the subcarrier level,
-rather than the complete time-domain OFDM waveform.
+Here, \(\mathbf{x}[k]\) and \(\mathbf{y}[k]\) are the transmit and receive
+antenna-symbol vectors on the \(k\)-th subcarrier, \(\mathbf{n}[k]\) is the
+noise vector, and \(\mathbf{H}[k]\) is the MIMO frequency-domain channel matrix.
+This is an equivalent subcarrier-level model rather than a complete
+time-domain OFDM waveform model.
 
 If the transmitter and the receiver are equipped with \(N_t\) and \(N_r\) antennas, respectively,
 then
@@ -1424,83 +882,39 @@ then
 \quad
 \mathbf{H}[k]\in\mathbb{C}^{N_r\times N_t}.
 \]
-Furthermore,
-the element \(h_{ij}[k]\) in \(\mathbf{H}[k]\) represents the frequency-domain channel response
-from the \(j\)-th transmit antenna to the \(i\)-th receive antenna on the \(k\)-th subcarrier.
-Therefore,
-the rows of \(\mathbf{H}[k]\) correspond to receive antennas,
-whereas its columns correspond to transmit antennas.
-Unlike a SISO system,
-where each subcarrier is described by a single scalar channel coefficient \(H[k]\),
-a MIMO system must describe all propagation paths between multiple transmit and receive antennas.
-Thus,
-\(\mathbf{H}[k]\) is not merely a coefficient describing amplitude attenuation or phase rotation,
-but a matrix that contains multiple spatial channel relationships.
-This matrix-based channel representation provides the basis for discussing how spatial differences among multiple antennas
-can be exploited for spatial multiplexing,
-spatial diversity,
-array gain,
-and beamforming.
+The element \(h_{ij}[k]\) represents the channel from the \(j\)-th transmit
+antenna to the \(i\)-th receive antenna.
+Thus, \(\mathbf{H}[k]\) contains multiple spatial channel relationships and
+provides the basis for spatial multiplexing, spatial diversity, array gain, and
+beamforming.
 
 \topichead{Beamforming and Spatial Processing}
-In the MIMO channel matrix \(\mathbf{H}[k]\),
-the channel coefficients between different transmit and receive antennas jointly describe
-the spatial channel relationships of a multi-antenna system.
-To exploit this spatial structure,
-the system needs to control the amplitudes and phases of the signals across different antennas.
-Beamforming is a typical example of this spatial processing idea:
-by designing complex-valued weights for different antennas,
-it coherently enhances the desired signal toward a target user or direction,
-while reducing the leakage of signal energy toward undesired users or interference directions.
-
-In communication systems,
-beamforming is usually designed based on the estimated channel state information.
-Its direct purpose is to increase the effective received signal strength of the target user,
-suppress multi-user interference,
-and improve the overall link quality.
-From the perspective of spatial energy distribution,
-beamforming can be understood as a way of controlling how wireless signal energy is distributed in space.
-For ISAC,
-this capability is particularly important,
-because the same set of antenna weights affects not only the received signal quality of communication users,
-but also the illumination strength and echo quality of sensing targets.
-Therefore,
-beamforming itself is better understood as a spatial processing method.
-Depending on the design objective,
-it can lead to array gain,
-interference suppression,
-and spatial selectivity,
-and it also provides a basis for later discussions on spatial multiplexing,
-spatial diversity,
-and joint beam design. 
+Beamforming exploits the spatial structure of \(\mathbf{H}[k]\) by controlling
+the amplitudes and phases across antennas.
+With properly designed complex weights, the desired signal can be coherently
+enhanced toward a user or direction, while leakage and interference can be
+suppressed.
+For ISAC, the same weights also affect target illumination and echo quality, so
+beamforming is a basic tool for spatial energy control.
 
 \topichead{Main Gains of MIMO}
-Based on the above MIMO channel representation and spatial processing perspective,
-a MIMO system can provide several typical performance gains.
-In this subsection,
-we focus on three fundamental gains:
-spatial multiplexing,
-spatial diversity,
-and array gain.
-They correspond to different system objectives:
-spatial multiplexing mainly improves transmission rate,
-spatial diversity improves link reliability,
-and array gain increases the effective signal strength.
+Based on the MIMO channel representation, three fundamental gains are commonly
+discussed: spatial multiplexing, spatial diversity, and array gain.
+They correspond respectively to higher rate, improved reliability, and stronger
+effective signal power.
 Figure~\ref{fig:mimo_gains_comparison} provides a conceptual comparison of these three gains.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.88\textwidth]{figures/chapter2/fig_mimo_gain.png}
+    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_mimo_gain.png}
     \caption{Conceptual comparison of spatial multiplexing, spatial diversity, and array gain via beamforming in MIMO systems.}
     \label{fig:mimo_gains_comparison}
 \end{figure}
 
 As illustrated in Fig.~\ref{fig:mimo_gains_comparison}(a),
-\textbf{spatial multiplexing} refers to transmitting multiple independent data streams
-on the same time instant and the same subcarrier,
-so that these streams can be transmitted in parallel through distinguishable spatial channels.
-Its main role is to improve throughput and spectral efficiency
-without occupying additional time or frequency resources.
+\textbf{spatial multiplexing} transmits multiple independent streams over the
+same time-frequency resource through distinguishable spatial channels, thereby
+improving throughput and spectral efficiency.
 If the number of spatial streams transmitted on the \(k\)-th subcarrier is denoted by \(N_s\),
 then the number of supportable spatial streams is usually limited by the rank of the channel matrix:
 \begin{equation}
@@ -1511,15 +925,11 @@ N_s
 \min(N_t,N_r).
 \label{eq:mimo_spatial_stream_rank}
 \end{equation}
-Compared with spatial diversity and array gain,
-spatial multiplexing emphasizes transmitting more data streams simultaneously,
-and is therefore mainly associated with rate improvement.
 
 As illustrated in Fig.~\ref{fig:mimo_gains_comparison}(b),
-\textbf{spatial diversity} refers to allowing the same information to propagate through multiple independent
-or weakly correlated spatial paths.
-Its main role is to reduce the probability that all paths experience deep fading at the same time,
-thereby improving link reliability and reducing the risk of outage or bit errors.
+\textbf{spatial diversity} sends the same information through independent or
+weakly correlated spatial paths, reducing the probability that all paths suffer
+deep fading simultaneously.
 Under ideal independent fading conditions,
 if the system can fully exploit the spatial branches between \(N_t\) transmit antennas and \(N_r\) receive antennas,
 the maximum spatial diversity order can be expressed as
@@ -1529,42 +939,21 @@ d_{\max}
 N_tN_r.
 \label{eq:mimo_max_diversity_order}
 \end{equation}
-Here,
-\(d_{\max}\) denotes the maximum diversity order that the system can achieve.
-Unlike spatial multiplexing,
-spatial diversity does not primarily aim to transmit more independent data streams simultaneously;
-instead,
-it emphasizes protecting the same information through multiple spatial paths.
+Here, \(d_{\max}\) denotes the maximum achievable diversity order.
 
-As illustrated in Fig.~\ref{fig:mimo_gains_comparison}(c),
-\textbf{array gain} refers to enhancing the desired signal through coherent transmission
-or coherent combining across multiple antennas.
-Its main role is to increase the effective SNR or SINR at the receiver,
-thereby improving link quality.
-Unlike spatial diversity,
-the emphasis of array gain is not on reducing the probability that multiple paths experience deep fading simultaneously,
-but on making the target signal stronger through phase compensation and weighted processing
-at the transmitter or receiver.
+\textbf{Array gain}, shown in Fig.~\ref{fig:mimo_gains_comparison}(c),
+enhances the desired signal through coherent transmission or combining across
+antennas, increasing the effective SNR or SINR.
 
-These three gains may appear simultaneously in practical MIMO systems,
-but they correspond to different performance objectives.
-Spatial multiplexing emphasizes rate,
-spatial diversity emphasizes reliability,
-and array gain emphasizes signal strength.
-Beamforming,
-on the other hand,
-can be regarded as an important method for controlling spatial energy distribution.
-Depending on the design objective,
-it can lead to array gain,
-interference suppression,
-and spatial selectivity.
+In practical systems, these gains may appear together, but their design
+objectives differ: rate, reliability, and signal strength.
+Beamforming is one important method for realizing array gain, interference
+suppression, and spatial selectivity.
 
 \topichead{Transmit Precoding and Receive Processing}
-The above MIMO gains do not arise automatically simply because multiple antennas are deployed.
-They rely on spatial signal processing at both the transmitter and the receiver.
-On the \(k\)-th subcarrier,
-the transmitter first maps the spatial data-stream vector onto multiple transmit antennas,
-which can be written as
+MIMO gains require spatial processing at the transmitter and receiver.
+On the \(k\)-th subcarrier, the transmitter maps the spatial data-stream vector
+onto antenna ports:
 \begin{equation}
 \mathbf{x}[k]
 =
@@ -1579,16 +968,9 @@ The dimensions of the related quantities are
 \quad
 \mathbf{x}[k]\in\mathbb{C}^{N_t\times 1}.
 \]
-Here,
-\(\mathbf{s}[k]\) denotes the spatial data-stream vector on the \(k\)-th subcarrier,
-where \(N_s\) is the number of spatial streams.
-The vector \(\mathbf{x}[k]\) denotes the frequency-domain transmit-symbol vector
-across the transmit antennas on the same subcarrier.
-The matrix \(\mathbf{W}[k]\) is the transmit precoding matrix,
-which determines how the spatial data streams are distributed across the transmit antennas
-with different amplitudes and phases.
-Therefore,
-precoding performs the mapping from spatial data streams to antenna-port symbols.
+Here, \(\mathbf{s}[k]\) is the spatial data-stream vector, \(N_s\) is the
+number of streams, and \(\mathbf{W}[k]\) is the transmit precoding matrix that
+maps streams to antenna-port symbols with selected amplitudes and phases.
 
 Substituting the precoded transmit vector into the MIMO subcarrier model gives
 \begin{equation}
@@ -1599,19 +981,12 @@ Substituting the precoded transmit vector into the MIMO subcarrier model gives
 \mathbf{n}[k].
 \label{eq:mimo_precoded_channel}
 \end{equation}
-The product
-\(\mathbf{H}[k]\mathbf{W}[k]\in\mathbb{C}^{N_r\times N_s}\)
-can be regarded as the effective MIMO channel after precoding.
-It describes how the \(N_s\) spatial data streams are observed by the \(N_r\) receive antennas
-after transmit precoding and wireless propagation.
-In other words,
-the received vector \(\mathbf{y}[k]\) is usually a mixture of multiple spatial data streams after passing through the channel,
-rather than a set of already separated data streams.
+The product \(\mathbf{H}[k]\mathbf{W}[k]\) is the effective channel after
+precoding, and \(\mathbf{y}[k]\) is generally a mixture of spatial streams.
 
-To recover the spatial data streams from the receive-antenna observations,
-the receiver further performs combining or detection.
-Let \(\mathbf{G}[k]\in\mathbb{C}^{N_s\times N_r}\) denote the receive processing matrix on the \(k\)-th subcarrier.
-Then,
+The receiver then applies combining or detection.
+Let \(\mathbf{G}[k]\in\mathbb{C}^{N_s\times N_r}\) denote the receive
+processing matrix:
 \[
 \hat{\mathbf{s}}[k]
 =
@@ -1630,79 +1005,25 @@ the overall equivalent input-output relationship becomes
 \mathbf{G}[k]\mathbf{n}[k].
 \label{eq:mimo_end_to_end_model}
 \end{equation}
-Therefore,
-the end-to-end MIMO transmission process can be understood as three consecutive stages:
-transmit precoding,
-wireless propagation,
-and receive processing.
-The matrix \(\mathbf{W}[k]\) maps spatial data streams to transmit antennas,
-\(\mathbf{H}[k]\) describes the multi-antenna wireless channel,
-and \(\mathbf{G}[k]\) is used to recover the data streams from the receive-antenna observations.
+The end-to-end MIMO process is therefore composed of transmit precoding,
+wireless propagation, and receive processing.
 
-Different MIMO gains are often associated with different processing strategies.
-For spatial multiplexing,
-multiple parallel spatial streams are transmitted,
-and \acs{ZF} or MMSE detection can be used to separate the mixed data streams at the receiver.
-For spatial diversity,
-maximum-ratio combining or space-time coding can be used to exploit multiple weakly correlated spatial branches
-and protect the same information.
-For array gain,
-maximum-ratio transmission or beamforming can be used to coherently enhance the target signal
-at the transmitter or the receiver.
-This discussion shows that MIMO performance improvements come from the joint effect of transmit precoding,
-wireless propagation,
-and receive processing,
-rather than from the mere increase in antenna number.
+Spatial multiplexing often uses detectors such as \acs{ZF} or MMSE to separate
+streams; spatial diversity uses combining or space-time coding; and array gain
+uses coherent transmission or combining.
+MIMO gains therefore arise from the joint effect of precoding, propagation, and
+receive processing, not merely from adding antennas.
 
 \topichead{Connection to ISAC}
-From the communication perspective,
-MIMO and beamforming are mainly used to improve link rate,
-reliability,
-and effective received signal strength,
-while suppressing interference among multiple users or multiple data streams.
-From the sensing perspective,
-a multi-antenna system can also illuminate target regions
-by controlling how signal energy is distributed in space,
-and it can obtain target direction information
-by exploiting the amplitude and phase differences among the signals received by different antennas.
-Therefore,
-the spatial degrees of freedom provided by MIMO are not only an important source of performance improvement
-in modern communication systems,
-but also a fundamental basis for wireless sensing to acquire spatial information.
-
-In ISAC systems,
-communication and sensing often share spectrum resources,
-hardware platforms,
-transmit waveforms,
-and antenna arrays.
-Therefore,
-beam design is no longer only oriented toward communication users,
-but must also take sensing targets or regions of interest into account.
-For example,
-the transmit precoding matrix or beamforming weights should ensure sufficient received signal quality
-for communication users,
-while also providing enough illumination energy toward the target direction
-so that useful echoes can be formed for detection and parameter estimation.
-When communication users and sensing targets are located in different spatial directions,
-the system usually needs to make tradeoffs among communication rate,
-interference suppression,
-target echo strength,
-and angle estimation performance.
-
-Therefore,
-MIMO and beamforming form a key foundation
-for extending conventional communication systems toward MIMO-ISAC systems.
-They provide not only effective means for improving communication link performance,
-but also basic tools for controlling spatial energy distribution,
-acquiring spatial sensing information,
-and designing joint communication--sensing beams.
-In later discussions on MIMO-ISAC,
-joint communication--sensing beam design,
-and spatial resource allocation,
-the concepts of spatial channels,
-precoding,
-and receive processing established in this subsection
-will continue to serve as a foundation.
+From the communication perspective, MIMO and beamforming improve rate,
+reliability, effective received signal strength, and interference suppression.
+From the sensing perspective, they control spatial illumination and obtain
+direction information from array observations.
+In ISAC, the same spectrum, hardware, waveform, and antenna array may serve
+both users and sensing targets, so beam design must balance communication rate,
+interference suppression, target echo strength, and angle estimation.
+The spatial-channel, precoding, and receive-processing concepts introduced here
+therefore form a key foundation for MIMO-ISAC and spatial resource allocation.
 
 \section{Core Principles of Radar and Sensing}
 
@@ -1721,88 +1042,43 @@ echo formation, performance metrics, and the basic processing flow.
 The purpose is to outline the fundamental concepts in radar sensing that are
 closely related to subsequent ISAC system modeling and joint design.
 
-\subsection{Basic Tasks of Radar Sensing Systems}
+\subsection{Radar Sensing Tasks and Echo-Based Parameter Extraction}
 
-The basic tasks of a radar sensing system can be understood as a layered
-process from target existence determination to target state characterization.
-In general, radar sensing does not merely involve receiving echo signals.
-Instead, it extracts physical information related to targets and the surrounding
-environment from the received signals.
-According to the task hierarchy, a radar sensing system typically includes
-three basic tasks: target detection, parameter estimation, and target tracking.
-Target detection focuses on determining whether a target exists in the
-observation region.
-Parameter estimation further obtains physical parameters such as range,
-velocity, and angle.
-Target tracking describes the continuous evolution of these states over time.
+\topichead{Basic Tasks of Radar Sensing Systems}
+
+The basic tasks of radar sensing form a hierarchy from target existence
+determination to target state characterization.
+Target detection determines whether a target exists in the observation region;
+parameter estimation obtains quantities such as range, velocity, and angle; and
+target tracking describes the evolution of these states over time.
 
 \topichead{Target Detection}
-Target detection is a fundamental task in radar sensing systems,
-and its core purpose is to determine whether a target exists in the
-observation region.
-From a signal processing perspective, target detection can be understood as
-making a decision between ``target present'' and ``target absent'' based on
+Target detection decides between ``target present'' and ``target absent'' from
 the received signal.
-Reliable target detection is a prerequisite for subsequent parameter
-estimation and target tracking.
-Its reliability therefore directly affects the effectiveness of subsequent
-sensing tasks.
-In practical systems, target detection also involves a trade-off between
-missed detection and false alarm:
-missed detection refers to the case where a real target is not detected by
-the system, whereas false alarm refers to the case where noise, clutter, or
-interference is incorrectly judged as a target.
+It is the prerequisite for parameter estimation and tracking, and it involves a
+tradeoff between missed detection and false alarm.
 
 \topichead{Parameter Estimation}
-Parameter estimation is the process of further obtaining the physical state
-of a target based on target detection.
-While target detection only determines whether a target exists in the
-observation region, parameter estimation further characterizes the target's
-position and motion properties.
-In radar sensing systems, commonly estimated parameters include range,
-velocity, and angle.
-Among them, range and angle mainly describe the spatial position of the target,
-whereas velocity describes the motion state of the target relative to the radar.
-Together, these parameters provide a basic description of the target state,
-and their estimation accuracy affects the reliability of subsequent target
-tracking and scene understanding.
+Parameter estimation further characterizes the target state after detection.
+Common parameters include range, velocity, and angle, which describe target
+position and motion and support later tracking and scene understanding.
 \topichead{Target Tracking}
-Target tracking is the process of continuously updating the target state
-based on target detection and parameter estimation.
-Unlike single-frame parameter estimation, target tracking focuses on the
-association and evolution of the target state across multiple observation
-instants.
-Through target tracking, the system can form a target trajectory and further
-infer the motion trend of the target, such as approaching, moving away,
-turning, or accelerating.
-Therefore, target tracking provides more continuous sensing information for
-dynamic scene understanding and subsequent decision-making.
-
-\subsection{Basic Idea of Echo Formation and Parameter Extraction}
+Target tracking continuously updates the target state across multiple
+observation instants.
+It forms trajectories and supports interpretation of motion trends such as
+approaching, moving away, turning, or accelerating.
 
 \topichead{Echo Formation}
-The formation of radar echoes can be understood as the result of the
-interaction between the transmitted signal, the target, and the propagation
-environment.
-A radar system first transmits a known signal, which propagates through space
-and is reflected or scattered when it encounters a target.
-Part of the signal energy then returns to the receiver along the propagation
-path and forms the received echo.
-Compared with the original transmitted signal, the echo usually exhibits
-amplitude attenuation, propagation delay, phase variation, and possible
-Doppler shift.
-These changes are not merely distortions introduced during signal propagation;
-they also carry physical information about the target, such as range,
-velocity, and angle.
-Therefore, the basic idea of radar parameter extraction is to infer the state
-information of the target and the environment by analyzing how the received
-echo differs from the transmitted signal.
+Radar echoes result from the interaction among the transmitted signal, the
+target, and the propagation environment.
+After reflection or scattering, the echo returns with amplitude attenuation,
+delay, phase variation, and possible Doppler shift.
+These changes carry range, velocity, and angle information, so radar parameter
+extraction analyzes how the echo differs from the transmitted signal.
 
 \topichead{Range Estimation}
-Range estimation is based on the propagation delay of the echo relative to
-the transmitted signal.
-To describe this relationship, the received signal can first be represented
-by a simplified echo model:
+Range estimation is based on the echo delay relative to the transmitted signal.
+A simplified echo model is
 \begin{equation}
     r(t)=\alpha s(t-\tau)e^{j2\pi f_D t}+n(t),
     \label{eq:simplified_radar_echo_model}
@@ -1813,23 +1089,16 @@ coefficient caused by propagation attenuation and target reflection properties,
 \(\tau\) denotes the propagation delay of the echo relative to the transmitted
 signal, \(f_D\) denotes the Doppler shift caused by target motion, and \(n(t)\)
 denotes noise.
-This model shows that a radar echo can be regarded as the transmitted signal
-after delay, amplitude variation, and frequency shift.
+This model represents the echo as a delayed, attenuated, and frequency-shifted
+version of the transmitted signal.
 
-In range estimation, the key quantity is the propagation delay \(\tau\).
-For a monostatic radar, the transmitter and receiver are located at the same
-or nearly the same position.
-The radar signal first propagates from the radar to the target, and then
-returns to the radar receiver after being reflected or scattered by the target.
-As illustrated in Fig.~\ref{fig:range_estimation_monostatic_radar}, if the
-target is located at a range \(R\) from the radar, the total propagation
-distance of the radar signal is \(2R\).
-Therefore, the echo delay corresponds to the round-trip propagation time
-rather than the one-way propagation time.
+For a monostatic radar, the signal travels from radar to target and back.
+As illustrated in Fig.~\ref{fig:range_estimation_monostatic_radar}, a target
+at range \(R\) produces a round-trip propagation distance \(2R\).
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_range_estimation.png}
+    \includegraphics[width=0.62\textwidth]{figures/chapter2/fig_range_estimation.png}
     \caption{Range estimation in a monostatic radar.}
     \label{fig:range_estimation_monostatic_radar}
 \end{figure}
@@ -1846,45 +1115,25 @@ Thus, the target range can be expressed as
     R=\frac{c\tau}{2}.
     \label{eq:radar_range_estimation}
 \end{equation}
-The factor \(2\) in the denominator reflects the round-trip propagation process
-of the radar signal, namely, radar--target--radar propagation.
-Therefore, once the propagation delay \(\tau\) is estimated from the received
-echo, the target range can be further obtained.
+The factor \(2\) reflects the radar--target--radar round trip.
 \topichead{Velocity Estimation}
-Velocity estimation is based on the Doppler shift of the echo relative to the
-transmitted signal.
-When a target moves with respect to the radar, the distance between the target
-and the radar varies with time, which causes the frequency of the echo signal
-to shift relative to that of the transmitted signal.
-This frequency variation is referred to as the Doppler shift.
-
-In radar velocity estimation, the Doppler shift usually corresponds to the
-component of the target velocity along the radar line of sight, namely, the
-radial velocity.
-The radial velocity characterizes the rate at which the distance between the
-target and the radar changes with time.
-Therefore, it reflects whether the target is approaching or moving away from
-the radar, rather than the complete two-dimensional or three-dimensional
-velocity vector of the target.
-As illustrated in Fig.~\ref{fig:velocity_estimation_monostatic_radar}, for a
-target moving with a radial velocity \(v\), the echo signal exhibits a Doppler
-shift associated with this velocity component.
+Velocity estimation is based on the Doppler shift of the echo.
+For a moving target, the line-of-sight distance changes with time, producing a
+frequency shift related to the radial velocity.
+As illustrated in Fig.~\ref{fig:velocity_estimation_monostatic_radar}, this
+radial component describes whether the target is approaching or moving away
+from the radar.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_velocity_estimation.png}
+    \includegraphics[width=0.62\textwidth]{figures/chapter2/fig_velocity_estimation.png}
     \caption{Velocity estimation in a monostatic radar.}
     \label{fig:velocity_estimation_monostatic_radar}
 \end{figure}
 
-For a monostatic radar, the transmitter and receiver are located at the same
-or nearly the same position.
-The radar signal first propagates from the radar to the target and then returns
-to the radar receiver after being reflected or scattered by the target.
-Therefore, target motion affects both the outgoing path and the return path,
-and the Doppler effect in a monostatic radar appears as a two-way effect.
-As a result, the radial velocity \(v\) and the Doppler shift \(f_D\) are
-commonly related by
+For a monostatic radar, target motion affects both the outgoing and return
+paths, so the radial velocity \(v\) and Doppler shift \(f_D\) are commonly
+related by
 \begin{equation}
     f_D=\frac{2v}{\lambda},
     \label{eq:radar_doppler_shift}
@@ -1895,37 +1144,16 @@ or equivalently,
     \label{eq:radar_velocity_estimation}
 \end{equation}
 where \(\lambda\) denotes the carrier wavelength.
-The factor \(2\) in the formula reflects the round-trip propagation process
-in a monostatic radar, that is, the target motion affects both the propagation
-from the radar to the target and the propagation from the target back to the
-radar.
-
-Once the Doppler shift \(f_D\) is estimated from the received echo, the radial
-velocity of the target can be further obtained.
-In practical applications, targets approaching the radar and targets moving
-away from the radar correspond to Doppler shifts with opposite signs.
-In this section, we mainly focus on the basic relationship between the
-magnitude of the Doppler shift and the magnitude of the radial velocity.
+The factor \(2\) again reflects the two-way propagation.
+Approaching and receding targets correspond to Doppler shifts with opposite
+signs, while the above equations describe the basic magnitude relationship.
 
 \topichead{Angle Estimation}
-Angle estimation is based on the spatial phase differences in the signals
-received by an antenna array.
-Unlike range estimation and velocity estimation, angle information usually
-requires spatial observations provided by multiple antenna elements.
-For a single receiving antenna, the received signal may contain delay and
-Doppler information, but it is generally difficult to determine the direction
-of arrival of the target echo from only one spatial sampling point.
-Therefore, radar systems commonly employ antenna arrays to obtain angle
-sensing capability.
-
-For an antenna array composed of multiple elements, the propagation path lengths
-from the same target echo to different antenna elements are usually not exactly
-the same.
-The difference in path length leads to phase differences among the received
-signals at different elements, and these phase differences are related to the
-direction of arrival of the echo.
-Therefore, by analyzing the phase relationship among the array received signals,
-the target angle can be further estimated.
+Angle estimation relies on spatial phase differences across an antenna array.
+A single antenna may provide delay and Doppler information, but direction of
+arrival generally requires multiple spatial samples.
+For an array, different propagation path lengths to different elements produce
+phase differences related to the echo direction.
 
 Consider a uniform linear array as an example.
 Let \(d\) denote the spacing between adjacent antenna elements, \(\lambda\)
@@ -1940,7 +1168,7 @@ difference between adjacent antenna elements can be expressed as
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_angle_estimation.jpeg}
+    \includegraphics[width=0.62\textwidth]{figures/chapter2/fig_angle_estimation.jpeg}
     \caption{Angle estimation using an antenna array.}
     \label{fig:angle_estimation_antenna_array}
 \end{figure}
@@ -1959,12 +1187,10 @@ phase difference between adjacent antenna elements as
     \label{eq:array_phase_difference}
 \end{equation}
 
-Therefore, the target angle \(\theta\) is reflected in the phase differences
-of the received signals through the path difference.
-Once the phase difference between antenna elements is estimated, the direction
-of arrival of the target echo can be further inferred.
+Therefore, the target angle is encoded in the inter-element phase difference,
+from which the direction of arrival can be inferred.
 
-\subsection{Key Performance Metrics of Sensing Systems}
+\subsection{Sensing Performance Metrics}
 
 \topichead{Detection Performance}
 Detection performance characterizes whether a sensing system can reliably
@@ -1974,13 +1200,11 @@ It is commonly described by detection probability, false alarm probability,
 and missed detection probability.
 
 \topichead{Binary Hypothesis Model}
-In radar sensing systems, the target detection problem can usually be
-simplified as a binary hypothesis testing problem.
-Let \(\mathbf{y}\) denote the received observation, and let \(\mathbf{s}\)
-denote the target echo component.
-The term \(\mathbf{n}\) represents the combined effect of noise, clutter,
-and interference.
-Then the detection problem can be written as
+In radar sensing, target detection is commonly modeled as a binary hypothesis
+testing problem.
+Let \(\mathbf{y}\) be the received observation, \(\mathbf{s}\) the target echo
+component, and \(\mathbf{n}\) the combined noise, clutter, and interference.
+Then
 \begin{equation}
     \begin{aligned}
         H_0 &: \quad \mathbf{y}=\mathbf{n}, \\
@@ -1989,35 +1213,16 @@ Then the detection problem can be written as
     \label{eq:radar_binary_detection_model}
 \end{equation}
 
-Here, \(\mathbf{y}\in\mathbb{C}^{N\times 1}\) denotes the received observation vector,
-which may represent temporal samples, spatial array observations, or their stacked form,
-depending on the sensing receiver.
-The vectors \(\mathbf{s}\in\mathbb{C}^{N\times 1}\) and
-\(\mathbf{n}\in\mathbb{C}^{N\times 1}\) denote the target-related signal component
-and the combined noise, clutter, and interference component, respectively.
-Here, \(H_0\) represents the target-absent case, where the received observation
-does not contain a target echo and is mainly composed of noise, clutter, and
-interference.
-In contrast, \(H_1\) represents the target-present case, where the received
-observation contains not only the background components but also the echo
-component reflected or scattered by the target.
-Therefore, the task of the detector is to determine, based on the received
-observation \(\mathbf{y}\), whether the current observation is more consistent
-with \(H_0\) or \(H_1\).
+Here, \(H_0\) represents the target-absent case and \(H_1\) represents the
+target-present case.
+The detector decides which hypothesis is more consistent with the observation
+\(\mathbf{y}\).
 
 \topichead{Detection Statistic and Threshold}
-In practical detection, the detector usually does not make a decision directly
-from the raw received observation \(\mathbf{y}\).
-Instead, it first constructs a detection statistic from the received observation,
-denoted by \(T(\mathbf{y})\).
-This statistic can be understood as a decision variable extracted from the
-received data, which is used to measure the likelihood that the current
-observation contains a target echo.
-In different detection methods, \(T(\mathbf{y})\) may be chosen as the received
-signal energy, the matched-filter output, the correlation peak, the magnitude
-of a range-Doppler cell, or other quantities related to the target echo.
-Under the Neyman--Pearson criterion, a commonly used detection statistic is
-the likelihood ratio.
+In practical detection, the receiver constructs a statistic \(T(\mathbf{y})\)
+from the observation.
+It may be the received energy, matched-filter output, correlation peak, a
+range-Doppler cell magnitude, or a likelihood ratio.
 
 After obtaining the detection statistic, the detector usually compares it with
 a predefined threshold \(\gamma\) to make a binary decision:
@@ -2030,24 +1235,12 @@ a predefined threshold \(\gamma\) to make a binary decision:
     \label{eq:detection_decision_h0}
 \end{equation}
 
-In other words, when the detection statistic exceeds the threshold, the system
-considers that the current observation is more likely to contain a target echo.
-When the detection statistic does not exceed the threshold, the system considers
-that the current observation is more likely to be caused by noise, clutter, or
-interference.
-Therefore, the choice of the threshold \(\gamma\) directly affects the decision
-result of the detector and further influences performance metrics such as
-detection probability and false alarm probability.
+The threshold \(\gamma\) therefore controls the detector decision and directly
+affects detection probability and false alarm probability.
 
 \topichead{Detection Outcomes and Probability Metrics}
-Given the true state and the detector decision, target detection may lead to
-four basic outcomes.
-The true state indicates whether a target is actually present, while the
-detector decision represents the judgment made by the system based on the
-received observation.
-The combinations of the true state and the detector decision, together with
-the corresponding conditional probabilities, are summarized in
-Table~\ref{tab:detection_outcomes}.
+Given the true state and the detector decision, four outcomes are possible, as
+summarized in Table~\ref{tab:detection_outcomes}.
 
 \begin{table}[htbp]
     \centering
@@ -2091,63 +1284,27 @@ Table~\ref{tab:detection_outcomes}.
     \end{tabularx}
 \end{table}
 
-Here, \(P_{FA}\) denotes the false alarm probability, namely the conditional
-probability that the detector incorrectly decides \(H_1\) when \(H_0\) is true.
-\(P_D\) denotes the detection probability, namely the conditional probability
-that the detector correctly decides \(H_1\) when \(H_1\) is true.
-\(P_M\) denotes the missed detection probability, namely the conditional
-probability that the detector incorrectly decides \(H_0\) when \(H_1\) is true.
-Since, under \(H_1\), the detector decision can only fall into two mutually
-exclusive outcomes, correct detection or missed detection, we have
+Here, \(P_{FA}\), \(P_D\), and \(P_M\) denote false alarm, detection, and missed
+detection probabilities, respectively.
+Since correct detection and missed detection are complementary under \(H_1\),
 \begin{equation}
     P_D+P_M=1.
     \label{eq:detection_missed_relation}
 \end{equation}
-These conditional probabilities characterize detector reliability from
-different perspectives:
-\(P_D\) reflects the capability of detecting an existing target,
-\(P_{FA}\) reflects the tendency to generate false alarms when no target is
-present, and \(P_M\) reflects the risk of missing a real target.
+These probabilities characterize detector reliability from different
+perspectives.
 
 \topichead{Threshold Tradeoff}
-The setting of the threshold \(\gamma\) directly affects the decision behavior
-of the detector.
-For a given detection statistic \(T(\mathbf{y})\), lowering the threshold
-generally increases the number of observations satisfying
-\(T(\mathbf{y})>\gamma\), and therefore increases the probability that the
-detector decides \(H_1\).
-When \(H_1\) is true, this usually improves the detection probability \(P_D\).
-However, when \(H_0\) is true, noise, clutter, or interference may also exceed
-the threshold, resulting in an increase in the false alarm probability
-\(P_{FA}\).
+Lowering \(\gamma\) generally increases the probability of deciding \(H_1\),
+which may improve \(P_D\) but also increase \(P_{FA}\).
+Raising \(\gamma\) suppresses false alarms but may miss weak targets.
+Detector design therefore balances \(P_D\) and \(P_{FA}\), rather than
+optimizing either metric in isolation.
 
-Conversely, increasing the threshold makes the condition
-\(T(\mathbf{y})>\gamma\) more stringent and reduces the probability that the
-detector decides \(H_1\).
-Therefore, when \(H_0\) is true, the false alarm probability \(P_{FA}\) usually
-decreases.
-However, when \(H_1\) is true, weak target echoes may fail to make the
-detection statistic exceed the threshold, which increases the missed detection
-probability \(P_M\) and reduces the detection probability \(P_D\).
-
-Therefore, detector design needs to balance detection probability and false
-alarm probability.
-A threshold that is too low may improve target detection probability, but it
-may also increase the number of false alarm events and further increase the
-burden on subsequent parameter estimation, target tracking, and system-level
-decision making.
-A threshold that is too high may help suppress false alarms, but it may also
-increase the risk of missing real targets.
-Hence, \(P_D\) and \(P_{FA}\) should be analyzed as coupled
-detection-performance metrics rather than being evaluated in isolation.
-
-\subsubsection{Neyman--Pearson Criterion}
-Based on the tradeoff between detection probability and false alarm probability,
-the Neyman--Pearson criterion provides a classical decision principle for
-detector design.
-For a given false alarm constraint \(P_{FA}=\alpha\), the Neyman--Pearson
-criterion aims to maximize the detection probability \(P_D\) under this
-constraint.
+\topichead{Neyman--Pearson Criterion}
+The Neyman--Pearson criterion provides a classical rule for this tradeoff:
+for a prescribed false alarm constraint \(P_{FA}=\alpha\), maximize the
+detection probability \(P_D\).
 
 Under this criterion, the classical decision rule is the likelihood-ratio test.
 For the received observation \(\mathbf{y}\), the likelihood ratio is defined as
@@ -2182,40 +1339,19 @@ namely,
     \label{eq:np_false_alarm_constraint}
 \end{equation}
 
-Here, \(p(\mathbf{y}\mid H_1)\) denotes the probability density of observing
-\(\mathbf{y}\) under the target-present hypothesis \(H_1\), while
-\(p(\mathbf{y}\mid H_0)\) denotes the probability density of observing
-\(\mathbf{y}\) under the target-absent hypothesis \(H_0\).
-The likelihood ratio \(\Lambda(\mathbf{y})\) measures how strongly the current
-observation supports \(H_1\) relative to \(H_0\).
-If \(\Lambda(\mathbf{y})>\eta\), the detector decides \(H_1\), indicating that
-a target is declared to be present.
-If \(\Lambda(\mathbf{y})\leq\eta\), the detector decides \(H_0\), indicating
-that no target is declared.
+Here, the likelihood ratio measures how strongly the observation supports
+\(H_1\) relative to \(H_0\), and the threshold \(\eta\) is chosen to satisfy
+the false alarm constraint.
 
-The above threshold constraint shows that \(\eta\) is not chosen arbitrarily.
-Instead, it is determined by controlling the probability of incorrectly
-deciding \(H_1\) when \(H_0\) is true.
-Therefore, the core idea of the Neyman--Pearson criterion is to maximize the
-target detection probability under a prescribed and acceptable false alarm
-level.
-
-To illustrate how the threshold is determined under the Neyman--Pearson
-criterion, consider a simplified one-dimensional detection statistic model.
-Let the detection statistic \(T\) follow
+As a simple illustration, consider a one-dimensional statistic \(T\):
 \begin{equation}
     T\mid H_0 \sim \mathcal{N}(0,1),
     \qquad
     T\mid H_1 \sim \mathcal{N}(\mu,1).
     \label{eq:np_gaussian_statistic_model}
 \end{equation}
-Here, \(H_0\) denotes the target-absent hypothesis, \(H_1\) denotes the
-target-present hypothesis, and \(\mu>0\) represents the mean shift of the
-detection statistic caused by the target echo.
-In this Gaussian mean-shift model, the likelihood ratio is a monotonic function
-of \(T\).
-Therefore, the likelihood-ratio test can be equivalently represented as a
-threshold test on \(T\).
+where \(\mu>0\) is the mean shift caused by the target echo.
+In this model, the likelihood-ratio test is equivalent to thresholding \(T\).
 
 Given a false alarm constraint \(P_{FA}=\alpha\), the threshold \(\gamma\) is
 determined by
@@ -2236,41 +1372,25 @@ Under the same threshold, the detection probability is given by
     \label{eq:np_pd_from_threshold}
 \end{equation}
 
-Figure~\ref{fig:np_threshold_illustration} shows the probability density
-functions of \(T\) under \(H_0\) and \(H_1\), together with the threshold
-\(\gamma\) determined by the prescribed \(P_{FA}\).
-The blue shaded region represents the probability that \(T\) exceeds
-\(\gamma\) under \(H_0\), namely \(P_{FA}=P(T>\gamma\mid H_0)\).
-The orange region is used to highlight the part of the \(H_1\) distribution
-associated with target detection.
-The detection probability \(P_D\) is computed as the probability that \(T\)
-exceeds the same threshold under \(H_1\), namely
-\(P_D=P(T>\gamma\mid H_1)\).
+Figure~\ref{fig:np_threshold_illustration} shows the two Gaussian densities and
+the threshold \(\gamma\).
+The false alarm probability is the area beyond \(\gamma\) under \(H_0\), while
+the detection probability is the corresponding area under \(H_1\).
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.76\textwidth]{figures/chapter2/fig_np_estimation.png}
+    \includegraphics[width=0.66\textwidth]{figures/chapter2/fig_np_estimation.png}
     \caption{Illustration of Neyman--Pearson threshold selection using a one-dimensional Gaussian detection statistic.}
     \label{fig:np_threshold_illustration}
 \end{figure}
-The corresponding simulation script is listed in the Companion Code section,
-where readers can also find the interactive version for adjusting \(P_{FA}\).
+The corresponding simulation script is listed in the Companion Code section.
 
-\subsubsection{Resolution}
-Resolution describes the ability of a sensing system to distinguish closely
-spaced targets.
-Unlike detection probability, which mainly characterizes whether a target can
-be detected, resolution focuses on whether two targets that are close in range,
-velocity, or angle can be identified as two distinct targets.
-Therefore, resolution is an important metric for evaluating the fine sensing
-capability of a system.
-It commonly includes range resolution, velocity resolution, and angle
-resolution.
+\topichead{Resolution}
+Resolution describes the ability to distinguish closely spaced targets in
+range, velocity, or angle.
+It is therefore a key metric for fine sensing capability.
 
-Range resolution describes the ability of the system to distinguish adjacent
-targets in the range dimension.
-Its physical basis is the ability to resolve differences in echo propagation
-delay.
+Range resolution is based on resolving differences in echo delay.
 Since the target range and the echo delay satisfy
 \begin{equation}
     R=\frac{c\tau}{2},
@@ -2285,9 +1405,7 @@ approximated as
     \label{eq:range_resolution}
 \end{equation}
 where \(c\) is the propagation speed of the electromagnetic wave.
-From this expression, increasing the signal bandwidth improves the delay
-resolution and thereby improves the range resolution, when other conditions
-remain unchanged.
+Thus, larger bandwidth improves range resolution.
 
 As an example, consider a \(77\,\mathrm{GHz}\) millimeter-wave radar system.
 If the signal bandwidth is \(B=1\,\mathrm{GHz}\), the range resolution is
@@ -2300,16 +1418,10 @@ approximately
     0.15\,\mathrm{m}.
     \label{eq:range_resolution_example}
 \end{equation}
-This indicates that, under ideal conditions, the system can distinguish
-targets with a separation on the order of \(0.15\,\mathrm{m}\) in the range
-dimension.
+This gives an ideal range resolution of about \(0.15\,\mathrm{m}\).
 
-Velocity resolution describes the ability of the system to distinguish targets
-with close radial velocities.
-Velocity estimation relies on the Doppler frequency shift, and the Doppler
-frequency resolution is usually related to the coherent observation time.
-A longer coherent observation time allows the system to resolve a smaller
-Doppler frequency interval.
+Velocity resolution describes the ability to distinguish close radial
+velocities and is mainly controlled by coherent observation time.
 If the coherent observation time is denoted by \(T_{\mathrm{obs}}\), the
 Doppler frequency resolution can be approximated as
 \begin{equation}
@@ -2346,18 +1458,11 @@ velocity resolution is approximately
     0.098\,\mathrm{m/s}.
     \label{eq:velocity_resolution_example}
 \end{equation}
-The above relationship shows that, for a fixed carrier wavelength, increasing
-the coherent observation time improves the velocity resolution.
+For a fixed wavelength, a longer coherent observation time improves velocity
+resolution.
 
-Angle resolution describes the ability of the system to distinguish targets
-with close directions.
-Unlike range resolution, which is mainly affected by signal bandwidth, and
-velocity resolution, which is mainly affected by coherent observation time,
-angle resolution is mainly related to the effective aperture of the antenna
-array.
-A larger effective aperture provides stronger spatial resolving capability and
-is therefore beneficial for distinguishing targets arriving from nearby
-directions.
+Angle resolution describes the ability to distinguish close directions and is
+mainly related to the effective antenna aperture.
 For an array with effective aperture \(D\), the angle resolution is often
 approximated as
 \begin{equation}
@@ -2379,13 +1484,9 @@ is \(D=4\,\mathrm{cm}\), the angle resolution is approximately
     5.6^\circ.
     \label{eq:angle_resolution_example}
 \end{equation}
-This approximate relationship shows that, for a fixed carrier wavelength,
-increasing the effective array aperture helps improve the angle resolution.
-It should be noted that the actual angle resolution is also affected by the
-array geometry, beamforming method, windowing scheme, signal-to-noise ratio,
-and target spatial location.
-Therefore, the above expression is mainly used to characterize the basic
-relationship between angle resolution and array aperture.
+For a fixed wavelength, a larger aperture improves angle resolution, although
+practical performance also depends on array geometry, beamforming, SNR, and
+target location.
 
 Table~\ref{tab:sensing_resolution_summary} summarizes the three resolution
 metrics and the main physical factors that control them.
@@ -2425,16 +1526,11 @@ metrics and the main physical factors that control them.
 \end{table}
 
 \topichead{Estimation Accuracy}
-Estimation accuracy describes how close the estimated target parameters are
-to their true values.
-It is closely related to resolution, but the two concepts focus on different
-aspects of sensing performance.
-Resolution mainly characterizes whether multiple targets that are close in
-range, velocity, or angle can be separated.
-In contrast, estimation accuracy focuses on whether the estimated range,
-radial velocity, or angle of a detected target is close to its true value.
-Therefore, resolution characterizes the separability of targets, whereas
-estimation accuracy characterizes the correctness of parameter estimation.
+Estimation accuracy describes how close estimated target parameters are to
+their true values.
+It differs from resolution: resolution concerns whether nearby targets can be
+separated, whereas accuracy concerns the correctness of the estimated range,
+velocity, or angle of a detected target.
 
 Let the true range, radial velocity, and angle of a target be denoted by
 \(R\), \(v\), and \(\theta\), respectively.
@@ -2447,10 +1543,9 @@ The parameter estimation errors can then be defined as
     e_\theta=\hat{\theta}-\theta.
     \label{eq:parameter_estimation_errors}
 \end{equation}
-These errors represent the deviations of the estimated range, velocity, and
-angle from the corresponding true parameters.
-To evaluate estimation accuracy in a statistical sense, metrics such as the
-mean squared error and root mean squared error are commonly used.
+These errors measure deviations from the true parameters.
+Statistical metrics such as mean squared error and root mean squared error are
+commonly used:
 For example, the mean squared error of range estimation can be written as
 \begin{equation}
     \mathrm{MSE}_R
@@ -2465,98 +1560,35 @@ and the corresponding root mean squared error is
     \sqrt{\mathbb{E}\left[(\hat{R}-R)^2\right]}.
     \label{eq:range_rmse}
 \end{equation}
-Similarly, the mean squared error or root mean squared error can also be
-defined for velocity and angle estimation.
-The mean squared error reflects the average squared magnitude of the estimation
-error, while the root mean squared error has the same physical unit as the
-estimated parameter and is therefore easier to interpret in engineering
-analysis.
-
-Parameter estimation accuracy is affected by multiple factors, including the
-received signal-to-noise ratio, signal bandwidth, coherent observation time,
-array aperture, target reflection properties, propagation environment, and
-estimation algorithm.
-In general, a higher signal-to-noise ratio helps reduce estimation error.
-A larger signal bandwidth is beneficial for delay and range estimation.
-A longer coherent observation time is beneficial for Doppler and velocity
-estimation.
-A larger array aperture is beneficial for angle estimation.
-Therefore, parameter estimation accuracy is not determined by a single factor,
-but is jointly affected by waveform design, array configuration, propagation
-environment, and signal processing methods.
-
-In sensing systems, parameter estimation accuracy directly affects the
-reliability of subsequent tasks.
-For example, large range or velocity estimation errors may degrade the
-stability of target tracking and motion-state prediction, while large angle
-estimation errors may affect target localization and beam pointing accuracy.
-Therefore, when evaluating sensing-system performance, it is necessary to
-consider not only whether a target can be detected and whether multiple targets
-can be resolved, but also how accurately the target parameters can be
-estimated.
+Similar metrics can be defined for velocity and angle.
+Accuracy is affected by SNR, bandwidth, coherent observation time, array
+aperture, target reflection, propagation environment, and estimation algorithm.
+It directly influences tracking, localization, and beam pointing, so sensing
+performance should consider not only detection and resolution but also
+parameter-estimation accuracy.
 
 \topichead{Sensing Coverage}
 Sensing coverage describes the spatial or state region in which a system can
-effectively perform target detection and parameter estimation.
-Unlike individual metrics such as detection probability, resolution, and
-estimation error, sensing coverage provides a more system-level description
-of sensing performance.
-It concerns not only the performance at a single location or for a single
-target state, but also the range, angular, and velocity regions over which the
-system can maintain reliable sensing capability.
+maintain reliable detection and parameter estimation.
+It is a system-level metric covering range, angular, and velocity dimensions.
+Range coverage is limited by echo power and round-trip propagation loss;
+angular coverage depends on antenna pattern, array structure, and beam
+scanning; and velocity coverage depends on the Doppler range that can be
+observed and estimated without ambiguity.
+Thus, coverage is not merely the geometric region a system can ``see'', but the
+effective operating region under requirements on false alarm probability,
+detection probability, and estimation error.
+For ISAC, sensing coverage must also be considered together with communication
+coverage, resource allocation, and beam scheduling.
 
-In the range dimension, sensing coverage is closely related to the strength of
-the received echo.
-For a monostatic radar, the transmitted signal first propagates from the radar
-to the target and then returns to the receiver after being reflected or
-scattered by the target.
-As the target range increases, the echo experiences stronger round-trip
-propagation loss, and the echo power received at the receiver usually decreases
-significantly.
-When the echo becomes weak, the detection statistic is less likely to exceed
-the decision threshold, the detection probability may decrease, and the
-parameter estimation error may increase.
-Therefore, the maximum detectable range is usually an important metric for
-describing sensing coverage.
+\subsection{Radar Waveforms and Communication--Sensing Comparison}
 
-In the angular dimension, sensing coverage is related to the antenna radiation
-pattern, array structure, and beam scanning capability.
-Even if a target lies within the detectable range, it may still be difficult
-to detect reliably if its direction falls in a region with low antenna gain or
-weak beam coverage.
-In such cases, accurate angle estimation may also be difficult.
-Therefore, angular coverage describes the directions over which the system can
-effectively receive target echoes and estimate target parameters.
-
-In the velocity dimension, sensing coverage is also related to the range of
-target velocities that the system can reliably observe and estimate.
-For high-speed targets, the Doppler frequency shift may exceed the range that
-can be effectively observed or unambiguously estimated by the system, resulting
-in increased velocity estimation error or velocity ambiguity.
-In dynamic sensing scenarios, velocity coverage directly affects the detection,
-tracking, and motion-state interpretation of moving targets.
-
-Therefore, sensing coverage should not be interpreted simply as the geometric
-range over which a system can ``see'' targets or the angular sector it can
-cover.
-Instead, it should be understood as the effective operating region under given
-performance requirements.
-For example, the effective coverage can be defined under constraints on false
-alarm probability, a lower bound on detection probability, or an upper bound
-on parameter estimation error.
-For integrated sensing and communication systems, sensing coverage should also
-be considered jointly with communication coverage, resource allocation, and
-beam scheduling, because system resources usually need to be shared between
-communication transmission and environmental sensing.
-
-\subsection{Typical Radar Waveforms and Processing Flow}
+\topichead{Typical Radar Waveforms and Processing Flow}
 \topichead{Pulse Radar}
-Pulse radar is one of the most fundamental radar waveform schemes.
-Its basic idea is to transmit a pulse signal within a short time interval and
-receive the delayed echo reflected or scattered by the target.
-Since a more distant target leads to a longer propagation time, pulse radar can
-estimate the target range by measuring the round-trip propagation delay between
-the transmitted pulse and the received echo.
+Pulse radar transmits a short pulse and receives the delayed echo reflected or
+scattered by the target.
+Because a more distant target produces a longer round-trip delay, range can be
+estimated from the time difference between transmission and reception.
 
 If the round-trip delay of the echo relative to the transmitted pulse is
 denoted by \(\tau\), the target range can be expressed as
@@ -2564,48 +1596,32 @@ denoted by \(\tau\), the target range can be expressed as
     R=\frac{c\tau}{2},
 \]
 where \(c\) is the propagation speed of the electromagnetic wave.
-The factor \(1/2\) comes from the two-way propagation of the radar signal,
-from the radar to the target and then back to the radar.
-Therefore, in pulse radar, the target range information is mainly represented
-by the time delay of the echo relative to the transmitted pulse.
-The basic concept of pulse radar is illustrated in
-Fig.~\ref{fig:pulse_radar_concept}.
+The factor \(1/2\) comes from the two-way radar--target--radar propagation.
+The basic concept is illustrated in Fig.~\ref{fig:pulse_radar_concept}.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.72\textwidth]{figures/chapter2/fig_pulse_radar.png}
+    \includegraphics[width=0.62\textwidth]{figures/chapter2/fig_pulse_radar.png}
     \caption{Concept of pulse radar.}
     \label{fig:pulse_radar_concept}
 \end{figure}
 
-Pulse radar has a clear physical interpretation and provides a direct intuition
-for radar ranging.
-However, there is a tradeoff among pulse width, signal bandwidth, transmitted
-energy, and range resolution.
-A shorter pulse helps improve range resolution, but the energy carried by a
-single pulse may be limited.
-A longer pulse can increase the transmitted energy, but without additional
-processing, the delay resolution may be degraded.
-Therefore, practical radar systems often use modulated pulses together with
-pulse compression or matched filtering to achieve a tradeoff between detection
-capability and range resolution.
+Pulse radar provides direct ranging intuition, but pulse width, bandwidth,
+transmitted energy, and range resolution are coupled.
+Practical systems often use modulated pulses with pulse compression or matched
+filtering to balance detection capability and range resolution.
 
 \topichead{Continuous-Wave Radar}
-Continuous-wave radar is another representative radar waveform scheme.
-Unlike pulse radar, which transmits short-duration pulses, continuous-wave
-radar usually transmits a continuous single-frequency or approximately
+Continuous-wave radar transmits a continuous single-frequency or approximately
 single-frequency signal.
-For a stationary target, the echo frequency is approximately the same as the
-transmitted frequency.
-When the target has radial motion relative to the radar, the received echo
-experiences a Doppler frequency shift.
-Therefore, continuous-wave radar mainly uses the frequency shift of the echo
-to sense the radial velocity of the target.
-The basic concept is illustrated in Fig.~\ref{fig:cw_radar_concept}.
+A stationary target returns an echo with approximately the same frequency,
+whereas radial motion produces a Doppler shift.
+Thus, continuous-wave radar is mainly used for velocity sensing, as illustrated
+in Fig.~\ref{fig:cw_radar_concept}.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.78\textwidth]{figures/chapter2/fig_cw_radar.png}
+    \includegraphics[width=0.64\textwidth]{figures/chapter2/fig_cw_radar.png}
     \caption{Concept of continuous-wave radar.}
     \label{fig:cw_radar_concept}
 \end{figure}
@@ -2618,65 +1634,33 @@ related to the radial velocity by
     v=\frac{\lambda f_D}{2}.
 \]
 Here, \(\lambda\) denotes the carrier wavelength.
-This relationship indicates that, in continuous-wave radar, the target velocity
-information is mainly represented by the frequency shift of the echo relative
-to the transmitted signal.
 
-Continuous-wave radar has a relatively simple structure and is suitable for
-velocity sensing.
-However, a purely continuous single-frequency signal does not provide an
-explicit time marker, and therefore it is generally difficult to directly
-obtain target range information.
-In other words, continuous-wave radar can naturally capture the frequency
-change caused by target motion, but its ranging capability is limited.
-To obtain range information within a continuous-wave framework, the transmitted
-frequency can be varied with time so that the propagation delay is converted
-into a measurable frequency difference.
-This leads to the basic idea of frequency-modulated continuous-wave radar.
+Because a pure single-frequency continuous wave has no explicit time marker,
+its direct ranging capability is limited.
+Varying the transmitted frequency with time converts delay into a measurable
+frequency difference, leading to FMCW radar.
 
 \topichead{Frequency-Modulated Continuous-Wave Radar}
-Frequency-modulated continuous-wave radar can be regarded as an extension of
-continuous-wave radar.
-Unlike a purely continuous-wave radar that transmits a signal with a fixed
-frequency, an FMCW radar transmits a continuous signal whose frequency varies
-with time.
-For a linear frequency-modulated chirp, the instantaneous frequency can be
-written as
+Frequency-modulated continuous-wave radar transmits a continuous signal whose
+frequency varies with time.
+For a linear chirp,
 \[
     f(t)=f_0+St,
 \]
-where \(f(t)\) denotes the instantaneous frequency at time \(t\), \(f_0\)
-denotes the starting frequency, and \(S\) denotes the chirp slope, which
-describes the rate of frequency variation over time.
-If the target echo has a propagation delay \(\tau\) relative to the local
-transmitted signal, the frequency difference obtained after mixing is denoted
-by \(f_b\), which is commonly referred to as the beat frequency.
-
-To illustrate the frequency structure of an FMCW chirp, a simplified
-\(77\,\mathrm{GHz}\) automotive millimeter-wave radar example is considered.
-In this example, the starting frequency is \(77\,\mathrm{GHz}\), the sweep
-bandwidth is \(0.5\,\mathrm{GHz}\), the duration of each chirp is
-\(40\,\mu\mathrm{s}\), and several up-chirps are transmitted consecutively.
-Figure~\ref{fig:fmcw_chirp_sequence} shows the instantaneous frequency of the
-chirp sequence as a function of time.
-Each chirp has an approximately linear frequency increase within its duration,
-and multiple chirps together form a repeated frequency-modulated structure.
+where \(f_0\) is the starting frequency and \(S\) is the chirp slope.
+If the echo has delay \(\tau\), mixing it with the local transmitted signal
+produces a beat frequency \(f_b\).
+Figure~\ref{fig:fmcw_chirp_sequence} illustrates a simplified
+\(77\,\mathrm{GHz}\) chirp sequence.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.78\textwidth]{figures/chapter2/fig_fmcw_chirp_sequence.png}
+    \includegraphics[width=0.66\textwidth]{figures/chapter2/fig_fmcw_chirp_sequence.png}
     \caption{Illustration of an FMCW chirp sequence in the \(77\,\mathrm{GHz}\) band.}
     \label{fig:fmcw_chirp_sequence}
 \end{figure}
 
-The corresponding simulation script is listed in the Companion Code section.
-
-
-For a linear frequency-modulated signal, the propagation delay \(\tau\) causes
-a difference between the instantaneous frequency of the delayed echo and that
-of the current local transmitted signal.
-When the Doppler effect is ignored or when the target velocity is relatively
-low, the beat frequency approximately satisfies
+For a linear chirp, ignoring Doppler or assuming low target velocity gives
 \[
     f_b \approx S\tau.
 \]
@@ -2689,163 +1673,69 @@ the target range can be approximated as
     R\approx \frac{c f_b}{2S}.
 \]
 
-This relationship indicates that an important idea of FMCW radar is to map the
-propagation delay of the target echo into a measurable frequency difference.
-For a fixed chirp slope \(S\), a larger target range leads to a larger
-propagation delay and therefore a larger beat frequency.
-As a result, the receiver can estimate the dominant frequency component in the
-beat signal through spectral analysis and then obtain the target range.
-
-To further illustrate the formation of the beat frequency, the simulation
-considers a target at a range of \(60\,\mathrm{m}\).
-Under the above chirp parameters, the round-trip propagation delay is
-approximately \(0.4\,\mu\mathrm{s}\), and the corresponding beat frequency is
-approximately \(5\,\mathrm{MHz}\).
-Figure~\ref{fig:fmcw_beat_frequency} shows the frequency offset between the
-local transmitted chirp and the delayed echo, together with the low-frequency
-beat signal obtained after mixing.
-This example focuses on the beat frequency induced by the target range, and
-the Doppler effect is not considered.
+FMCW radar therefore maps propagation delay into a measurable frequency
+difference.
+For a fixed chirp slope, a larger range produces a larger beat frequency.
+Figure~\ref{fig:fmcw_beat_frequency} illustrates this beat-frequency formation
+for a representative target range.
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.76\textwidth]{figures/chapter2/fig_fmcw_beat_frequency.png}
+    \includegraphics[width=0.66\textwidth]{figures/chapter2/fig_fmcw_beat_frequency.png}
     \caption{Illustration of beat frequency formation in FMCW radar.}
     \label{fig:fmcw_beat_frequency}
 \end{figure}
 
-The corresponding simulation script is listed in the Companion Code section.
+The corresponding simulation scripts are listed in the Companion Code section.
+When radial motion is significant, Doppler also affects the beat frequency.
+Practical FMCW systems usually transmit multiple chirps: fast-time samples are
+used for range processing, while slow-time variation across chirps supports
+Doppler and velocity estimation.
 
-
-When the target has significant radial motion, the Doppler frequency shift also
-affects the beat frequency.
-Therefore, the beat frequency in a single chirp may contain both range and
-velocity information.
-In practical FMCW radar systems, multiple chirps are usually transmitted
-consecutively.
-The fast-time samples within a chirp are mainly used for range processing,
-whereas the phase variation or frequency variation across multiple chirps in
-slow time can be further used for Doppler and velocity estimation.
-
-\subsection{Comparison Between Digital Communication and Radar Sensing}
+\topichead{Comparison Between Digital Communication and Radar Sensing}
 
 \topichead{Common Characteristics}
-Although digital communication and radar sensing are designed for different
-tasks, they are both built upon wireless electromagnetic propagation and signal
-processing.
+Digital communication and radar sensing are designed for different tasks, but
+both rely on wireless electromagnetic propagation and signal processing.
 In both systems, a designed signal is transmitted, propagates through the
-environment, is observed at the receiver, and is then processed to extract the
-required information.
-From a system perspective, both communication and radar sensing involve a
-transmitter, a propagation environment, a receiver, and signal processing
-modules.
-From a physical propagation perspective, both are affected by path loss,
-multipath propagation, noise, interference, synchronization errors, and
-hardware nonidealities.
-Therefore, digital communication and radar sensing are not completely separate
-systems.
-They share common foundations in electromagnetic propagation, hardware
-architecture, and signal processing methods.
+environment, is observed at the receiver, and is processed to extract useful
+information.
+They therefore share foundations in propagation, hardware architecture,
+synchronization, array processing, interference handling, and receiver design.
 
 \topichead{Fundamental Differences}
-The fundamental difference between the two systems first lies in their
-objectives.
-The main goal of digital communication is to reliably deliver information bits,
-symbols, or messages to the receiver.
-Therefore, the receiver focuses on recovering the transmitted information as
-accurately as possible in the presence of channel effects, noise, and
-interference.
-In contrast, the main goal of radar sensing is to extract environmental
-information from target echoes or environmental scattering signals.
-This includes detecting whether a target is present and estimating target
-parameters such as range, velocity, angle, and reflection properties.
-In this sense, communication emphasizes correct information reception, whereas
-sensing emphasizes reliable detection and accurate parameter estimation.
-
-Communication and radar sensing also interpret the propagation environment
-differently.
-In communication systems, the wireless channel is usually treated as a medium
-for information transmission.
-It introduces fading, phase rotation, delay spread, and interference, and the
-receiver therefore needs to perform channel estimation, equalization,
-demodulation, and decoding to compensate for the signal distortion caused by
-the channel.
-In radar sensing, however, the propagation environment and the target response
-are themselves the quantities to be inferred.
-The propagation delay, Doppler frequency shift, array phase difference, and
-reflection strength contained in the echo are not merely distortions to be
-removed; instead, they are key features that carry target-state information.
-
-There is also a clear difference in propagation path and path loss.
-A typical communication link involves one-way propagation from the transmitter
-to the receiver, and the received power is mainly affected by one-way path
-loss.
-In a monostatic radar system, the signal first propagates from the radar to the
-target and is then reflected or scattered back to the radar.
-The echo therefore experiences a two-way propagation process.
-Compared with a communication link, a radar echo not only travels over a longer
-propagation path, but is also affected by the radar cross section and
-reflection properties of the target.
-As a result, the received echo power usually decays more rapidly with distance.
-This is one of the important reasons why radar systems require special
-considerations in transmit power, antenna gain, waveform design, and receiver
-processing.
+The main difference lies in objectives and interpretation of the received
+signal.
+Communication aims to recover information bits or symbols reliably in the
+presence of channel effects, noise, and interference.
+Radar sensing aims to infer environmental information from echoes, including
+target existence, range, velocity, angle, and reflection properties.
+Thus, the wireless channel is mainly a medium to be compensated in
+communication, whereas in sensing the propagation response itself carries the
+desired physical information.
+The propagation path also differs: communication links are usually one-way,
+whereas monostatic radar echoes experience two-way propagation and target
+reflection, leading to stronger distance-dependent attenuation.
 
 \topichead{Basis for Integration}
-Despite these differences, digital communication and radar sensing still have
-a strong basis for integration.
-First, they use the same electromagnetic propagation medium and occupy limited
-spectrum resources.
-Second, modern wireless communication systems already rely on large-scale
-antenna arrays, wideband radio-frequency front ends, beamforming capability,
-and high-speed digital signal processing.
-These hardware capabilities can also support environmental sensing.
-Third, communication and sensing share many signal processing tools, such as
-synchronization, correlation-based detection, frequency-domain analysis, array
-processing, interference suppression, detection theory, and estimation theory.
-Therefore, a communication system is not only an information transmission
-platform, but can also potentially serve as an environmental sensing platform.
+The basis for integration is also clear.
+Both functions use the same propagation medium and scarce spectrum resources,
+and modern communication systems already employ wideband radio-frequency
+front ends, large antenna arrays, beamforming, and high-speed digital signal
+processing.
+Many tools, including synchronization, correlation, frequency-domain analysis,
+array processing, detection, and estimation, are useful for both communication
+and sensing.
 
 \topichead{Challenges of Integration}
-Having a common basis does not mean that communication and sensing can be
-simply combined.
-Their performance metrics are different.
-Communication systems usually focus on bit error rate, throughput, spectral
-efficiency, latency, and reliability, whereas sensing systems focus on
-detection probability, false alarm probability, range resolution, velocity
-resolution, angle resolution, parameter estimation accuracy, and sensing
-coverage.
-Their optimal waveforms are also not necessarily the same.
-Communication waveforms often need to support high spectral efficiency,
-multi-user access, and low implementation complexity, while radar sensing
-waveforms emphasize range-velocity resolution, correlation properties, sidelobe
-levels, and target-parameter estimability.
-Therefore, a waveform that is optimal for communication may not be optimal for
-sensing, and a sensing-friendly waveform may reduce communication efficiency or
-increase receiver complexity.
-
-Differences in receiver processing and engineering constraints further
-increase the difficulty of integration.
-A communication receiver mainly focuses on synchronization, channel estimation,
-equalization, symbol detection, and decoding, whereas a sensing receiver
-focuses more on echo enhancement, target detection, spectral analysis,
-parameter estimation, and tracking.
-In addition, an ISAC system must simultaneously deal with synchronization
-accuracy, dynamic range, self-interference suppression, sensing resolution,
-mismatch between communication coverage and sensing coverage, multi-user
-interference, and real-time resource scheduling.
-Therefore, ISAC is not a simple superposition of a communication system and a
-radar system.
-Instead, it requires joint design across waveform design, hardware
+Integration is nevertheless challenging.
+Communication metrics such as BER, throughput, spectral efficiency, latency,
+and reliability differ from sensing metrics such as detection probability,
+false alarm probability, resolution, estimation accuracy, and coverage.
+Preferred waveforms and receiver processing flows also differ: communication
+emphasizes information recovery and multi-user transmission, whereas sensing
+emphasizes echo enhancement, parameter estimation, and tracking.
+ISAC therefore requires joint design across waveform design, hardware
 architecture, resource allocation, and receiver processing.
-
-Overall, digital communication and radar sensing share common physical and
-signal processing foundations, but they also differ fundamentally in task
-objectives, propagation paths, performance metrics, and receiver processing
-flows.
-These commonalities make integration possible, while these differences
+The common foundations make integration possible, while the differences
 determine the complexity of ISAC system design.
-Understanding the similarities and differences between communication and
-sensing provides a basis for the subsequent discussion of ISAC system models,
-waveform design, resource allocation, and communication--sensing performance
-tradeoffs.
