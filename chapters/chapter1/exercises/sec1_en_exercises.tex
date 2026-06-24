@@ -10,3 +10,97 @@
 % \begin{enumerate}[label=\textbf{Exercise 1.\arabic*.}, leftmargin=*]
 %     \item ...
 % \end{enumerate}
+
+\section*{Exercises}
+\addcontentsline{toc}{section}{Exercises}
+
+\subsection*{Section 1.1}
+
+\noindent
+The exercises in this section are organized around four dimensions:
+\emph{conceptual understanding}, \emph{comparative analysis},
+\emph{in-depth thinking and discussion}, and \emph{open exploration}.
+Readers are encouraged to complete them independently after studying this chapter.
+Some of these exercises may also be used for classroom discussion, group seminars,
+or course paper topics.
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*]
+
+    \item \textit{(Conceptual Understanding)} Explain in your own words why ISAC cannot be simply understood as the physical concatenation of ``communications + radar.'' Provide examples from the perspectives of the signal layer, resource layer, hardware layer, protocol layer, network layer, and service layer to illustrate the difference between ``deep coupling'' and ``simple concatenation.''
+
+    \item \textit{(Conceptual Understanding)} In communication systems, the wireless channel is usually regarded as an unfavorable factor that must be ``overcome,'' whereas in radar/sensing systems, the channel (including target response) is the information-bearing object that must be ``analyzed.'' Based on this fundamental difference, discuss the unique challenges of channel modeling in ISAC systems: how can the same channel model simultaneously serve both communication and sensing functionalities?
+
+    \item \textit{(Conceptual Understanding)} This chapter points out that there is a relationship of ``bidirectional empowerment'' between communication and sensing in ISAC. Explain, respectively, the meanings of ``sensing-assisted communication'' and ``communication-empowered sensing,'' and provide one specific application scenario for each. If either direction of this bidirectional empowerment is removed, how might system performance be affected?
+    
+    \begin{sloppypar}
+    \item \textit{(Conceptual Understanding)} Compare and distinguish the following terms: ISAC, JCAS, JRC, DFRC, and RadCom. Why does this textbook adopt ISAC as the unified terminology?
+    \end{sloppypar}
+
+    \item \textit{(Comparative Analysis)} Compare the core differences between communication systems and radar/sensing systems from the perspectives of transmit signal characteristics, receiver processing methods, target objects, performance metrics, and the role of the channel. Then summarize the main contradictions that these differences introduce into unified ISAC design.
+    
+    \begin{sloppypar}
+    \item \textit{(Comparative Analysis)} Compare the three stages of ISAC evolution---the spectrum coexistence stage, the joint design stage, and the 6G native integration stage---in terms of:
+    \begin{enumerate}[label=(\alph*)]
+        \item core technical objective;
+        \item design level of concern;
+        \item system relationship between communication and sensing;
+        \item representative performance evaluation metrics.
+    \end{enumerate}
+    Then further discuss whether these three stages have a strictly chronological order. Why or why not?
+    \end{sloppypar}
+
+    \item \textit{(Comparative Analysis)} In the spectrum coexistence stage, representative implementation modes include time-division sharing, frequency-division isolation, coexistence-aware processing, and opportunistic spectrum reuse. Analyze the advantages and disadvantages of these four approaches, and explain why their room for improving spectral efficiency is limited, thereby motivating the evolution toward the second stage.
+
+    \item \textit{(In-Depth Thinking and Discussion)} This chapter points out that the core role of 5G and earlier mobile networks was mainly that of an ``information transmission pipe,'' whereas 6G networks are evolving into integrated service platforms combining connectivity, sensing, computing, and control. Based on a vertical application scenario with which you are familiar (such as autonomous driving, smart factories, or low-altitude UAV management), answer the following in detail:
+    \begin{enumerate}[label=(\alph*)]
+        \item What are the communication requirements and sensing requirements in this scenario?
+        \item Why is the traditional ``external'' independent sensing solution insufficient to satisfy these requirements?
+        \item How can ISAC realize the service loop of ``sensing $\rightarrow$ communication $\rightarrow$ computation $\rightarrow$ decision $\rightarrow$ control'' in this scenario?
+    \end{enumerate}
+
+    \item \textit{(In-Depth Thinking and Discussion)} Communication systems operating in the mmWave/THz bands naturally possess large bandwidth and narrow beams. From the perspectives of range resolution
+    \[
+        \Delta R = \frac{c}{2B}
+    \]
+    and angular resolution, explain why high-frequency communication systems are naturally suitable for sensing. At the same time, discuss the unique technical challenges faced by high-frequency ISAC systems, such as path loss, beam alignment, hardware complexity, and energy consumption.
+
+    \item \textit{(In-Depth Thinking and Discussion)} Communication signals such as OFDM are usually random because they carry unknown data symbols, whereas traditional radar signals are usually deterministic and known in advance so that matched filtering can be performed at the receiver. In an ISAC system, if an OFDM communication waveform is used simultaneously for sensing and the sensing receiver cannot fully obtain the instantaneous transmitted data symbols, how should the receiver deal with the problem of an unknown or partially unknown reference signal? What implications does this issue have for ISAC system architecture design?
+
+    \item \textit{(In-Depth Thinking and Discussion)} This chapter summarizes the driving forces behind ISAC evolution into four aspects: spectral efficiency requirements, hardware platform development, network intelligence trends, and the 6G vision. Analyze:
+    \begin{enumerate}[label=(\alph*)]
+        \item whether there are intrinsic relationships among these four driving forces; if so, explain their logical relationship using either a diagram or text;
+        \item which of these driving forces you consider the most fundamental, and why;
+        \item what additional factors, beyond these four, may also promote the evolution of ISAC technology.
+    \end{enumerate}
+
+    \item \textit{(In-Depth Thinking and Discussion)} In the joint beamforming design of the second stage of ISAC, the system usually needs to simultaneously satisfy the SINR requirements of communication users and the illumination power requirements in the directions of sensing targets. Analyze intuitively whether joint beamforming is easier or more difficult when the communication user and the sensing target are located in the same spatial direction. What about when they are approximately orthogonal in space? Provide your reasoning.
+
+    \item \textit{(Open Exploration)} 3GPP and ITU-R have already included sensing capability in their 6G-related research agendas. Please consult the latest standardization documents or white papers (indicating the version or publication date in your answer), and answer the following:
+    \begin{enumerate}[label=(\alph*)]
+        \item What are the current scope and focal directions of ISAC standardization research?
+        \item What are the major controversies or difficulties faced by ISAC in the standardization process?
+        \item In your view, what key obstacles must still be overcome before ISAC can move from standardization to large-scale commercial deployment?
+    \end{enumerate}
+
+    \item \textit{(Open Exploration)} This chapter points out that the sensing objects of ISAC are very broad, including not only traditional moving-target detection but also applications such as vital sign monitoring and gesture recognition. Select one nontraditional sensing application of interest to you and discuss:
+    \begin{enumerate}[label=(\alph*)]
+        \item what specific requirements this application imposes on sensing accuracy, latency, and coverage;
+        \item what the basic principle is for realizing this sensing function using communication signals (such as Wi-Fi or 5G NR);
+        \item what privacy and security concerns such a sensing application may raise.
+    \end{enumerate}
+
+    \item \textit{(Open Exploration)} Suppose you are the CTO of a mobile operator and are evaluating whether to introduce ISAC capability into existing 5G base stations. Analyze the problem from the following perspectives:
+    \begin{enumerate}[label=(\alph*)]
+        \item What new business revenue sources might be created by introducing ISAC functionality?
+        \item What hardware and software upgrades would be required for existing base stations?
+        \item What technical and business risks would be involved in deploying ISAC functionality?
+        \item In which scenarios would you recommend prioritizing ISAC deployment, and why?
+    \end{enumerate}
+
+\end{enumerate}
+
+\noindent\textbf{Note:}
+These exercises progress from conceptual understanding to comparative analysis,
+in-depth discussion, and open exploration. Readers are encouraged to answer them
+independently after studying this chapter. Some questions are also suitable for
+classroom discussion, group seminars, or course assignments.

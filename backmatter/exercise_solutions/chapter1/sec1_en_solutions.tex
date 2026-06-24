@@ -12,3 +12,245 @@
 % \begin{enumerate}[label=\textbf{Exercise 1.\arabic*.}, leftmargin=*]
 %     \item ...
 % \end{enumerate}
+
+% backmatter/exercise_solutions/chapter1/sec1_en_solutions.tex
+%
+% Solutions for Chapter 1, Section 1 exercises.
+
+\section*{Chapter 1: Introduction}
+\addcontentsline{toc}{section}{Chapter 1: Introduction}
+
+\subsection*{Section 1.1 Exercises}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*]
+
+    \item
+    ISAC cannot be simply regarded as a physical concatenation of ``communications + radar,'' because its essence is not the mechanical coexistence of two functions, but the \emph{deep integration and coordinated design} of communication and sensing across multiple layers.
+
+    At the \emph{signal layer}, simple concatenation means that communication signals and sensing signals are separately designed and merely transmitted on the same platform, whereas deep coupling means that a unified waveform may simultaneously carry data and enable target sensing.
+
+    At the \emph{resource layer}, simple concatenation corresponds to static allocation of time, frequency, power, or antennas to two isolated functions, while deep coupling aims at joint scheduling and dynamic sharing of these resources according to service demands.
+
+    At the \emph{hardware layer}, simple concatenation may use two relatively independent RF chains or modules, but deep coupling emphasizes shared antennas, shared front ends, and even shared baseband processing platforms.
+
+    At the \emph{protocol layer}, simple concatenation keeps communication and sensing procedures separate, whereas deep coupling requires coordinated signaling, feedback, and control mechanisms.
+
+    At the \emph{network layer}, simple concatenation treats sensing as a local add-on capability, while deep coupling allows sensing information to participate in networking, resource optimization, mobility management, and network intelligence.
+
+    At the \emph{service layer}, simple concatenation means communication provides data transfer and sensing provides auxiliary environmental information independently. By contrast, deep coupling enables new integrated services, such as cooperative autonomous driving, digital twins, and intelligent industrial control.
+
+    Therefore, the key difference lies in whether communication and sensing are merely co-located or are \emph{jointly designed, mutually supportive, and service-oriented}.
+
+    \item 
+    In conventional communication systems, the channel is usually modeled as an uncertain disturbance that affects reliable transmission, and the system objective is to estimate, equalize, or adapt to it. In radar/sensing systems, however, the channel and target response are precisely the objects of interest, since they contain information such as range, velocity, angle, material properties, or motion states.
+
+    This difference creates unique challenges for ISAC channel modeling.
+
+    First, the model must support \emph{two distinct purposes simultaneously}: it should describe communication propagation loss, fading, and interference, while also preserving target-related structures that can be used for sensing.
+
+    Second, the model must capture both \emph{communication links} and \emph{sensing echoes}. In many cases, this includes direct paths, reflected paths, clutter, multipath components, and dynamic targets.
+
+    Third, ISAC channel models often require \emph{higher geometric and temporal resolution} than traditional communication models, because sensing depends strongly on delay, Doppler, angle, and scattering characteristics.
+
+    Fourth, the model should be \emph{consistent across scales}. For communication, coarse statistical models may sometimes suffice, but sensing often needs parametric or physics-aware models.
+
+    A feasible approach is to build \emph{unified geometry-based stochastic or hybrid channel models} in which common propagation paths serve communication performance analysis, while fine-grained target scattering parameters support sensing tasks. In this way, the same model can describe both the communication channel and the sensing scene in a unified framework.
+
+    \item 
+    ``Sensing-assisted communication'' means that sensing information is used to improve communication performance. For example, environmental awareness or target localization can support beam alignment, blockage prediction, handover optimization, and interference management. A typical scenario is vehicular communications at mmWave frequencies, where sensing can detect vehicle positions and road geometry to accelerate beam tracking and reduce communication outage.
+
+    ``Communication-empowered sensing'' means that communication infrastructure, waveforms, signaling mechanisms, or networking capabilities are used to enhance sensing. For example, wideband communication signals and multi-base-station cooperation can improve target detection, localization, and tracking. A representative scenario is using 5G/6G base stations for traffic monitoring or drone detection.
+
+    If sensing assistance is removed, communication systems may suffer from weaker environmental awareness, slower adaptation, and reduced robustness, especially in highly dynamic scenarios. If communication empowerment is removed, sensing may lose large-scale infrastructure support, cooperative observation capability, or waveform diversity, leading to reduced coverage and lower efficiency. Hence, the performance gain of ISAC comes precisely from this bidirectional empowerment.
+
+    \item 
+    These terms all describe the convergence of communication and sensing/radar, but they differ in emphasis.
+
+    \begin{itemize}
+        \item \textbf{ISAC} (Integrated Sensing and Communication) is a broad and increasingly accepted term emphasizing deep functional integration.
+        \item \textbf{JCAS} (Joint Communication and Sensing) highlights joint design, especially at the signal processing and resource allocation levels.
+        \item \textbf{JRC} (Joint Radar and Communication) is widely used when the sensing function is specifically radar-oriented.
+        \item \textbf{DFRC} (Dual-Functional Radar-Communication) stresses that one system or waveform serves both radar and communication functions simultaneously.
+        \item \textbf{RadCom} usually refers to radar-communication coexistence or integration, often in application-specific or earlier-stage contexts.
+    \end{itemize}
+
+    This textbook adopts \textbf{ISAC} as the unified terminology because it is broader than radar-only formulations, better aligned with 6G trends, and more suitable for describing not only target detection and tracking, but also localization, imaging, gesture recognition, vital sign monitoring, and other sensing tasks. It also emphasizes system-level integration rather than only waveform-level coexistence.
+
+    \item 
+    Communication systems and radar/sensing systems differ fundamentally in several aspects.
+
+    In terms of \emph{transmit signal characteristics}, communication signals are primarily designed to carry information efficiently and reliably, while radar/sensing signals are often designed to achieve good ambiguity properties, high resolution, and strong detectability.
+
+    In terms of \emph{receiver processing}, communication receivers focus on synchronization, channel estimation, equalization, detection, and decoding, whereas sensing receivers emphasize matched filtering, parameter estimation, target detection, imaging, and tracking.
+
+    In terms of \emph{target objects}, communication is mainly concerned with intended users or links, while sensing targets may be passive objects, moving vehicles, human bodies, or environmental structures.
+
+    In terms of \emph{performance metrics}, communication systems care about rate, latency, reliability, coverage, and energy efficiency, whereas sensing systems care about detection probability, false alarm rate, range/velocity/angular resolution, estimation accuracy, and tracking stability.
+
+    In terms of the \emph{role of the channel}, communication treats the channel as a medium that affects information delivery, but sensing treats it as the carrier of environmental information.
+
+    These differences lead to several contradictions in ISAC design: waveform randomness versus determinism, user-oriented beams versus target illumination needs, communication-oriented resource efficiency versus sensing-oriented observability, and protocol simplicity versus sensing-aware control complexity. The challenge of ISAC is to manage these contradictions under a unified architecture.
+
+    \item 
+    The three evolutionary stages of ISAC may be compared as follows.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Core technical objective:}
+        \begin{itemize}
+            \item \emph{Spectrum coexistence stage:} reduce mutual interference and improve spectrum sharing efficiency.
+            \item \emph{Joint design stage:} jointly optimize waveform, beamforming, and resource allocation for both communication and sensing.
+            \item \emph{6G native integration stage:} embed sensing as a native network capability and support integrated services.
+        \end{itemize}
+
+        \item \textbf{Design level of concern:}
+        \begin{itemize}
+            \item \emph{Spectrum coexistence stage:} mainly spectrum access and interference coordination.
+            \item \emph{Joint design stage:} signal processing, transceiver design, and physical-layer optimization.
+            \item \emph{6G native integration stage:} cross-layer, network-level, and service-oriented design.
+        \end{itemize}
+
+        \item \textbf{System relationship between communication and sensing:}
+        \begin{itemize}
+            \item \emph{Spectrum coexistence stage:} relatively independent systems sharing resources.
+            \item \emph{Joint design stage:} partially coupled systems with common waveforms or common beamforming.
+            \item \emph{6G native integration stage:} deeply integrated functions within one unified network framework.
+        \end{itemize}
+
+        \item \textbf{Representative performance evaluation metrics:}
+        \begin{itemize}
+            \item \emph{Spectrum coexistence stage:} interference level, spectral efficiency, coexistence success rate.
+            \item \emph{Joint design stage:} communication rate/SINR together with sensing CRB, detection probability, or estimation accuracy.
+            \item \emph{6G native integration stage:} joint service quality, network intelligence, end-to-end latency, sensing coverage, and integrated utility.
+        \end{itemize}
+    \end{enumerate}
+
+    These three stages should not be regarded as strictly chronological in an absolute sense. In practice, they overlap. Some applications still remain at the coexistence stage, while others already explore native integration. The stages are better understood as \emph{evolutionary paradigms} rather than rigidly separated historical periods.
+
+    \item 
+    In the spectrum coexistence stage, several representative approaches are used.
+
+    \textbf{Time-division sharing} is simple and easy to implement, and it can effectively avoid simultaneous interference. However, it reduces temporal utilization and cannot fully exploit concurrent opportunities.
+
+    \textbf{Frequency-division isolation} provides clear spectral separation and facilitates engineering deployment, but it fragments spectrum resources and sacrifices flexibility.
+
+    \textbf{Coexistence-aware processing} attempts to suppress or mitigate interference through advanced signal processing. Its advantage is improved resource reuse, but it often increases computational complexity and requires better prior knowledge or coordination.
+
+    \textbf{Opportunistic spectrum reuse} allows one system to use idle resources of the other, thereby improving efficiency. However, it depends on accurate sensing of spectrum occupancy and often suffers from uncertainty and instability.
+
+    The limitation common to these methods is that communication and sensing are still largely treated as separate entities. Their resource sharing is typically conservative, and the system cannot fully exploit joint waveform design, unified hardware, or cross-layer optimization. Hence, the achievable gain in spectral efficiency is fundamentally limited, which motivates the transition to the joint design stage.
+    
+    \begin{sloppypar}
+    \item 
+    Consider the scenario of autonomous driving.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Communication and sensing requirements:} \\
+        Communication requires ultra-low latency, high reliability, support for vehicle-to-vehicle and vehicle-to-infrastructure links, and possibly high data rates for map updates or cooperative perception. Sensing requires accurate detection of vehicles, pedestrians, lanes, obstacles, and relative motion, often under dynamic and obstructed conditions.
+
+        \item \textbf{Why traditional external independent sensing is insufficient:} \\
+        Independent sensing devices such as cameras, lidars, or roadside radars may suffer from limited field of view, sensitivity to weather or blockage, and a lack of network-level information fusion. They are also often isolated from the communication system, which weakens cooperative awareness and coordinated decision-making.
+
+        \item \textbf{How ISAC enables the service loop:} \\
+        ISAC can first \emph{sense} the surrounding environment through roadside units or base stations. The sensing information is then delivered through \emph{communication} links to edge servers or vehicles. Next, \emph{computation} performs data fusion, scene reconstruction, and risk analysis. Based on this, \emph{decision} modules determine path planning, collision avoidance, or scheduling. Finally, \emph{control} commands are sent back to vehicles or infrastructure. This closes the loop from environmental awareness to intelligent actuation.
+    \end{enumerate}
+
+    The key benefit is that the communication network is no longer only a transport pipe, but an active participant in perception and control.
+    \end{sloppypar}
+    
+    \item 
+    High-frequency communication systems such as mmWave and THz systems are naturally suitable for sensing for two main reasons.
+
+    First, they usually operate with very large bandwidths. Since range resolution is
+    \[
+        \Delta R = \frac{c}{2B},
+    \]
+    a larger bandwidth \(B\) leads directly to finer range resolution.
+
+    Second, high-frequency systems support compact large-scale antenna arrays, which generate narrow beams and thus improve angular resolution and spatial selectivity.
+
+    Therefore, the same physical properties that benefit high-capacity communication also provide favorable conditions for high-resolution sensing.
+
+    However, high-frequency ISAC also faces important technical challenges. Severe path loss limits sensing range and communication coverage. Narrow beams require accurate beam alignment and fast tracking, especially in mobile scenarios. Hardware implementation becomes more difficult because of high-speed converters, phase noise, nonlinearities, and calibration issues. In addition, large antenna arrays and wideband processing may lead to high energy consumption and system cost. As a result, while mmWave/THz systems are promising for ISAC, practical deployment requires advances in beam management, energy-efficient hardware, and robust signal processing.
+
+    \item 
+    If an OFDM waveform is used for both communication and sensing, but the sensing receiver does not fully know the instantaneous transmitted data symbols, the receiver faces the problem of an unknown or partially unknown reference signal.
+
+    One possible solution is to exploit \emph{known components} of the signal, such as pilots, synchronization sequences, reference signals, or control channels, for sensing. Another approach is \emph{data-aided sensing}, in which the communication receiver first decodes the transmitted data and then reconstructs the waveform for sensing. A third option is \emph{semi-blind or blind sensing}, where the receiver jointly estimates both data-related uncertainty and sensing parameters. Robust statistical processing may also be adopted when only partial prior information is available.
+
+    This issue has important implications for ISAC architecture design. It suggests that communication decoding and sensing processing should not always be completely separated. Instead, information sharing between communication and sensing modules may be necessary. It also motivates architectures with shared baseband access, joint receiver design, or dedicated signaling structures that preserve sensing capability.
+
+    \item 
+    The four driving forces behind ISAC evolution are closely related.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Intrinsic relationships:} \\
+        Spectral efficiency requirements create the practical need for deeper integration, because separate communication and sensing systems waste scarce spectrum resources. Hardware platform development provides the enabling foundation, since shared RF chains, large antenna arrays, and stronger processors make integration feasible. Network intelligence trends increase the value of sensing information, because intelligent networks require environmental awareness for optimization and automation. Finally, the 6G vision provides the top-level strategic framework that pushes these technical trends toward a unified architecture. Thus, one may view the logic as: \emph{demand pull} (spectrum pressure and new services) + \emph{technology push} (hardware and AI) + \emph{system vision} (6G) $\rightarrow$ ISAC evolution.
+
+        \item \textbf{Most fundamental driving force:} \\
+        A reasonable argument is that spectral efficiency demand is the most fundamental, because spectrum scarcity is a long-term and universal constraint. Integration is strongly motivated by the need to avoid duplicative use of spectrum and infrastructure. However, one may also argue that hardware development is equally fundamental, since without technical feasibility the demand could not be realized.
+
+        \item \textbf{Additional promoting factors:} \\
+        Other factors include the growth of autonomous systems, digital twin applications, low-altitude economy, smart transportation, public safety needs, edge computing development, and the demand for context-aware services. Regulatory support and industrial ecosystem maturity may also accelerate ISAC development.
+    \end{enumerate}
+
+    \item 
+    In joint beamforming, whether the communication user and the sensing target are aligned in space has a major impact on difficulty.
+
+    If they are located in the \emph{same or very similar direction}, joint beamforming is often easier. The reason is that one beam can simultaneously deliver communication energy to the user and illumination energy to the target. In this case, the two objectives are more consistent, and the beamforming design may achieve dual benefits with limited conflict.
+
+    If they are \emph{approximately orthogonal in space}, joint beamforming is usually more difficult. The system may need to split power, form multiple beams, or manage stronger trade-offs between maintaining user SINR and allocating sufficient sensing power toward another direction. This increases optimization complexity and may reduce efficiency.
+
+    In short, spatial alignment tends to create synergy, whereas spatial separation tends to create competition for antenna, power, and beamforming degrees of freedom.
+
+    \item 
+    Since standardization is evolving rapidly, answers should always cite specific versions or dates of documents consulted. In general, current ISAC-related standardization studies in organizations such as 3GPP and ITU-R focus on exploring sensing use cases, performance indicators, channel and waveform considerations, network architecture implications, and possible integration into future 6G frameworks.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Current scope and focal directions:} \\
+        These include use case identification (such as localization, environmental mapping, traffic monitoring, and industrial sensing), study of sensing requirements, evaluation methodologies, support for joint communication and sensing waveforms, and possible changes to air interface and network procedures.
+
+        \item \textbf{Major controversies or difficulties:} \\
+        Key difficulties include the lack of unified sensing performance metrics, diversity of use cases, uncertain business models, coexistence with legacy systems, privacy concerns, hardware calibration requirements, and the complexity of incorporating sensing into existing communication standards.
+
+        \item \textbf{Key obstacles toward commercialization:} \\
+        Major obstacles include insufficient standard maturity, unclear return on investment, limited interoperability, high upgrade cost, uncertain regulation regarding sensing data, and the challenge of proving reliable performance in diverse practical scenarios.
+    \end{enumerate}
+
+    In short, standardization is progressing, but large-scale deployment still requires technical, economic, and regulatory convergence.
+
+    \item 
+    Consider \emph{vital sign monitoring} as a nontraditional sensing application.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Requirements:} \\
+        Vital sign monitoring usually requires fine motion sensitivity, because respiration and heartbeat induce only very small chest displacements. It also requires sufficiently low latency for real-time monitoring and suitable coverage for indoor environments such as homes, hospitals, or elderly-care facilities.
+
+        \item \textbf{Basic principle:} \\
+        Communication signals such as Wi-Fi or 5G NR can be used to monitor subtle changes in the propagation channel. Tiny periodic body movements modulate channel phase, amplitude, or Doppler characteristics. By extracting and processing these variations, the system can estimate respiration rate, heartbeat-related micro-motion, or presence status.
+
+        \item \textbf{Privacy and security concerns:} \\
+        Such applications may reveal sensitive personal information, including health condition, daily habits, occupancy, or activity patterns. Therefore, issues arise regarding informed consent, secure storage, access control, anonymization, and protection against unauthorized sensing or data leakage.
+    \end{enumerate}
+
+    This example shows that ISAC expands sensing far beyond conventional target detection and raises important ethical and regulatory questions.
+
+    \item 
+    If acting as the CTO of a mobile operator, the decision to introduce ISAC into existing 5G base stations should be evaluated from both business and technical perspectives.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Potential new revenue sources:} \\
+        ISAC may enable traffic monitoring, smart transportation services, industrial automation support, security surveillance, drone detection, indoor occupancy analytics, infrastructure monitoring, and context-aware enterprise services. These may open new business-to-business and government-oriented markets.
+
+        \item \textbf{Required hardware and software upgrades:} \\
+        Existing base stations may need antenna and RF calibration upgrades, higher-precision synchronization, enhanced baseband processing capability, sensing-aware waveform and beam management software, data fusion modules, and interfaces to edge computing or AI platforms.
+
+        \item \textbf{Technical and business risks:} \\
+        Technical risks include uncertain sensing accuracy, interference with communication performance, additional complexity, calibration difficulties, and limited robustness in diverse environments. Business risks include unclear customer demand, uncertain pricing models, regulatory restrictions, privacy liabilities, and long payback periods.
+
+        \item \textbf{Recommended priority deployment scenarios:} \\
+        Priority should be given to high-value and high-demand scenarios where network infrastructure already exists and sensing creates clear additional value, such as smart transportation corridors, ports, industrial parks, airports, and low-altitude UAV management zones. These scenarios often have stronger willingness to pay, clearer safety requirements, and more controllable deployment environments.
+    \end{enumerate}
+
+    Overall, ISAC deployment in 5G base stations is promising, but should begin with targeted vertical scenarios where technical feasibility and business value are both relatively clear.
+
+\end{enumerate}

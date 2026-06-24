@@ -12,3 +12,192 @@
 % \begin{enumerate}[label=\textbf{Exercise 1.\arabic*.}, leftmargin=*]
 %     \item ...
 % \end{enumerate}
+
+% backmatter/exercise_solutions/chapter1/sec2_en_solutions.tex
+%
+% Solutions for Chapter 1, Section 1.2 exercises.
+
+\subsection*{Section 1.2 Exercises}
+
+\begin{enumerate}[label=\textbf{\arabic*.}, leftmargin=*]
+
+    \item 
+    ISAC is not merely an optional addition of functions because it changes the \emph{capability boundary} of the system itself. A standalone communication system is designed mainly to transport data reliably and efficiently between endpoints. A standalone sensing system, by contrast, is designed to observe targets or the environment and extract physical-state information. In an integrated system, these two capabilities are no longer isolated. Instead, the network can both \emph{understand the environment} and \emph{react through communication and control}, thereby forming a new type of infrastructure.
+
+    This is a restructuring of system capability for three reasons. First, the system gains a new internal perception function rather than depending only on external devices. Second, communication and sensing can support each other, enabling better adaptation, scheduling, and service orchestration. Third, the value of the system shifts from single-function provision to integrated service support. Therefore, ISAC changes not only what the system does, but also how the system is defined.
+
+    \item 
+    ``System-level benefit restructuring'' means that the value of ISAC should be evaluated from the perspective of the \emph{overall system outcome}, rather than from whether one isolated metric becomes better. For example, even if the communication rate or sensing accuracy does not improve significantly, the system may still achieve lower deployment cost, better resource utilization, faster rollout, stronger service integration, or new business opportunities.
+
+    This differs fundamentally from ``having one better metric.'' A single improved metric is a \emph{local} gain, while system-level benefit restructuring is a \emph{global} reorganization of value. The latter concerns the total cost, total utility, service loop efficiency, and cross-layer coordination ability of the whole system. In other words, ISAC is valuable not only because one number may increase, but because the entire system may become more efficient, more scalable, and more service-capable.
+
+    \item 
+    Traditional communication systems were historically designed with information delivery as the central objective. Their main concerns included throughput, latency, reliability, and coverage. As a result, they usually treated the physical environment only as a channel condition to be estimated or compensated, rather than as a source of service-level information. This is why they often appear to be ``unaware of the physical world.''
+
+    Before 5G, this limitation was less evident because most services mainly required content delivery, voice, messaging, or internet access. In such scenarios, the network did not need to understand the environment in real time. However, in the 6G era, services such as autonomous driving, industrial automation, digital twins, extended reality, and low-altitude UAV management require the network not only to connect devices, but also to know where objects are, how they move, and what the environmental state is. For example, in autonomous driving, merely transmitting data is insufficient if the network cannot support real-time awareness of vehicles, pedestrians, and road conditions. Thus, the lack of native environmental awareness becomes increasingly restrictive.
+
+    \item 
+    The two deployment schemes differ as follows.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Spectrum occupation mode:} \\
+        Standalone deployment usually requires separate or partially separated spectrum planning for communication and sensing, which may lead to duplicated spectrum occupation or more complex coexistence coordination. ISAC can allow more unified or jointly scheduled use of spectrum resources, improving overall efficiency.
+
+        \item \textbf{Hardware construction cost:} \\
+        Standalone deployment generally requires separate devices, antennas, RF chains, and processing units, which leads to higher total hardware cost. ISAC can reduce duplication by sharing key hardware resources, although the shared platform may itself be more sophisticated.
+
+        \item \textbf{Deployment procedure and implementation complexity:} \\
+        Standalone systems require separate site planning, installation, calibration, integration, and maintenance processes. ISAC can reduce repeated deployment work by reusing communication infrastructure, though it may introduce more demanding integrated design requirements.
+
+        \item \textbf{Service support capability:} \\
+        Standalone systems can support communication and sensing individually, but coordination between them is often weaker. ISAC is better suited to support closed-loop services in which sensing, communication, computation, and control are tightly coupled.
+    \end{enumerate}
+
+    For large-scale emerging 6G scenarios, integrated deployment using ISAC is generally more suitable, especially when coverage, fast deployment, and service integration are important. However, standalone deployment may still be preferred in highly specialized scenarios where sensing requirements are extremely strict and difficult to satisfy on a shared platform.
+
+    \item 
+    The four core values of ISAC---spectrum efficiency, hardware cost, deployment efficiency, and business closed-loop capability---are not independent. They are strongly coupled.
+
+    Improved \emph{spectrum efficiency} can reduce duplicated resource occupation and make integrated services more economically attractive. Shared \emph{hardware cost} can lower the entry barrier for deployment and support large-scale rollout. Better \emph{deployment efficiency} shortens time to service and reduces operational friction, which in turn helps business adoption. Stronger \emph{business closed-loop capability} increases the practical value of integration and justifies investment in shared spectrum and hardware.
+
+    These values may reinforce one another. For instance, hardware sharing reduces cost, which accelerates deployment; large-scale deployment then increases service coverage and data availability, which strengthens business closed-loop capability; once the business value becomes clear, operators and industries are more willing to exploit integrated spectrum usage. Therefore, these four values should be understood as parts of one system-level value chain rather than as isolated advantages.
+
+    \item 
+    ISAC does not always provide spectral gain under all conditions. Its advantage holds only when the dual use of resources is sufficiently coordinated and the resulting trade-offs remain acceptable.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Resource conflicts between the two functions:} \\
+        If communication and sensing simultaneously demand incompatible time, frequency, spatial, or power resources, the expected gain may be weakened or even lost.
+
+        \item \textbf{Mutual interference and self-interference:} \\
+        If the integrated system cannot effectively suppress cross-function interference or leakage, performance degradation may offset the benefit of spectrum sharing.
+
+        \item \textbf{Target-resolution requirements:} \\
+        High-resolution sensing may require large bandwidth, long coherent observation, or specially designed waveforms. If these requirements are incompatible with communication needs, integrated operation may be suboptimal.
+
+        \item \textbf{Communication-link quality requirements:} \\
+        In scenarios with very strict communication reliability, latency, or throughput requirements, the system may need to prioritize communication performance, leaving limited flexibility for sensing integration.
+    \end{enumerate}
+
+    Therefore, ISAC spectral gain is most likely to hold when resource conflicts are manageable, interference can be controlled, sensing requirements are compatible with communication signals, and the communication link has enough design margin.
+
+    \item 
+    For vehicle--road collaborative infrastructure, the two candidate schemes can be compared as follows.
+
+    \textbf{CAPEX:} Scheme A usually requires separate procurement and installation of communication base stations and roadside radar, leading to higher upfront capital expenditure. Scheme B may require upgrading existing communication sites, but overall duplication is reduced.
+
+    \textbf{OPEX:} Scheme A involves maintaining two infrastructures, which increases long-term operating expenses. Scheme B benefits from unified site management, power supply, and maintenance workflows, thus tending to reduce OPEX.
+
+    \textbf{Deployment cycle:} Scheme A often takes longer because two systems must be planned and installed. Scheme B can leverage existing base-station locations and backhaul resources, allowing faster deployment.
+
+    \textbf{Maintenance complexity:} Scheme A has more independent equipment types and interfaces, which complicates maintenance and fault diagnosis. Scheme B may increase software and calibration complexity, but total management can still be simpler at the system level.
+
+    \textbf{Future service expansion capability:} Scheme B is generally better positioned to support future integrated services such as cooperative perception, edge intelligence, and closed-loop traffic control.
+
+    Therefore, Scheme B is generally recommended for large-scale urban deployment, especially where communication infrastructure is already available. Scheme A may still be suitable for locations requiring highly specialized radar performance.
+
+    \item 
+    Although communication and sensing do not have perfectly identical hardware requirements, hardware sharing can still be more economical when evaluated from the perspective of \emph{total system cost}. This is because practical engineering decisions are rarely determined by achieving the best possible performance for each isolated module. Instead, they aim to optimize the total balance among cost, capability, scalability, and maintainability.
+
+    Shared antenna arrays, RF chains, and baseband platforms reduce duplication in procurement, installation, power supply, site rental, and maintenance. Even if the shared hardware must be designed to meet somewhat stricter specifications, this additional complexity may still be cheaper than building and operating two separate systems. Furthermore, modern digital processing and calibration techniques can compensate for some performance mismatches.
+
+    Thus, the economic advantage of hardware sharing does not mean every module is individually optimal; rather, it means the \emph{whole system} is more cost-effective.
+
+    \item 
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Why ISAC is suitable for rapid large-scale emerging scenarios:} \\
+        Emerging scenarios such as the low-altitude economy, industrial Internet, and public safety often require broad coverage, fast rollout, and scalable management. ISAC is well suited to these needs because it can reuse existing communication infrastructure, reduce repeated site construction, and provide both connectivity and environmental awareness on the same platform.
+
+        \item \textbf{Obstacles of relying entirely on standalone sensing infrastructure:} \\
+        If only standalone sensing infrastructure is used, deployment may face many practical obstacles, including site acquisition difficulty, separate power and backhaul requirements, duplicated installation processes, higher cost, fragmented management, and weaker integration with communication and control systems. These factors can significantly slow down deployment and reduce economic viability.
+    \end{enumerate}
+
+    Therefore, the value of ISAC in deployment efficiency is especially prominent in scenarios where scale, speed, and coordination matter.
+
+    \item 
+    Consider the scenario of low-altitude UAV management.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Sensing stage:} \\
+        The system obtains information such as UAV position, altitude, trajectory, speed, flight density, and possible intrusion into restricted areas.
+
+        \item \textbf{Communication stage:} \\
+        The system transmits sensing results, UAV identification information, control instructions, warning messages, and coordination information between airspace management entities and UAVs.
+
+        \item \textbf{Decision-making stage:} \\
+        Decisions may be made by an airspace management platform, an edge server, or a supervisory control center based on fused sensing and communication information.
+
+        \item \textbf{Feedback stage:} \\
+        Feedback may include route adjustment commands, collision-avoidance alerts, access permissions, or restriction notices. These outputs then affect the next round of UAV movement and network scheduling.
+    \end{enumerate}
+
+    This closed loop illustrates why ISAC is more than a sensing add-on: it supports continuous perception, coordination, and control within one service chain.
+
+    \item 
+    The statement that external sensors can always be attached to a communication system, making ISAC unnecessary, is only partially valid. While external devices can indeed provide sensing capability, this does not eliminate the need for integrated solutions.
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{System cost:} \\
+        External attachment often leads to duplicated hardware, separate integration effort, and higher total lifecycle cost. ISAC can reduce these inefficiencies through resource sharing.
+
+        \item \textbf{Deployment efficiency:} \\
+        Attaching independent sensors at scale requires additional site planning, installation, calibration, and maintenance. ISAC can often leverage existing communication infrastructure, making deployment faster and more practical.
+
+        \item \textbf{Business closed-loop capability:} \\
+        External sensing systems may remain loosely coupled to communication and control platforms, which weakens real-time interaction and end-to-end service orchestration. ISAC is better positioned to support a tightly integrated perception--communication--decision--feedback loop.
+    \end{enumerate}
+
+    Therefore, externally attached sensing can be useful in some scenarios, but it is not a complete substitute for ISAC, especially when large-scale integration and service closed loops are required.
+
+    \item 
+    Business closed-loop capability is key for ISAC to become an intrinsic 6G capability because 6G is expected to be more than a connectivity network. It is increasingly envisioned as an intelligent service platform that integrates communication, sensing, computation, and control.
+
+    If sensing only provides auxiliary information without influencing communication, computation, or control, then it remains an optional enhancement. By contrast, once sensing information directly enters decision-making and feeds back into network behavior, user actions, or control mechanisms, it becomes part of the network's core operational logic.
+
+    This is especially important for digital twins, intelligent transportation, smart manufacturing, and autonomous systems. In these scenarios, the network must continuously perceive the environment, communicate relevant information, compute decisions, and apply feedback in real time. Thus, business closed-loop capability is not merely an extra benefit; it is what makes ISAC a native functional component of future networks.
+
+    \item 
+    If future 6G networks are widely equipped with ISAC capability, operators may gradually evolve beyond traditional connectivity service providers.
+
+    First, they may become \emph{environmental information service providers} by offering location, motion, occupancy, traffic-state, or situational-awareness services to industries and governments. Second, by combining sensing with edge computing and AI, operators may further develop into \emph{decision-support platforms}, helping customers optimize logistics, traffic management, public safety, industrial control, and resource scheduling.
+
+    This does not mean connectivity becomes unimportant. Rather, connectivity becomes one layer of a broader integrated service stack. In such a future, operators may create value not only by transporting data, but also by generating and exploiting physical-world information.
+
+    \item 
+    A practical evaluation framework for ISAC may include at least the following dimensions:
+
+    \begin{enumerate}[label=(\alph*)]
+        \item \textbf{Spectrum utilization efficiency:} corresponds to the core value of \emph{spectrum efficiency}.
+        \item \textbf{Total hardware and infrastructure cost:} corresponds to \emph{hardware cost}.
+        \item \textbf{Deployment time and rollout scalability:} corresponds to \emph{deployment efficiency}.
+        \item \textbf{Communication performance and sensing performance balance:} corresponds to \emph{technical feasibility and integrated capability}.
+        \item \textbf{Closed-loop service value or business monetization potential:} corresponds to \emph{business closed-loop capability}.
+        \item \textbf{Operation and maintenance complexity:} relates to both \emph{hardware cost} and \emph{deployment efficiency}.
+        \item \textbf{Regulatory, privacy, and security suitability:} relates to long-term \emph{service viability}.
+    \end{enumerate}
+
+    A good framework should not focus only on physical-layer performance. It should jointly consider technical effectiveness, economic cost, deployment practicality, and service value creation.
+
+    \item 
+    In the near future, ISAC is especially likely to achieve large-scale deployment first in scenarios such as vehicular networks, the low-altitude economy, and industrial automation.
+
+    Vehicular networks are promising because they require both communication and environmental awareness, have high safety value, and can benefit strongly from closed-loop coordination. The low-altitude economy is also attractive because UAV supervision demands wide-area sensing, connectivity, and rapid deployment. Industrial automation has high willingness to pay, relatively controlled environments, and clear business value for integrated sensing and communication.
+
+    From the perspective of the four dimensions:
+    \begin{itemize}
+        \item \textbf{Spectrum efficiency:} these scenarios can benefit from avoiding separate spectrum usage for sensing and communication.
+        \item \textbf{Hardware cost:} shared infrastructure reduces duplication.
+        \item \textbf{Deployment efficiency:} these applications often require fast and scalable rollout.
+        \item \textbf{Business closed-loop capability:} all three scenarios naturally require perception--decision--control loops.
+    \end{itemize}
+
+    Among them, industrial automation may be the earliest to mature commercially because industrial settings are more controllable and the return on investment may be easier to demonstrate. However, vehicular and low-altitude scenarios may drive broader public-scale deployment.
+
+    \item 
+    Yes, it is entirely possible that some individual metric may decrease slightly while the overall system becomes more valuable. This is a typical manifestation of system-level benefit restructuring.
+
+    For example, suppose an ISAC-enabled roadside unit sacrifices a small portion of communication throughput in order to allocate resources for environmental sensing. Although the peak data rate becomes slightly lower, the system may gain real-time traffic awareness, better safety support, fewer accidents, improved coordination efficiency, and lower total infrastructure cost compared with deploying separate radar and communication systems. In such a case, the total system value clearly increases.
+
+    This does not necessarily reduce industrial acceptance. In practice, industry often values overall return on investment, deployment simplicity, service capability, and operational efficiency more than isolated peak metrics. As long as the local performance reduction remains within acceptable bounds and the global benefit is significant, ISAC can still be highly attractive.
+
+\end{enumerate}
